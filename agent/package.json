@@ -1,0 +1,51 @@
+{
+  "name": "botium-box-agent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon -e js -x node --watch src -r dotenv/config src/index.js",
+    "dev:agent1": "BOTIUM_AGENT_NAME=\"Default Agent\" node -r dotenv/config src/index.js",
+    "dev:agent2": "BOTIUM_AGENT_NAME=\"Default Agent 2\" node -r dotenv/config src/index.js",
+    "dev:agent3": "BOTIUM_AGENT_NAME=\"Default Agent 3\" node -r dotenv/config src/index.js",
+    "dev:agents": "npm-run-all -p dev:agent1 dev:agent2 dev:agent3",
+    "prod:agent1": "BOTIUM_AGENT_NAME=\"Default Agent\" node -r dotenv/config src/index.js dotenv_config_path=.env.production",
+    "prod:agent2": "BOTIUM_AGENT_NAME=\"Default Agent 2\" node -r dotenv/config src/index.js dotenv_config_path=.env.production",
+    "prod:agent3": "BOTIUM_AGENT_NAME=\"Default Agent 3\" node -r dotenv/config src/index.js dotenv_config_path=.env.production",
+    "prod:agents": "npm-run-all -p prod:agent1 prod:agent2 prod:agent3",
+    "link": "npm link botium-connector-dialogflow botium-connector-webdriverio botium-connector-directline3 botium-core",
+    "eslint": "eslint \"./src/**/*.js\"",
+    "build:dist": "NODE_ENV=production npm run eslint && rollup -c && javascript-obfuscator dist/botium-box-agent.js --output dist/botium-box-agent.js --compact true --self-defending true",
+    "run:dist": "NODE_ENV=production node -r dotenv/config dist/botium-box-agent.js dotenv_config_path=.env.production",
+    "copy:free-dist": "cp -Rf dist .env.production package.json package-lock.json ~/botium-box-basic-dist/agent"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "botium-connector-alexa-smapi": "0.0.2",
+    "botium-connector-dialogflow": "0.0.4",
+    "botium-connector-directline3": "0.0.5",
+    "botium-connector-watson": "0.0.1",
+    "botium-connector-webdriverio": "0.0.6",
+    "botium-core": "^1.3.29",
+    "debug": "^4.1.0",
+    "dotenv": "^6.1.0",
+    "kue": "^0.11.6",
+    "npm-run-all": "^4.1.3",
+    "slug": "^0.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "javascript-obfuscator": "^0.18.1",
+    "ncp": "^2.0.0",
+    "nodemon": "^1.18.4",
+    "rollup": "^0.67.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0"
+  }
+}

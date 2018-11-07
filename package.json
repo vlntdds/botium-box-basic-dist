@@ -1,0 +1,14 @@
+{
+  "name": "botium-box-basic-dist",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "start:agent": "cd agent && npm install --production && npm run run:dist",
+    "start:server": "cd server && npm install --production && npm run run:dist",
+    "start": "npm-run-all -p start:server"
+  },
+  "author": "",
+  "dependencies": {
+    "npm-run-all": "^4.1.3"
+  }
+}
