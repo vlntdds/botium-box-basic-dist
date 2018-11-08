@@ -15,9 +15,9 @@
     "prod:agents": "npm-run-all -p prod:agent1 prod:agent2 prod:agent3",
     "link": "npm link botium-connector-dialogflow botium-connector-webdriverio botium-connector-directline3 botium-core",
     "eslint": "eslint \"./src/**/*.js\"",
-    "build:dist": "NODE_ENV=production npm run eslint && rollup -c && javascript-obfuscator dist/botium-box-agent.js --output dist/botium-box-agent.js --compact true --self-defending true",
-    "run:dist": "NODE_ENV=production node -r dotenv/config dist/botium-box-agent.js dotenv_config_path=.env.production",
-    "copy:free-dist": "cp -Rf dist .env.production package.json package-lock.json ~/botium-box-basic-dist/agent"
+    "build:dist": "npm run eslint && rollup -c && javascript-obfuscator dist/botium-box-agent.js --output dist/botium-box-agent.js --compact true --self-defending true",
+    "run:dist": "node -r dotenv/config dist/botium-box-agent.js",
+    "publish:free-dist": "npm run build:dist && mkdir -p ~/botium-box-basic-dist/agent  && cp -Rf dist package.json package-lock.json ~/botium-box-basic-dist/agent && cp .env.botium-box-basic-dist ~/botium-box-basic-dist/agent/.env"
   },
   "author": "",
   "license": "ISC",
@@ -42,7 +42,6 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "javascript-obfuscator": "^0.18.1",
-    "ncp": "^2.0.0",
     "nodemon": "^1.18.4",
     "rollup": "^0.67.0",
     "rollup-plugin-commonjs": "^9.2.0",

@@ -10,9 +10,9 @@
     "start:prod": "node -r dotenv/config src/index.js dotenv_config_path=.env.production",
     "prisma-deploy:prod": "prisma deploy -e .env.production",
     "eslint": "eslint \"./src/**/*.js\"",
-    "build:dist": "NODE_ENV=production rollup -c && javascript-obfuscator dist/botium-box-server.js --output dist/botium-box-server.js --compact true --self-defending true",
-    "run:dist": "NODE_ENV=production node -r dotenv/config  dist/botium-box-server.js dotenv_config_path=.env.production",
-    "publish:free-dist": "npm run build:dist && mkdir -p ~/botium-box-basic-dist/server/src/generated && cp -Rf dist .env.production package.json package-lock.json src/schema.graphql ~/botium-box-basic-dist/server && cp src/schema.graphql ~/botium-box-basic-dist/server/src && cp src/generated/prisma.graphql ~/botium-box-basic-dist/server/src/generated"
+    "build:dist": "rollup -c && javascript-obfuscator dist/botium-box-server.js --output dist/botium-box-server.js --compact true --self-defending true",
+    "run:dist": "node -r dotenv/config  dist/botium-box-server.js",
+    "publish:free-dist": "npm run build:dist && mkdir -p ~/botium-box-basic-dist/server/dist/generated && cp -Rf dist package.json package-lock.json ~/botium-box-basic-dist/server && cp src/generated/prisma.graphql ~/botium-box-basic-dist/server/dist/generated && cp src/schema.graphql ~/botium-box-basic-dist/server/dist && cp .env.botium-box-basic-dist ~/botium-box-basic-dist/server/.env"
   },
   "dependencies": {
     "async": "^2.6.1",
