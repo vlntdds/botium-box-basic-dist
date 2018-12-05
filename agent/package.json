@@ -18,8 +18,8 @@
     "build:free-dist": "npm run eslint && cross-env BUILDTARGET=basic rollup -c && javascript-obfuscator dist/botium-box-agent.js --output dist/botium-box-agent.js --compact true --self-defending true",
     "build:premium-dist": "npm run eslint && cross-env BUILDTARGET=premium rollup -c && javascript-obfuscator dist/botium-box-agent.js --output dist/botium-box-agent.js --compact true --self-defending true",
     "run:dist": "node dist/botium-box-agent.js",
-    "publish:free-dist": "npm run build:free-dist && mkdir -p ~/botium-box-dist/basic/agent  && cp -Rf dist package.json package-lock.json ~/botium-box-dist/basic/agent && cp .env.botium-box-basic-dist ~/botium-box-dist/basic/agent/.env",
-    "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/agent  && cp -Rf dist package.json package-lock.json ~/botium-box-dist/premium/agent && cp .env.production ~/botium-box-dist/premium/agent/.env"
+    "publish:free-dist": "npm run build:free-dist && mkdir -p ~/botium-box-dist/agent  && cp -Rf dist package.json ~/botium-box-basic-dist/agent && cp .env.botium-box-basic-dist ~/botium-box-basic-dist/agent/.env",
+    "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/agent  && cp -Rf dist package.json ~/botium-box-dist/premium/agent && cp .env.production ~/botium-box-dist/premium/agent/.env"
   },
   "author": "",
   "license": "ISC",

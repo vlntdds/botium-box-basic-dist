@@ -13,8 +13,8 @@
     "build:free-dist": "cross-env BUILDTARGET=basic rollup -c && javascript-obfuscator dist/botium-box-server.js --output dist/botium-box-server.js --compact true --self-defending true",
     "build:premium-dist": "cross-env BUILDTARGET=premium rollup -c && javascript-obfuscator dist/botium-box-server.js --output dist/botium-box-server.js --compact true --self-defending true",
     "run:dist": "node dist/botium-box-server.js",
-    "publish:free-dist": "npm run build:free-dist && mkdir -p ~/botium-box-dist/basic/server/dist/generated && cp -Rf dist database package.json package-lock.json .graphqlconfig.yml ~/botium-box-dist/basic/server && cp src/generated/prisma.graphql ~/botium-box-dist/basic/server/dist/generated && cp src/schema.graphql ~/botium-box-dist/basic/server/dist && cp .env.botium-box-basic-dist ~/botium-box-dist/basic/server/.env",
-    "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/server/dist/generated && cp -Rf dist database package.json package-lock.json .graphqlconfig.yml ~/botium-box-dist/premium/server && cp src/generated/prisma.graphql ~/botium-box-dist/premium/server/dist/generated && cp src/schema.graphql ~/botium-box-dist/premium/server/dist && cp .env.production ~/botium-box-dist/premium/server/.env"
+    "publish:free-dist": "npm run build:free-dist && mkdir -p ~/botium-box-basic-dist/server/dist/generated && cp -Rf dist database package.json .graphqlconfig.yml ~/botium-box-basic-dist/server && cp src/generated/prisma.graphql ~/botium-box-basic-dist/server/dist/generated && cp src/schema.graphql ~/botium-box-basic-dist/server/dist && cp .env.botium-box-basic-dist ~/botium-box-basic-dist/server/.env",
+    "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/server/dist/generated && cp -Rf dist database package.json .graphqlconfig.yml ~/botium-box-dist/premium/server && cp src/generated/prisma.graphql ~/botium-box-dist/premium/server/dist/generated && cp src/schema.graphql ~/botium-box-dist/premium/server/dist && cp .env.production ~/botium-box-dist/premium/server/.env"
   },
   "dependencies": {
     "async": "^2.6.1",
@@ -39,8 +39,8 @@
     "moment": "^2.22.2",
     "natural": "^0.6.2",
     "node-cache": "^4.2.0",
-    "prisma": "^1.16.2",
     "prisma-binding": "^2.1.5",
+    "prisma": "^1.16.2",
     "randomatic": "^3.1.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
