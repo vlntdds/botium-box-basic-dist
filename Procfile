@@ -1,1 +1,1 @@
-web: cd parent && npm start
+web: npm start
