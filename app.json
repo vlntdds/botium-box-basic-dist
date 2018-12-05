@@ -8,7 +8,7 @@
   ],
   "website": "https://botium.at/",
   "repository": "https://github.com/codeforequity-at/botium-box-basic-dist",
-  "logo": "https://github.com/codeforequity-at/botium-box-basic-dist/master/botium-logo.png",
+  "logo": "https://raw.githubusercontent.com/codeforequity-at/botium-box-basic-dist/master/botium-logo.png",
   "env": {
     "BOTIUMBOX_QUEUE_REDISURL": {
       "description": "Full Redis Url for Botium Box",
