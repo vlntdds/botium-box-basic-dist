@@ -7,20 +7,28 @@
     "automation"
   ],
   "website": "https://botium.at/",
-  "repository": "https://github.com/jane-doe/small-sharp-tool",
-  "logo": "https://small-sharp-tool.com/logo.svg",
-  "success_url": "/welcome",
-  "scripts": {
-    "postdeploy": "bundle exec rake bootstrap"
-  },
+  "repository": "https://github.com/codeforequity-at/botium-box-basic-dist",
+  "logo": "https://raw.githubusercontent.com/codeforequity-at/botium-box-basic-dist/master/botium-logo.png",
   "env": {
-    "SECRET_TOKEN": {
-      "description": "A secret key for verifying the integrity of signed cookies.",
+    "BOTIUMBOX_QUEUE_REDISURL": {
+      "description": "Full Redis Url for Botium Box",
+      "value": "redis://redisuser:redispassword@redishost:redisport"
+    },
+    "PRISMA_ENDPOINT": {
+      "description": "Prisma Endpoint for Botium Box",
+      "value": "https://my-prisma-endpoint/demo/dev"
+    },
+    "PRISMA_MANAGEMENT_API_SECRET": {
+      "description": "Prisma Management API Secret (get it from your Prisma Endpoint)",
+      "value": "my-prisma-management-api-secret"
+    },
+    "PRISMA_SECRET": {
+      "description": "Prisma Secret (please select or generate your own)",
       "generator": "secret"
     },
-    "WEB_CONCURRENCY": {
-      "description": "The number of processes to run.",
-      "value": "5"
+    "JWT_SECRET": {
+      "description": "JWT Secret (please select or generate your own)",
+      "generator": "secret"
     }
   },
   "formation": {
