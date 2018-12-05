@@ -1,1 +1,1 @@
-web: cd parent && npm install && npm run prepare && npm start
+web: cd parent && npm start
