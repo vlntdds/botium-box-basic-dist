@@ -12,8 +12,10 @@ Get Prisma - a free instance running on Heroku as a starter. See [here](https://
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-Fill in the environment variables from what you know from above. 
+Fill in the environment variables from what you know from above.
+
 Default username: "admin"
+
 Default password: "nooneknows"
 
 Have fun.
