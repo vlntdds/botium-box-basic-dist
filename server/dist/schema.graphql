@@ -10,93 +10,123 @@
 # import ChatbotWhereInput from "./generated/prisma.graphql"
 # import ChatbotOrderByInput from "./generated/prisma.graphql"
 
-# import TestSession from "./generated/prisma.graphql"
-# import TestSessionCreateInput from "./generated/prisma.graphql"
-# import TestSessionWhereInput from "./generated/prisma.graphql"
-# import TestSessionOrderByInput from "./generated/prisma.graphql"
+# import TestSession, TestSessionCreateInput, TestSessionWhereInput, TestSessionOrderByInput from "./generated/prisma.graphql"
+# import TestSessionTestCaseResult, TestSessionTestCaseResultWhereInput, TestSessionTestCaseResultOrderByInput from "./generated/prisma.graphql"
 # import TestSessionSubscriptionPayload from "./generated/prisma.graphql"
 
 # import TestSet, TestSetCreateInput, TestSetUpdateInput from "./generated/prisma.graphql"
 # import TestSetScript, TestSetScriptCreateInput, TestSetScriptUpdateInput from "./generated/prisma.graphql"
 # import TestSetRepository, TestSetRepositoryCreateInput, TestSetRepositoryUpdateInput from "./generated/prisma.graphql"
 # import TestSetFolder, TestSetFolderCreateInput, TestSetFolderUpdateInput from "./generated/prisma.graphql"
+# import TestSetExcel, TestSetExcelCreateInput, TestSetExcelUpdateInput from "./generated/prisma.graphql"
 
 # import DeviceSet, DeviceSetCreateInput, DeviceSetUpdateInput, DeviceDescriptorCreateInput from "./generated/prisma.graphql"
+# import UserRole, UserCreateInput, UserUpdateInput, UserWhereInput, UserOrderByInput from "./generated/prisma.graphql"
 # import ApiKey, ApiKeyCreateInput, ApiKeyUpdateInput, ApiKeyWhereInput, ApiKeyOrderByInput from "./generated/prisma.graphql"
+# import DeviceProvider, DeviceProviderCreateInput, DeviceProviderUpdateInput, DeviceProviderWhereInput, DeviceProviderOrderByInput from "./generated/prisma.graphql"
+
+directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION | MUTATION
+directive @hasRole(roles: [String]) on QUERY | FIELD | FIELD_DEFINITION | MUTATION
 
 type Query {
-  testprojects(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, first: Int): [TestProject!]!
-  testproject(id: ID!): TestProject
-  agents(where: AgentWhereInput, orderBy: AgentOrderByInput, skip: Int, first: Int): [Agent!]!
-  agent(id: ID!): Agent
-  chatbots(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, first: Int): [Chatbot!]!
-  chatbot(id: ID!): Chatbot
-  availablewatsonworkspaces(url: String!, version: String!, username: String!, password: String!): [DropDownValue!]!
-  testsessions(where: TestSessionWhereInput, orderBy: TestSessionOrderByInput, skip: Int, first: Int): [TestSession!]!
-  testsession(id: ID!): TestSession
-  testsets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, first: Int): [TestSet!]!
-  testset(id: ID!): TestSet
-  testsetscript(id: ID!): TestSetScript
-  testsetscripts(testSetId: ID!, skip: Int, first: Int): [TestSetScript!]!
-  validatetestsetscript(script: String!, scriptType: TestSetScriptType!): ValidateTestSetScriptOutput!
-  testsetrepository(id: ID!): TestSetRepository
-  testsetrepositories(testSetId: ID!, skip: Int, first: Int): [TestSetRepository!]!
-  testsetfolder(id: ID!): TestSetFolder
-  testsetfolders(testSetId: ID!, skip: Int, first: Int): [TestSetFolder!]!
-  devicesets(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, first: Int): [DeviceSet!]!
-  deviceset(id: ID!): DeviceSet
-  availabledevices(provider: DeviceProvider!): [DropDownValue!]!
-  
-  apikeys(where: ApiKeyWhereInput, orderBy: ApiKeyOrderByInput, skip: Int, first: Int): [ApiKey!]!
-  apikey(id: ID!): ApiKey
+  autologin: AuthPayload
   me: User
-  
-  chartTestSetResultCount: [ChartTestSetResultCount!]!
-  chartFailedCountByChatbotByDay(timeFrame: ChartTimeFrame): [ChartFailedCountByChatbotByDay!]!
-  
-  liveChatConvoSteps(conversationId: String!): [String!]!
+
+  testprojects(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, first: Int): [TestProject!]! @isAuthenticated
+  testproject(id: ID!): TestProject @isAuthenticated
+  agents(where: AgentWhereInput, orderBy: AgentOrderByInput, skip: Int, first: Int): [Agent!]! @isAuthenticated
+  agent(id: ID!): Agent @isAuthenticated
+  chatbots(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, first: Int): [Chatbot!]! @isAuthenticated
+  chatbot(id: ID!): Chatbot @isAuthenticated
+  availablewatsonworkspaces(url: String!, version: String!, username: String!, password: String!): [DropDownValue!]! @isAuthenticated
+  testsessions(where: TestSessionWhereInput, orderBy: TestSessionOrderByInput, skip: Int, first: Int): [TestSession!]! @isAuthenticated
+  testsession(id: ID!): TestSession @isAuthenticated
+  testsessiontestcaseresults(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, first: Int): [TestSessionTestCaseResult!]! @isAuthenticated
+  testsessiontestcaseresult(id: ID!): TestSessionTestCaseResult @isAuthenticated
+  testsets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, first: Int): [TestSet!]! @isAuthenticated
+  testset(id: ID!): TestSet @isAuthenticated
+  testsetscript(id: ID!): TestSetScript @isAuthenticated
+  testsetscripts(testSetId: ID!, skip: Int, first: Int): [TestSetScript!]! @isAuthenticated
+  validatetestsetscript(script: String!, scriptType: TestSetScriptType!): ValidateTestSetScriptOutput! @isAuthenticated
+  clonetestsetoptions: CloneTestSetOptionsPossible! @isAuthenticated
+  testsetrepository(id: ID!): TestSetRepository @isAuthenticated
+  testsetrepositories(testSetId: ID!, skip: Int, first: Int): [TestSetRepository!]! @isAuthenticated
+  testsetfolder(id: ID!): TestSetFolder @isAuthenticated
+  testsetfolders(testSetId: ID!, skip: Int, first: Int): [TestSetFolder!]! @isAuthenticated
+  testsetexcel(id: ID!): TestSetExcel @isAuthenticated
+  testsetexcels(testSetId: ID!, skip: Int, first: Int): [TestSetExcel!]! @isAuthenticated
+  devicesets(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, first: Int): [DeviceSet!]! @isAuthenticated
+  deviceset(id: ID!): DeviceSet @isAuthenticated
+  availabledevices(provider: ID!): [DropDownValue!]! @isAuthenticated
+
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, first: Int): [User!]! @isAuthenticated
+  user(id: ID!): User @isAuthenticated
+  apikeys(where: ApiKeyWhereInput, orderBy: ApiKeyOrderByInput, skip: Int, first: Int): [ApiKey!]! @isAuthenticated
+  apikey(id: ID!): ApiKey @isAuthenticated
+  deviceproviders(where: DeviceProviderWhereInput, orderBy: DeviceProviderOrderByInput, skip: Int, first: Int): [DeviceProvider!]! @isAuthenticated
+  deviceprovider(id: ID!): DeviceProvider @isAuthenticated
+
+  chartTestSetResultCount(testProjectId: ID): [ChartTestSetResultCount!]! @isAuthenticated
+  chartFailedCountByChatbotByDay(timeFrame: ChartTimeFrame): [CountByDaySeries!]! @isAuthenticated
+  chartFailedCountByTestSetByDay(testProjectId: ID, timeFrame: ChartTimeFrame): [CountByDaySeries!]! @isAuthenticated
+  chartTestProjectTrainingStatusByTestSet(testProjectId: ID!): [ChartTrainingStatus!]! @isAuthenticated
+  chartTestProjectTrainingStatusByDeviceSet(testProjectId: ID!): [ChartTrainingStatus!]! @isAuthenticated
+
+  liveChatConvoSteps(conversationId: String!): [String!]! @isAuthenticated
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String!): AuthPayload!
-  login(email: String!, password: String!): AuthPayload!
-  createTestProject(testProject: TestProjectCreateInput!): TestProject!
-  quickstartTestProject(testProject: TestProjectCreateInput!): ID!
-  startTestProject(id: ID!): ID!
-  updateTestProject(id: ID!, testProject: TestProjectUpdateInput!): TestProject!
-  deleteTestProject(id: ID!): Boolean!
-  createAgent(agent: AgentCreateInput!): Agent!
-  updateAgent(id: ID!, agent: AgentUpdateInput!): Agent!
-  deleteAgent(id: ID!): Boolean!
-  createChatbot(chatbot: ChatbotCreateInput!): Chatbot!
-  updateChatbot(id: ID!, chatbot: ChatbotUpdateInput!): Chatbot!
-  deleteChatbot(id: ID!): Boolean!
-  createTestSession(testSession: TestSessionCreateInput!): TestSession!
-  deleteTestSession(id: ID!): Boolean!
-  createTestSet(testSet: TestSetCreateInput!): TestSet!
-  updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet!
-  deleteTestSet(id: ID!): Boolean!
-  createTestSetScript(testSetScript: TestSetScriptCreateInput!): TestSetScript!
-  updateTestSetScript(id: ID!, testSetScript: TestSetScriptUpdateInput!): TestSetScript!
-  deleteTestSetScript(id: ID!): Boolean!
-  createTestSetRepository(testSetRepository: TestSetRepositoryCreateInput!): TestSetRepository!
-  updateTestSetRepository(id: ID!, testSetRepository: TestSetRepositoryUpdateInput!): TestSetRepository!
-  deleteTestSetRepository(id: ID!): Boolean!
-  createTestSetFolder(testSetFolder: TestSetFolderCreateInput!): TestSetFolder!
-  updateTestSetFolder(id: ID!, testSetFolder: TestSetFolderUpdateInput!): TestSetFolder!
-  deleteTestSetFolder(id: ID!): Boolean!
-  createDeviceSet(deviceSet: DeviceSetCreateInput!): DeviceSet!
-  updateDeviceSet(id: ID!, deviceSet: DeviceSetUpdateInput!): DeviceSet!
-  deleteDeviceSet(id: ID!): Boolean!
+  login(name: String, email: String, password: String!): AuthPayload!
 
-  createApiKey(apiKey: ApiKeyCreateInput!): ApiKey!
-  updateApiKey(id: ID!, apiKey: ApiKeyUpdateInput!): ApiKey!
-  deleteApiKey(id: ID!): Boolean!
-  
-  liveChatStartBot(id: ID!): String!
-  liveChatSendToBot(conversationId: String!, convoStep: String!): Boolean!
-  liveChatStopBot(conversationId: String!): Boolean!
-  liveChatSaveConvoSteps(conversationId: String!, testSetId: ID, newTestSetName: String, testCaseName: String!): ID!
+  createTestProject(testProject: TestProjectCreateInput!): TestProject! @isAuthenticated
+  quickstartTestProject(testProject: TestProjectCreateInput!): ID! @isAuthenticated
+  startTestProject(id: ID!): ID! @isAuthenticated
+  updateTestProject(id: ID!, testProject: TestProjectUpdateInput!): TestProject! @isAuthenticated
+  deleteTestProject(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+  createAgent(agent: AgentCreateInput!): Agent! @isAuthenticated
+  updateAgent(id: ID!, agent: AgentUpdateInput!): Agent! @isAuthenticated
+  deleteAgent(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+  createChatbot(chatbot: ChatbotCreateInput!): Chatbot! @isAuthenticated
+  updateChatbot(id: ID!, chatbot: ChatbotUpdateInput!): Chatbot! @isAuthenticated
+  deleteChatbot(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+  createTestSession(testSession: TestSessionCreateInput!): TestSession! @isAuthenticated
+  deleteTestSession(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+  createTestSet(testSet: TestSetCreateInput!): TestSet! @isAuthenticated
+  updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @isAuthenticated
+  deleteTestSet(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+  cloneTestSet(id: ID!, options: CloneTestSetOptionsChoosen!): TestSet! @isAuthenticated
+  createTestSetScript(testSetScript: TestSetScriptCreateInput!): TestSetScript! @isAuthenticated
+  updateTestSetScript(id: ID!, testSetScript: TestSetScriptUpdateInput!): TestSetScript! @isAuthenticated
+  deleteTestSetScript(id: ID!): Boolean! @isAuthenticated
+  createTestSetRepository(testSetRepository: TestSetRepositoryCreateInput!): TestSetRepository! @isAuthenticated
+  updateTestSetRepository(id: ID!, testSetRepository: TestSetRepositoryUpdateInput!): TestSetRepository! @isAuthenticated
+  deleteTestSetRepository(id: ID!): Boolean! @isAuthenticated
+  createTestSetFolder(testSetFolder: TestSetFolderCreateInput!): TestSetFolder! @isAuthenticated
+  updateTestSetFolder(id: ID!, testSetFolder: TestSetFolderUpdateInput!): TestSetFolder! @isAuthenticated
+  deleteTestSetFolder(id: ID!): Boolean! @isAuthenticated
+  createTestSetExcel(testSetExcel: TestSetExcelCreateInput!): TestSetExcel! @isAuthenticated
+  updateTestSetExcel(id: ID!, testSetExcel: TestSetExcelUpdateInput!): TestSetExcel! @isAuthenticated
+  deleteTestSetExcel(id: ID!): Boolean! @isAuthenticated
+  createDeviceSet(deviceSet: DeviceSetCreateInput!): DeviceSet! @isAuthenticated
+  updateDeviceSet(id: ID!, deviceSet: DeviceSetUpdateInput!): DeviceSet! @isAuthenticated
+  deleteDeviceSet(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+
+  createUser(user: UserCreateInput!): User! @hasRole(roles: ["ADMIN"])
+  updateUser(id: ID!, user: UserUpdateInput!): User! @isAuthenticated
+  deleteUser(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+
+  createApiKey(apiKey: ApiKeyCreateInput!): ApiKey! @hasRole(roles: ["ADMIN"])
+  updateApiKey(id: ID!, apiKey: ApiKeyUpdateInput!): ApiKey! @hasRole(roles: ["ADMIN"])
+  deleteApiKey(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+
+  createDeviceProvider(deviceProvider: DeviceProviderCreateInput!): DeviceProvider! @hasRole(roles: ["ADMIN"])
+  updateDeviceProvider(id: ID!, deviceProvider: DeviceProviderUpdateInput!): DeviceProvider! @hasRole(roles: ["ADMIN"])
+  deleteDeviceProvider(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+
+  liveChatStartBot(id: ID!): String! @isAuthenticated
+  liveChatSendToBot(conversationId: String!, convoStep: String!): Boolean! @isAuthenticated
+  liveChatStopBot(conversationId: String!): Boolean! @isAuthenticated
+  liveChatSaveConvoSteps(conversationId: String!, testSetId: ID, newTestSetName: String, testCaseName: String!): ID! @isAuthenticated
 }
 
 type Subscription {
@@ -134,19 +164,31 @@ enum ChartTimeFrame {
 type ChartTestSetResultCount {
   id: ID!
   name: String!
+  lastRun: DateTime!
+  lastTestSessionId: ID!
   testCaseLastTotalCount: Int!
   testCaseLastSuccessCount: Int!
   testCaseLastSuccessRate: Float!
-  testCasePreviousTotalCount: Int!
-  testCasePreviousSuccessCount: Int!
-  testCasePreviousSuccessRate: Float!
+  previousRun: DateTime
+  previousTestSessionId: ID
+  testCasePreviousTotalCount: Int
+  testCasePreviousSuccessCount: Int
+  testCasePreviousSuccessRate: Float
   testCaseTrend: Trend!
 }
 
-type ChartFailedCountByChatbotByDay {
+type CountByDaySeries {
   id: ID!
   name: String!
   data: [Int]!
+}
+
+type ChartTrainingStatus {
+  id: ID!
+  name: String!
+  totalCount: Int!
+  successCount: Int!
+  failedCount: Int!
 }
 
 type ValidateTestSetScriptOutput {
@@ -156,6 +198,15 @@ type ValidateTestSetScriptOutput {
   scriptType: TestSetScriptType!
 }
 
+type CloneTestSetOptionsPossible {
+  humanifiers: [String]!
+}
+
+input CloneTestSetOptionsChoosen {
+  humanifiersToExecute: [String]!,
+  percentToHumanify: Float!
+}
+
 type AuthPayload {
   token: String!
   user: User!
@@ -163,6 +214,9 @@ type AuthPayload {
 
 type User {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   email: String!
   name: String!
+  roles: [UserRole!]!
 }

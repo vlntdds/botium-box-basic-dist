@@ -1,0 +1,282 @@
+type TestProject {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  code: String! @unique
+  description: String
+  tags: [String!]
+  chatbot: Chatbot!
+  testSets: [TestSet!]!
+  deviceSets: [DeviceSet!]!
+  capabilities: [Capability!]!
+  agent: Agent
+  batchCount: Int  
+}
+
+type Agent {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
+  description: String
+  tags: [String!]
+  heartbeat: DateTime
+  capabilities: [Capability!]!
+}
+
+type Chatbot {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
+  description: String
+  tags: [String!]
+  capabilities: [Capability!]! @relation(name: "ChatbotCapabilities")
+  sources: [Capability!]! @relation(name: "ChatbotSources")
+  envs: [Capability!]! @relation(name: "ChatbotEnvs")
+}
+
+enum CapabilityType {
+  STRING
+  TEXT
+  INT
+  BOOLEAN
+  JSON
+}
+
+type Capability {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  type: CapabilityType!
+  stringValue: String
+  intValue: Int
+  booleanValue: Boolean
+  jsonValue: String
+}
+
+type TestSession {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  tags: [String!]
+  chatbot: Chatbot!
+  testSets: [TestSet!]!
+  deviceSets: [DeviceSet!]!
+  testProject: TestProject
+  agent: Agent
+  batchCount: Int
+  status: TestSessionStatus!
+  results: [TestSessionTestCaseResult!]!
+  jobs: [TestSessionJob!]!
+  capabilities: [Capability!]! @relation(name: "TestSessionCapabilities")
+  sources: [Capability!]! @relation(name: "TestSessionSources")
+  envs: [Capability!]! @relation(name: "TestSessionEnvs")
+}
+
+enum TestSessionStatus {
+  PENDING
+  RUNNING
+  READY
+  FAILED
+}
+
+type TestSessionTestCaseResult {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  testSession: TestSession!
+  testcaseName: String!
+  testcaseSource: String!
+  success: Boolean!
+  err: String
+  messages: String
+  attachments: [TestSessionTestCaseResultAttachment!]!
+  testSet: TestSet
+  testSetScript: TestSetScript
+  testSetRepository: TestSetRepository
+  testSetFolder: TestSetFolder
+  testSetExcel: TestSetExcel
+  testSetFilename: String
+  deviceSet: DeviceSet
+  deviceName: String
+}
+
+type TestSessionTestCaseResultAttachment {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String,
+  mimeType: String!,
+  base64: String!
+}
+
+type TestSessionJob {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  testSession: TestSession!
+  jobId: Int
+  progressPercent: Int
+  status: TestSessionJobStatus!
+  err: String
+  started: DateTime
+  finished: DateTime
+  logs: [TestSessionJobLog!]!
+}
+
+enum TestSessionJobStatus {
+  PENDING
+  RUNNING
+  READY
+  FAILED
+}
+
+type TestSessionJobLog {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  testSessionJob: TestSessionJob!
+  log: String!
+}
+
+type TestSet {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  expandConvos: Boolean @default(value: "true")
+  expandUtterancesToConvos: Boolean @default(value: "false")
+  expandUtterancesIncomprehension: String
+  tags: [String!]
+  scripts: [TestSetScript!]!
+  repositories: [TestSetRepository!]!
+  folders: [TestSetFolder!]!
+  excels: [TestSetExcel!]!
+}
+
+type TestSetScript {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  script: String!
+  scriptType: TestSetScriptType!
+  testSet: TestSet!
+}
+
+enum TestSetScriptType {
+  SCRIPTING_TYPE_CONVO
+  SCRIPTING_TYPE_UTTERANCES
+}
+
+type TestSetRepository {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  giturl: String!
+  gitbranch: String!
+  gitdir: String
+  globFilter: String
+  testSet: TestSet!
+}
+
+type TestSetFolder {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  path: String!
+  globFilter: String
+  testSet: TestSet!
+}
+
+type TestSetExcel {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  filename: String!
+  filecontent: String!
+  hasConvos: Boolean!
+  hasUtterances: Boolean!
+  worksheetsConvos: String
+  worksheetsUtterances: String
+  startRow: Int!
+  startCol: Int!
+  testSet: TestSet!
+}
+
+type DeviceSet {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  tags: [String!]
+  provider: DeviceProvider!
+  devices: [DeviceDescriptor!]!
+}
+
+type DeviceDescriptor {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  type: DeviceType!
+  capabilities: String!
+}
+
+type DeviceProvider {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
+  type: DeviceProviderType!
+  url: String
+  username: String
+  password: String
+}
+
+enum DeviceProviderType {
+  SAUCELABS
+  LOCALSELENIUM
+  INTEGRATED
+}
+enum DeviceType {
+  DESKTOP
+  MOBILEBROWSER
+  MOBILEAPP
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+type User {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String! @unique
+  password: String!
+  name: String! @unique
+  roles: [UserRole!]!
+}
+
+type ApiKey {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
+  key: String! @unique
+  validFrom: DateTime
+  validTo: DateTime
+}

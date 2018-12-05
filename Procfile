@@ -1,0 +1,1 @@
+web: cd parent && npm start

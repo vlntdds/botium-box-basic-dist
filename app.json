@@ -1,0 +1,33 @@
+{
+  "name": "Botium Box Community Edition",
+  "description": "Botium Box Community Edition",
+  "keywords": [
+    "chatbot",
+    "test",
+    "automation"
+  ],
+  "website": "https://botium.at/",
+  "repository": "https://github.com/codeforequity-at/botium-box-basic-dist",
+  "logo": "https://github.com/codeforequity-at/botium-box-basic-dist/master/botium-logo.png",
+  "env": {
+    "BOTIUMBOX_QUEUE_REDISURL": {
+      "description": "Full Redis Url for Botium Box",
+      "value": "redis://redisuser:redispassword@redishost:redisport"
+    },
+    "PRISMA_ENDPOINT": {
+      "description": "Prisma Endpoint for Botium Box",
+      "value": "https://my-prisma-endpoint/demo/dev"
+    },
+    "PRISMA_MANAGEMENT_API_SECRET": {
+      "description": "Prisma Management API Secret (get it from your Prisma Endpoint)",
+      "value": "my-prisma-management-api-secret"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "image": "heroku/nodejs"
+}
