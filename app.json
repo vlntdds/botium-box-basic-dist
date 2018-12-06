@@ -23,11 +23,11 @@
       "value": "my-prisma-management-api-secret"
     },
     "PRISMA_SECRET": {
-      "description": "Prisma Secret (please select or generate your own)",
+      "description": "Prisma Secret (generated)",
       "generator": "secret"
     },
     "JWT_SECRET": {
-      "description": "JWT Secret (please select or generate your own)",
+      "description": "JWT Secret (generated)",
       "generator": "secret"
     }
   },
