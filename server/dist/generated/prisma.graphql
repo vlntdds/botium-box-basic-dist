@@ -1,5 +1,5 @@
 # source: http://127.0.0.1:4466/box/dev
-# timestamp: Thu Dec 06 2018 10:19:06 GMT+0000 (UTC)
+# timestamp: Tue Dec 11 2018 12:02:03 GMT+0000 (UTC)
 
 type Agent implements Node {
   id: ID!
@@ -383,6 +383,10 @@ type AggregateDeviceProvider {
 }
 
 type AggregateDeviceSet {
+  count: Int!
+}
+
+type AggregateSystemSettings {
   count: Int!
 }
 
@@ -3329,6 +3333,7 @@ type Mutation {
   createTestSessionJobLog(data: TestSessionJobLogCreateInput!): TestSessionJobLog!
   createUser(data: UserCreateInput!): User!
   createApiKey(data: ApiKeyCreateInput!): ApiKey!
+  createSystemSettings(data: SystemSettingsCreateInput!): SystemSettings!
   createTestSetRepository(data: TestSetRepositoryCreateInput!): TestSetRepository!
   createDeviceDescriptor(data: DeviceDescriptorCreateInput!): DeviceDescriptor!
   createTestProject(data: TestProjectCreateInput!): TestProject!
@@ -3348,6 +3353,7 @@ type Mutation {
   updateTestSessionJobLog(data: TestSessionJobLogUpdateInput!, where: TestSessionJobLogWhereUniqueInput!): TestSessionJobLog
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateApiKey(data: ApiKeyUpdateInput!, where: ApiKeyWhereUniqueInput!): ApiKey
+  updateSystemSettings(data: SystemSettingsUpdateInput!, where: SystemSettingsWhereUniqueInput!): SystemSettings
   updateTestSetRepository(data: TestSetRepositoryUpdateInput!, where: TestSetRepositoryWhereUniqueInput!): TestSetRepository
   updateDeviceDescriptor(data: DeviceDescriptorUpdateInput!, where: DeviceDescriptorWhereUniqueInput!): DeviceDescriptor
   updateTestProject(data: TestProjectUpdateInput!, where: TestProjectWhereUniqueInput!): TestProject
@@ -3367,6 +3373,7 @@ type Mutation {
   deleteTestSessionJobLog(where: TestSessionJobLogWhereUniqueInput!): TestSessionJobLog
   deleteUser(where: UserWhereUniqueInput!): User
   deleteApiKey(where: ApiKeyWhereUniqueInput!): ApiKey
+  deleteSystemSettings(where: SystemSettingsWhereUniqueInput!): SystemSettings
   deleteTestSetRepository(where: TestSetRepositoryWhereUniqueInput!): TestSetRepository
   deleteDeviceDescriptor(where: DeviceDescriptorWhereUniqueInput!): DeviceDescriptor
   deleteTestProject(where: TestProjectWhereUniqueInput!): TestProject
@@ -3386,6 +3393,7 @@ type Mutation {
   upsertTestSessionJobLog(where: TestSessionJobLogWhereUniqueInput!, create: TestSessionJobLogCreateInput!, update: TestSessionJobLogUpdateInput!): TestSessionJobLog!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertApiKey(where: ApiKeyWhereUniqueInput!, create: ApiKeyCreateInput!, update: ApiKeyUpdateInput!): ApiKey!
+  upsertSystemSettings(where: SystemSettingsWhereUniqueInput!, create: SystemSettingsCreateInput!, update: SystemSettingsUpdateInput!): SystemSettings!
   upsertTestSetRepository(where: TestSetRepositoryWhereUniqueInput!, create: TestSetRepositoryCreateInput!, update: TestSetRepositoryUpdateInput!): TestSetRepository!
   upsertDeviceDescriptor(where: DeviceDescriptorWhereUniqueInput!, create: DeviceDescriptorCreateInput!, update: DeviceDescriptorUpdateInput!): DeviceDescriptor!
   upsertTestProject(where: TestProjectWhereUniqueInput!, create: TestProjectCreateInput!, update: TestProjectUpdateInput!): TestProject!
@@ -3405,6 +3413,7 @@ type Mutation {
   updateManyTestSessionJobLogs(data: TestSessionJobLogUpdateManyMutationInput!, where: TestSessionJobLogWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyApiKeys(data: ApiKeyUpdateManyMutationInput!, where: ApiKeyWhereInput): BatchPayload!
+  updateManySystemSettingses(data: SystemSettingsUpdateManyMutationInput!, where: SystemSettingsWhereInput): BatchPayload!
   updateManyTestSetRepositories(data: TestSetRepositoryUpdateManyMutationInput!, where: TestSetRepositoryWhereInput): BatchPayload!
   updateManyDeviceDescriptors(data: DeviceDescriptorUpdateManyMutationInput!, where: DeviceDescriptorWhereInput): BatchPayload!
   updateManyTestProjects(data: TestProjectUpdateManyMutationInput!, where: TestProjectWhereInput): BatchPayload!
@@ -3424,6 +3433,7 @@ type Mutation {
   deleteManyTestSessionJobLogs(where: TestSessionJobLogWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyApiKeys(where: ApiKeyWhereInput): BatchPayload!
+  deleteManySystemSettingses(where: SystemSettingsWhereInput): BatchPayload!
   deleteManyTestSetRepositories(where: TestSetRepositoryWhereInput): BatchPayload!
   deleteManyDeviceDescriptors(where: DeviceDescriptorWhereInput): BatchPayload!
   deleteManyTestProjects(where: TestProjectWhereInput): BatchPayload!
@@ -3473,6 +3483,7 @@ type Query {
   testSessionJobLogs(where: TestSessionJobLogWhereInput, orderBy: TestSessionJobLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionJobLog]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   apiKeys(where: ApiKeyWhereInput, orderBy: ApiKeyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ApiKey]!
+  systemSettingses(where: SystemSettingsWhereInput, orderBy: SystemSettingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SystemSettings]!
   testSetRepositories(where: TestSetRepositoryWhereInput, orderBy: TestSetRepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetRepository]!
   deviceDescriptors(where: DeviceDescriptorWhereInput, orderBy: DeviceDescriptorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DeviceDescriptor]!
   testProjects(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestProject]!
@@ -3492,6 +3503,7 @@ type Query {
   testSessionJobLog(where: TestSessionJobLogWhereUniqueInput!): TestSessionJobLog
   user(where: UserWhereUniqueInput!): User
   apiKey(where: ApiKeyWhereUniqueInput!): ApiKey
+  systemSettings(where: SystemSettingsWhereUniqueInput!): SystemSettings
   testSetRepository(where: TestSetRepositoryWhereUniqueInput!): TestSetRepository
   deviceDescriptor(where: DeviceDescriptorWhereUniqueInput!): DeviceDescriptor
   testProject(where: TestProjectWhereUniqueInput!): TestProject
@@ -3511,6 +3523,7 @@ type Query {
   testSessionJobLogsConnection(where: TestSessionJobLogWhereInput, orderBy: TestSessionJobLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionJobLogConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   apiKeysConnection(where: ApiKeyWhereInput, orderBy: ApiKeyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApiKeyConnection!
+  systemSettingsesConnection(where: SystemSettingsWhereInput, orderBy: SystemSettingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SystemSettingsConnection!
   testSetRepositoriesConnection(where: TestSetRepositoryWhereInput, orderBy: TestSetRepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetRepositoryConnection!
   deviceDescriptorsConnection(where: DeviceDescriptorWhereInput, orderBy: DeviceDescriptorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeviceDescriptorConnection!
   testProjectsConnection(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestProjectConnection!
@@ -3539,6 +3552,7 @@ type Subscription {
   testSessionJobLog(where: TestSessionJobLogSubscriptionWhereInput): TestSessionJobLogSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   apiKey(where: ApiKeySubscriptionWhereInput): ApiKeySubscriptionPayload
+  systemSettings(where: SystemSettingsSubscriptionWhereInput): SystemSettingsSubscriptionPayload
   testSetRepository(where: TestSetRepositorySubscriptionWhereInput): TestSetRepositorySubscriptionPayload
   deviceDescriptor(where: DeviceDescriptorSubscriptionWhereInput): DeviceDescriptorSubscriptionPayload
   testProject(where: TestProjectSubscriptionWhereInput): TestProjectSubscriptionPayload
@@ -3552,6 +3566,351 @@ type Subscription {
   capability(where: CapabilitySubscriptionWhereInput): CapabilitySubscriptionPayload
   testSetExcel(where: TestSetExcelSubscriptionWhereInput): TestSetExcelSubscriptionPayload
   deviceProvider(where: DeviceProviderSubscriptionWhereInput): DeviceProviderSubscriptionPayload
+}
+
+type SystemSettings implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  cleanupJobIntervalMinutes: Int
+  keepTestCaseSuccessScreenshotsDays: Int
+  keepTestCaseSuccessConversationDays: Int
+  keepTestCaseFailedScreenshotsDays: Int
+  keepTestCaseFailedConversationDays: Int
+  availableConnectors: [String!]!
+}
+
+"""A connection to a list of items."""
+type SystemSettingsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SystemSettingsEdge]!
+  aggregate: AggregateSystemSettings!
+}
+
+input SystemSettingsCreateavailableConnectorsInput {
+  set: [String!]
+}
+
+input SystemSettingsCreateInput {
+  cleanupJobIntervalMinutes: Int
+  keepTestCaseSuccessScreenshotsDays: Int
+  keepTestCaseSuccessConversationDays: Int
+  keepTestCaseFailedScreenshotsDays: Int
+  keepTestCaseFailedConversationDays: Int
+  availableConnectors: SystemSettingsCreateavailableConnectorsInput
+}
+
+"""An edge in a connection."""
+type SystemSettingsEdge {
+  """The item at the end of the edge."""
+  node: SystemSettings!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SystemSettingsOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  cleanupJobIntervalMinutes_ASC
+  cleanupJobIntervalMinutes_DESC
+  keepTestCaseSuccessScreenshotsDays_ASC
+  keepTestCaseSuccessScreenshotsDays_DESC
+  keepTestCaseSuccessConversationDays_ASC
+  keepTestCaseSuccessConversationDays_DESC
+  keepTestCaseFailedScreenshotsDays_ASC
+  keepTestCaseFailedScreenshotsDays_DESC
+  keepTestCaseFailedConversationDays_ASC
+  keepTestCaseFailedConversationDays_DESC
+}
+
+type SystemSettingsPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  cleanupJobIntervalMinutes: Int
+  keepTestCaseSuccessScreenshotsDays: Int
+  keepTestCaseSuccessConversationDays: Int
+  keepTestCaseFailedScreenshotsDays: Int
+  keepTestCaseFailedConversationDays: Int
+  availableConnectors: [String!]!
+}
+
+type SystemSettingsSubscriptionPayload {
+  mutation: MutationType!
+  node: SystemSettings
+  updatedFields: [String!]
+  previousValues: SystemSettingsPreviousValues
+}
+
+input SystemSettingsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SystemSettingsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SystemSettingsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SystemSettingsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SystemSettingsWhereInput
+}
+
+input SystemSettingsUpdateavailableConnectorsInput {
+  set: [String!]
+}
+
+input SystemSettingsUpdateInput {
+  cleanupJobIntervalMinutes: Int
+  keepTestCaseSuccessScreenshotsDays: Int
+  keepTestCaseSuccessConversationDays: Int
+  keepTestCaseFailedScreenshotsDays: Int
+  keepTestCaseFailedConversationDays: Int
+  availableConnectors: SystemSettingsUpdateavailableConnectorsInput
+}
+
+input SystemSettingsUpdateManyMutationInput {
+  cleanupJobIntervalMinutes: Int
+  keepTestCaseSuccessScreenshotsDays: Int
+  keepTestCaseSuccessConversationDays: Int
+  keepTestCaseFailedScreenshotsDays: Int
+  keepTestCaseFailedConversationDays: Int
+  availableConnectors: SystemSettingsUpdateavailableConnectorsInput
+}
+
+input SystemSettingsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SystemSettingsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SystemSettingsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SystemSettingsWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  cleanupJobIntervalMinutes: Int
+
+  """All values that are not equal to given value."""
+  cleanupJobIntervalMinutes_not: Int
+
+  """All values that are contained in given list."""
+  cleanupJobIntervalMinutes_in: [Int!]
+
+  """All values that are not contained in given list."""
+  cleanupJobIntervalMinutes_not_in: [Int!]
+
+  """All values less than the given value."""
+  cleanupJobIntervalMinutes_lt: Int
+
+  """All values less than or equal the given value."""
+  cleanupJobIntervalMinutes_lte: Int
+
+  """All values greater than the given value."""
+  cleanupJobIntervalMinutes_gt: Int
+
+  """All values greater than or equal the given value."""
+  cleanupJobIntervalMinutes_gte: Int
+  keepTestCaseSuccessScreenshotsDays: Int
+
+  """All values that are not equal to given value."""
+  keepTestCaseSuccessScreenshotsDays_not: Int
+
+  """All values that are contained in given list."""
+  keepTestCaseSuccessScreenshotsDays_in: [Int!]
+
+  """All values that are not contained in given list."""
+  keepTestCaseSuccessScreenshotsDays_not_in: [Int!]
+
+  """All values less than the given value."""
+  keepTestCaseSuccessScreenshotsDays_lt: Int
+
+  """All values less than or equal the given value."""
+  keepTestCaseSuccessScreenshotsDays_lte: Int
+
+  """All values greater than the given value."""
+  keepTestCaseSuccessScreenshotsDays_gt: Int
+
+  """All values greater than or equal the given value."""
+  keepTestCaseSuccessScreenshotsDays_gte: Int
+  keepTestCaseSuccessConversationDays: Int
+
+  """All values that are not equal to given value."""
+  keepTestCaseSuccessConversationDays_not: Int
+
+  """All values that are contained in given list."""
+  keepTestCaseSuccessConversationDays_in: [Int!]
+
+  """All values that are not contained in given list."""
+  keepTestCaseSuccessConversationDays_not_in: [Int!]
+
+  """All values less than the given value."""
+  keepTestCaseSuccessConversationDays_lt: Int
+
+  """All values less than or equal the given value."""
+  keepTestCaseSuccessConversationDays_lte: Int
+
+  """All values greater than the given value."""
+  keepTestCaseSuccessConversationDays_gt: Int
+
+  """All values greater than or equal the given value."""
+  keepTestCaseSuccessConversationDays_gte: Int
+  keepTestCaseFailedScreenshotsDays: Int
+
+  """All values that are not equal to given value."""
+  keepTestCaseFailedScreenshotsDays_not: Int
+
+  """All values that are contained in given list."""
+  keepTestCaseFailedScreenshotsDays_in: [Int!]
+
+  """All values that are not contained in given list."""
+  keepTestCaseFailedScreenshotsDays_not_in: [Int!]
+
+  """All values less than the given value."""
+  keepTestCaseFailedScreenshotsDays_lt: Int
+
+  """All values less than or equal the given value."""
+  keepTestCaseFailedScreenshotsDays_lte: Int
+
+  """All values greater than the given value."""
+  keepTestCaseFailedScreenshotsDays_gt: Int
+
+  """All values greater than or equal the given value."""
+  keepTestCaseFailedScreenshotsDays_gte: Int
+  keepTestCaseFailedConversationDays: Int
+
+  """All values that are not equal to given value."""
+  keepTestCaseFailedConversationDays_not: Int
+
+  """All values that are contained in given list."""
+  keepTestCaseFailedConversationDays_in: [Int!]
+
+  """All values that are not contained in given list."""
+  keepTestCaseFailedConversationDays_not_in: [Int!]
+
+  """All values less than the given value."""
+  keepTestCaseFailedConversationDays_lt: Int
+
+  """All values less than or equal the given value."""
+  keepTestCaseFailedConversationDays_lte: Int
+
+  """All values greater than the given value."""
+  keepTestCaseFailedConversationDays_gt: Int
+
+  """All values greater than or equal the given value."""
+  keepTestCaseFailedConversationDays_gte: Int
+}
+
+input SystemSettingsWhereUniqueInput {
+  id: ID
 }
 
 type TestProject implements Node {

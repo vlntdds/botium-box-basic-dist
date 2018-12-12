@@ -290,14 +290,28 @@ const testsetData = [
   }
 ]
 
+const settingsData = [
+  {
+    cleanupJobIntervalMinutes: 30,
+    keepTestCaseSuccessScreenshotsDays: 10,
+    keepTestCaseSuccessConversationDays: 10,
+    keepTestCaseFailedScreenshotsDays: 60,
+    keepTestCaseFailedConversationDays: 60
+  }
+]
+
 async function createRecords(entityName, entities, queryFn, keyField, createFn) {
   let createdCount = 0;
   for (const entityData of entities) {
-    const existingEntity = await queryFn({ where: { [keyField]: entityData[keyField]   } });
+    const query = { }
+    if (keyField) {
+      query.where = { [keyField]: entityData[keyField] }
+    }
+    const existingEntity = await queryFn(query);
     if (existingEntity && existingEntity.length > 0) {
-      console.log(entityName + ' ' + entityData[keyField] + ' already existing, skipping.');
+      console.log(entityName + ' ' + (keyField && entityData[keyField]) + ' already existing, skipping.');
     } else {
-      console.log('creating ' + entityName + ' ' + entityData[keyField]);
+      console.log('creating ' + entityName + ' ' + (keyField && entityData[keyField]));
       try {
         await createFn({ data: entityData });
         createdCount++;
@@ -317,4 +331,5 @@ async function createRecords(entityName, entities, queryFn, keyField, createFn) 
     await createRecords('deviceset', deviceSetsData, db.query.deviceSets, 'name', db.mutation.createDeviceSet);
     await createRecords('chatbot', chatbotsData, db.query.chatbots, 'name', db.mutation.createChatbot);
     await createRecords('testset', testsetData, db.query.testSets, 'name', db.mutation.createTestSet);
+    await createRecords('settings', settingsData, db.query.systemSettingses, null, db.mutation.createSystemSettings);
 })();

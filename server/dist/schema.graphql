@@ -24,6 +24,7 @@
 # import UserRole, UserCreateInput, UserUpdateInput, UserWhereInput, UserOrderByInput from "./generated/prisma.graphql"
 # import ApiKey, ApiKeyCreateInput, ApiKeyUpdateInput, ApiKeyWhereInput, ApiKeyOrderByInput from "./generated/prisma.graphql"
 # import DeviceProvider, DeviceProviderCreateInput, DeviceProviderUpdateInput, DeviceProviderWhereInput, DeviceProviderOrderByInput from "./generated/prisma.graphql"
+# import SystemSettings, SystemSettingsCreateInput, SystemSettingsUpdateInput from "./generated/prisma.graphql"
 
 directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION | MUTATION
 directive @hasRole(roles: [String]) on QUERY | FIELD | FIELD_DEFINITION | MUTATION
@@ -65,6 +66,8 @@ type Query {
   apikey(id: ID!): ApiKey @isAuthenticated
   deviceproviders(where: DeviceProviderWhereInput, orderBy: DeviceProviderOrderByInput, skip: Int, first: Int): [DeviceProvider!]! @isAuthenticated
   deviceprovider(id: ID!): DeviceProvider @isAuthenticated
+  systemsettings: SystemSettings @isAuthenticated
+  availableconnectors: [DropDownValue!]! @isAuthenticated
 
   chartTestSetResultCount(testProjectId: ID): [ChartTestSetResultCount!]! @isAuthenticated
   chartFailedCountByChatbotByDay(timeFrame: ChartTimeFrame): [CountByDaySeries!]! @isAuthenticated
@@ -122,6 +125,8 @@ type Mutation {
   createDeviceProvider(deviceProvider: DeviceProviderCreateInput!): DeviceProvider! @hasRole(roles: ["ADMIN"])
   updateDeviceProvider(id: ID!, deviceProvider: DeviceProviderUpdateInput!): DeviceProvider! @hasRole(roles: ["ADMIN"])
   deleteDeviceProvider(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+
+  updateSystemSettings(systemSettings: SystemSettingsUpdateInput!): SystemSettings! @hasRole(roles: ["ADMIN"])
 
   liveChatStartBot(id: ID!): String! @isAuthenticated
   liveChatSendToBot(conversationId: String!, convoStep: String!): Boolean! @isAuthenticated

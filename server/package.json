@@ -14,7 +14,7 @@
     "build:premium-dist": "cross-env BUILDTARGET=premium rollup -c && javascript-obfuscator dist/botium-box-server.js --output dist/botium-box-server.js --compact true --self-defending true",
     "run:dist": "node dist/botium-box-server.js",
     "publish:free-dist": "npm run build:free-dist && mkdir -p ~/botium-box-basic-dist/server/dist/generated && cp -Rf dist database package.json .graphqlconfig.yml ~/botium-box-basic-dist/server && cp src/generated/prisma.graphql ~/botium-box-basic-dist/server/dist/generated && cp src/schema.graphql ~/botium-box-basic-dist/server/dist && cp .env.botium-box-basic-dist ~/botium-box-basic-dist/server/.env",
-    "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/server/dist/generated && cp -Rf dist database package.json .graphqlconfig.yml ~/botium-box-dist/premium/server && cp src/generated/prisma.graphql ~/botium-box-dist/premium/server/dist/generated && cp src/schema.graphql ~/botium-box-dist/premium/server/dist && cp .env.production ~/botium-box-dist/premium/server/.env"
+    "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/server/dist/generated && cp -Rf dist database package.json .graphqlconfig.yml ~/botium-box-dist/premium/server && cp src/generated/prisma.graphql ~/botium-box-dist/premium/server/dist/generated && cp src/schema.graphql ~/botium-box-dist/premium/server/dist && cp .env.botium-box-premium-dist ~/botium-box-dist/premium/server/.env"
   },
   "dependencies": {
     "async": "^2.6.1",

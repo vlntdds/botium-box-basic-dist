@@ -280,3 +280,14 @@ type ApiKey {
   validFrom: DateTime
   validTo: DateTime
 }
+
+type SystemSettings {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  cleanupJobIntervalMinutes: Int
+  keepTestCaseSuccessScreenshotsDays: Int
+  keepTestCaseSuccessConversationDays: Int
+  keepTestCaseFailedScreenshotsDays: Int
+  keepTestCaseFailedConversationDays: Int
+}
