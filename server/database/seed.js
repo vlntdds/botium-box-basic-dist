@@ -26,6 +26,14 @@ const usersData = [
     roles: {
       set: ["USER"]
     }
+  },
+  {
+    email: "tester@tester.com",
+    password: "$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm", // plaintext password: "nooneknows"
+    name: "tester",
+    roles: {
+      set: ["TESTER"]
+    }
   }
 ]
 

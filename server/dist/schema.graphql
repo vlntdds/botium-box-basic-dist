@@ -81,41 +81,41 @@ type Query {
 type Mutation {
   login(name: String, email: String, password: String!): AuthPayload!
 
-  createTestProject(testProject: TestProjectCreateInput!): TestProject! @isAuthenticated
-  quickstartTestProject(testProject: TestProjectCreateInput!): ID! @isAuthenticated
-  startTestProject(id: ID!): ID! @isAuthenticated
-  updateTestProject(id: ID!, testProject: TestProjectUpdateInput!): TestProject! @isAuthenticated
+  createTestProject(testProject: TestProjectCreateInput!): TestProject! @hasRole(roles: ["ADMIN","USER"])
+  quickstartTestProject(testProject: TestProjectCreateInput!): ID! @hasRole(roles: ["ADMIN","USER"])
+  startTestProject(id: ID!): ID! @hasRole(roles: ["ADMIN","USER","TESTER"])
+  updateTestProject(id: ID!, testProject: TestProjectUpdateInput!): TestProject! @hasRole(roles: ["ADMIN","USER"])
   deleteTestProject(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
-  createAgent(agent: AgentCreateInput!): Agent! @isAuthenticated
-  updateAgent(id: ID!, agent: AgentUpdateInput!): Agent! @isAuthenticated
+  createAgent(agent: AgentCreateInput!): Agent! @hasRole(roles: ["ADMIN","USER"])
+  updateAgent(id: ID!, agent: AgentUpdateInput!): Agent! @hasRole(roles: ["ADMIN","USER"])
   deleteAgent(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
-  createChatbot(chatbot: ChatbotCreateInput!): Chatbot! @isAuthenticated
-  updateChatbot(id: ID!, chatbot: ChatbotUpdateInput!): Chatbot! @isAuthenticated
+  createChatbot(chatbot: ChatbotCreateInput!): Chatbot! @hasRole(roles: ["ADMIN","USER"])
+  updateChatbot(id: ID!, chatbot: ChatbotUpdateInput!): Chatbot! @hasRole(roles: ["ADMIN","USER"])
   deleteChatbot(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
-  createTestSession(testSession: TestSessionCreateInput!): TestSession! @isAuthenticated
+  createTestSession(testSession: TestSessionCreateInput!): TestSession! @hasRole(roles: ["ADMIN","USER","TESTER"])
   deleteTestSession(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
-  createTestSet(testSet: TestSetCreateInput!): TestSet! @isAuthenticated
-  updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @isAuthenticated
+  createTestSet(testSet: TestSetCreateInput!): TestSet! @hasRole(roles: ["ADMIN","USER"])
+  updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @hasRole(roles: ["ADMIN","USER"])
   deleteTestSet(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
-  cloneTestSet(id: ID!, options: CloneTestSetOptionsChoosen!): TestSet! @isAuthenticated
-  createTestSetScript(testSetScript: TestSetScriptCreateInput!): TestSetScript! @isAuthenticated
-  updateTestSetScript(id: ID!, testSetScript: TestSetScriptUpdateInput!): TestSetScript! @isAuthenticated
-  deleteTestSetScript(id: ID!): Boolean! @isAuthenticated
-  createTestSetRepository(testSetRepository: TestSetRepositoryCreateInput!): TestSetRepository! @isAuthenticated
-  updateTestSetRepository(id: ID!, testSetRepository: TestSetRepositoryUpdateInput!): TestSetRepository! @isAuthenticated
-  deleteTestSetRepository(id: ID!): Boolean! @isAuthenticated
-  createTestSetFolder(testSetFolder: TestSetFolderCreateInput!): TestSetFolder! @isAuthenticated
-  updateTestSetFolder(id: ID!, testSetFolder: TestSetFolderUpdateInput!): TestSetFolder! @isAuthenticated
-  deleteTestSetFolder(id: ID!): Boolean! @isAuthenticated
-  createTestSetExcel(testSetExcel: TestSetExcelCreateInput!): TestSetExcel! @isAuthenticated
-  updateTestSetExcel(id: ID!, testSetExcel: TestSetExcelUpdateInput!): TestSetExcel! @isAuthenticated
-  deleteTestSetExcel(id: ID!): Boolean! @isAuthenticated
-  createDeviceSet(deviceSet: DeviceSetCreateInput!): DeviceSet! @isAuthenticated
-  updateDeviceSet(id: ID!, deviceSet: DeviceSetUpdateInput!): DeviceSet! @isAuthenticated
+  cloneTestSet(id: ID!, options: CloneTestSetOptionsChoosen!): TestSet! @hasRole(roles: ["ADMIN","USER"])
+  createTestSetScript(testSetScript: TestSetScriptCreateInput!): TestSetScript! @hasRole(roles: ["ADMIN","USER"])
+  updateTestSetScript(id: ID!, testSetScript: TestSetScriptUpdateInput!): TestSetScript! @hasRole(roles: ["ADMIN","USER"])
+  deleteTestSetScript(id: ID!): Boolean! @hasRole(roles: ["ADMIN","USER"])
+  createTestSetRepository(testSetRepository: TestSetRepositoryCreateInput!): TestSetRepository! @hasRole(roles: ["ADMIN","USER"])
+  updateTestSetRepository(id: ID!, testSetRepository: TestSetRepositoryUpdateInput!): TestSetRepository! @hasRole(roles: ["ADMIN","USER"])
+  deleteTestSetRepository(id: ID!): Boolean! @hasRole(roles: ["ADMIN","USER"])
+  createTestSetFolder(testSetFolder: TestSetFolderCreateInput!): TestSetFolder! @hasRole(roles: ["ADMIN","USER"])
+  updateTestSetFolder(id: ID!, testSetFolder: TestSetFolderUpdateInput!): TestSetFolder! @hasRole(roles: ["ADMIN","USER"])
+  deleteTestSetFolder(id: ID!): Boolean! @hasRole(roles: ["ADMIN","USER"])
+  createTestSetExcel(testSetExcel: TestSetExcelCreateInput!): TestSetExcel! @hasRole(roles: ["ADMIN","USER"])
+  updateTestSetExcel(id: ID!, testSetExcel: TestSetExcelUpdateInput!): TestSetExcel! @hasRole(roles: ["ADMIN","USER"])
+  deleteTestSetExcel(id: ID!): Boolean! @hasRole(roles: ["ADMIN","USER"])
+  createDeviceSet(deviceSet: DeviceSetCreateInput!): DeviceSet! @hasRole(roles: ["ADMIN","USER"])
+  updateDeviceSet(id: ID!, deviceSet: DeviceSetUpdateInput!): DeviceSet! @hasRole(roles: ["ADMIN","USER"])
   deleteDeviceSet(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
 
   createUser(user: UserCreateInput!): User! @hasRole(roles: ["ADMIN"])
-  updateUser(id: ID!, user: UserUpdateInput!): User! @isAuthenticated
+  updateUser(id: ID!, user: UserUpdateInput!): User! @hasRole(roles: ["ADMIN","USER"])
   deleteUser(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
 
   createApiKey(apiKey: ApiKeyCreateInput!): ApiKey! @hasRole(roles: ["ADMIN"])
@@ -128,10 +128,10 @@ type Mutation {
 
   updateSystemSettings(systemSettings: SystemSettingsUpdateInput!): SystemSettings! @hasRole(roles: ["ADMIN"])
 
-  liveChatStartBot(id: ID!): String! @isAuthenticated
-  liveChatSendToBot(conversationId: String!, convoStep: String!): Boolean! @isAuthenticated
-  liveChatStopBot(conversationId: String!): Boolean! @isAuthenticated
-  liveChatSaveConvoSteps(conversationId: String!, testSetId: ID, newTestSetName: String, testCaseName: String!): ID! @isAuthenticated
+  liveChatStartBot(id: ID!): String! @hasRole(roles: ["ADMIN","USER","TESTER"])
+  liveChatSendToBot(conversationId: String!, convoStep: String!): Boolean! @hasRole(roles: ["ADMIN","USER","TESTER"])
+  liveChatStopBot(conversationId: String!): Boolean! @hasRole(roles: ["ADMIN","USER","TESTER"])
+  liveChatSaveConvoSteps(conversationId: String!, testSetId: ID, newTestSetName: String, testCaseName: String!): ID! @hasRole(roles: ["ADMIN","USER"])
 }
 
 type Subscription {

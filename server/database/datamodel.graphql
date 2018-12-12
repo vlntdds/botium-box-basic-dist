@@ -259,6 +259,7 @@ enum DeviceType {
 enum UserRole {
   ADMIN
   USER
+  TESTER
 }
 
 type User {

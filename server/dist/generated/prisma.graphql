@@ -1,5 +1,5 @@
 # source: http://127.0.0.1:4466/box/dev
-# timestamp: Tue Dec 11 2018 12:02:03 GMT+0000 (UTC)
+# timestamp: Wed Dec 12 2018 20:38:35 GMT+0000 (UTC)
 
 type Agent implements Node {
   id: ID!
@@ -3577,7 +3577,6 @@ type SystemSettings implements Node {
   keepTestCaseSuccessConversationDays: Int
   keepTestCaseFailedScreenshotsDays: Int
   keepTestCaseFailedConversationDays: Int
-  availableConnectors: [String!]!
 }
 
 """A connection to a list of items."""
@@ -3590,17 +3589,12 @@ type SystemSettingsConnection {
   aggregate: AggregateSystemSettings!
 }
 
-input SystemSettingsCreateavailableConnectorsInput {
-  set: [String!]
-}
-
 input SystemSettingsCreateInput {
   cleanupJobIntervalMinutes: Int
   keepTestCaseSuccessScreenshotsDays: Int
   keepTestCaseSuccessConversationDays: Int
   keepTestCaseFailedScreenshotsDays: Int
   keepTestCaseFailedConversationDays: Int
-  availableConnectors: SystemSettingsCreateavailableConnectorsInput
 }
 
 """An edge in a connection."""
@@ -3640,7 +3634,6 @@ type SystemSettingsPreviousValues {
   keepTestCaseSuccessConversationDays: Int
   keepTestCaseFailedScreenshotsDays: Int
   keepTestCaseFailedConversationDays: Int
-  availableConnectors: [String!]!
 }
 
 type SystemSettingsSubscriptionPayload {
@@ -3682,17 +3675,12 @@ input SystemSettingsSubscriptionWhereInput {
   node: SystemSettingsWhereInput
 }
 
-input SystemSettingsUpdateavailableConnectorsInput {
-  set: [String!]
-}
-
 input SystemSettingsUpdateInput {
   cleanupJobIntervalMinutes: Int
   keepTestCaseSuccessScreenshotsDays: Int
   keepTestCaseSuccessConversationDays: Int
   keepTestCaseFailedScreenshotsDays: Int
   keepTestCaseFailedConversationDays: Int
-  availableConnectors: SystemSettingsUpdateavailableConnectorsInput
 }
 
 input SystemSettingsUpdateManyMutationInput {
@@ -3701,7 +3689,6 @@ input SystemSettingsUpdateManyMutationInput {
   keepTestCaseSuccessConversationDays: Int
   keepTestCaseFailedScreenshotsDays: Int
   keepTestCaseFailedConversationDays: Int
-  availableConnectors: SystemSettingsUpdateavailableConnectorsInput
 }
 
 input SystemSettingsWhereInput {
@@ -11448,6 +11435,7 @@ type UserPreviousValues {
 enum UserRole {
   ADMIN
   USER
+  TESTER
 }
 
 type UserSubscriptionPayload {
