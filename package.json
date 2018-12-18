@@ -2,14 +2,16 @@
   "name": "botium-box-basic-dist",
   "scripts": {
     "start:agent": "cd agent && npm run run:dist",
-    "start:server": "cd server && npm run run:dist",
+    "start:server": "cd server && npm run prisma-deploy && npm run prisma-seed && npm run run:dist",
     "start": "npm-run-all -p start:agent start:server",
     "prepare:agent": "cd agent && npm install --production",
-    "prepare:server": "cd server && npm install --production && npm run prisma-deploy && npm run prisma-seed",
-    "prepare": "npm-run-all prepare:agent prepare:server",
-    "postinstall": "npm run prepare"
+    "prepare:server": "cd server && npm install --production",
+    "postinstall": "npm-run-all prepare:agent prepare:server",
+    "start-standalone:backend": "cd server/database && cross-env docker-compose up",
+    "start-standalone:frontend": "./wait-for-it.sh -s 127.0.0.1:4466 -- cross-env DEBUG=botium* PRISMA_ENDPOINT=http://127.0.0.1:4466/box/standalone PRISMA_SECRET=mysecret123 JWT_SECRET=jwtsecret123 npm start"
   },
   "dependencies": {
-    "npm-run-all": "^4.1.3"
+    "npm-run-all": "^4.1.3",
+    "cross-env": "^5.2.0"
   }
 }

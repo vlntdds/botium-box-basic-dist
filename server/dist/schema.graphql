@@ -13,6 +13,7 @@
 # import TestSession, TestSessionCreateInput, TestSessionWhereInput, TestSessionOrderByInput from "./generated/prisma.graphql"
 # import TestSessionTestCaseResult, TestSessionTestCaseResultWhereInput, TestSessionTestCaseResultOrderByInput from "./generated/prisma.graphql"
 # import TestSessionSubscriptionPayload from "./generated/prisma.graphql"
+# import TestSessionJob from "./generated/prisma.graphql"
 
 # import TestSet, TestSetCreateInput, TestSetUpdateInput from "./generated/prisma.graphql"
 # import TestSetScript, TestSetScriptCreateInput, TestSetScriptUpdateInput from "./generated/prisma.graphql"
@@ -44,6 +45,7 @@ type Query {
   testsession(id: ID!): TestSession @isAuthenticated
   testsessiontestcaseresults(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, first: Int): [TestSessionTestCaseResult!]! @isAuthenticated
   testsessiontestcaseresult(id: ID!): TestSessionTestCaseResult @isAuthenticated
+  testsessionjob(id: ID!): TestSessionJob @isAuthenticated
   testsets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, first: Int): [TestSet!]! @isAuthenticated
   testset(id: ID!): TestSet @isAuthenticated
   testsetscript(id: ID!): TestSetScript @isAuthenticated
@@ -82,7 +84,7 @@ type Mutation {
   login(name: String, email: String, password: String!): AuthPayload!
 
   createTestProject(testProject: TestProjectCreateInput!): TestProject! @hasRole(roles: ["ADMIN","USER"])
-  quickstartTestProject(testProject: TestProjectCreateInput!): ID! @hasRole(roles: ["ADMIN","USER"])
+  quickstartTestProject(testProject: TestProjectCreateInput!, startProject: Boolean!): ID! @hasRole(roles: ["ADMIN","USER"])
   startTestProject(id: ID!): ID! @hasRole(roles: ["ADMIN","USER","TESTER"])
   updateTestProject(id: ID!, testProject: TestProjectUpdateInput!): TestProject! @hasRole(roles: ["ADMIN","USER"])
   deleteTestProject(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])

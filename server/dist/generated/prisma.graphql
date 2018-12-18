@@ -1,5 +1,5 @@
 # source: http://127.0.0.1:4466/box/dev
-# timestamp: Wed Dec 12 2018 20:38:35 GMT+0000 (UTC)
+# timestamp: Fri Dec 14 2018 21:49:08 GMT+0000 (UTC)
 
 type Agent implements Node {
   id: ID!
@@ -2460,6 +2460,7 @@ input DeviceProviderSubscriptionWhereInput {
 
 enum DeviceProviderType {
   SAUCELABS
+  TESTOBJECTS
   LOCALSELENIUM
   INTEGRATED
 }
