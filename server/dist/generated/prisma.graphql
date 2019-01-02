@@ -1,5 +1,5 @@
-# source: http://127.0.0.1:4466/box/dev
-# timestamp: Fri Dec 14 2018 21:49:08 GMT+0000 (UTC)
+# source: http://192.168.99.100:4466/box/dev
+# timestamp: Fri Dec 28 2018 20:01:26 GMT+0100 (W. Europe Standard Time)
 
 type Agent implements Node {
   id: ID!
@@ -411,6 +411,10 @@ type AggregateTestSessionTestCaseResult {
 }
 
 type AggregateTestSessionTestCaseResultAttachment {
+  count: Int!
+}
+
+type AggregateTestSessionTestCaseResultTranscript {
   count: Int!
 }
 
@@ -3342,6 +3346,7 @@ type Mutation {
   createTestSetFolder(data: TestSetFolderCreateInput!): TestSetFolder!
   createTestSetScript(data: TestSetScriptCreateInput!): TestSetScript!
   createTestSessionTestCaseResultAttachment(data: TestSessionTestCaseResultAttachmentCreateInput!): TestSessionTestCaseResultAttachment!
+  createTestSessionTestCaseResultTranscript(data: TestSessionTestCaseResultTranscriptCreateInput!): TestSessionTestCaseResultTranscript!
   createChatbot(data: ChatbotCreateInput!): Chatbot!
   createTestSet(data: TestSetCreateInput!): TestSet!
   createDeviceSet(data: DeviceSetCreateInput!): DeviceSet!
@@ -3362,6 +3367,7 @@ type Mutation {
   updateTestSetFolder(data: TestSetFolderUpdateInput!, where: TestSetFolderWhereUniqueInput!): TestSetFolder
   updateTestSetScript(data: TestSetScriptUpdateInput!, where: TestSetScriptWhereUniqueInput!): TestSetScript
   updateTestSessionTestCaseResultAttachment(data: TestSessionTestCaseResultAttachmentUpdateInput!, where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
+  updateTestSessionTestCaseResultTranscript(data: TestSessionTestCaseResultTranscriptUpdateInput!, where: TestSessionTestCaseResultTranscriptWhereUniqueInput!): TestSessionTestCaseResultTranscript
   updateChatbot(data: ChatbotUpdateInput!, where: ChatbotWhereUniqueInput!): Chatbot
   updateTestSet(data: TestSetUpdateInput!, where: TestSetWhereUniqueInput!): TestSet
   updateDeviceSet(data: DeviceSetUpdateInput!, where: DeviceSetWhereUniqueInput!): DeviceSet
@@ -3382,6 +3388,7 @@ type Mutation {
   deleteTestSetFolder(where: TestSetFolderWhereUniqueInput!): TestSetFolder
   deleteTestSetScript(where: TestSetScriptWhereUniqueInput!): TestSetScript
   deleteTestSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
+  deleteTestSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptWhereUniqueInput!): TestSessionTestCaseResultTranscript
   deleteChatbot(where: ChatbotWhereUniqueInput!): Chatbot
   deleteTestSet(where: TestSetWhereUniqueInput!): TestSet
   deleteDeviceSet(where: DeviceSetWhereUniqueInput!): DeviceSet
@@ -3402,6 +3409,7 @@ type Mutation {
   upsertTestSetFolder(where: TestSetFolderWhereUniqueInput!, create: TestSetFolderCreateInput!, update: TestSetFolderUpdateInput!): TestSetFolder!
   upsertTestSetScript(where: TestSetScriptWhereUniqueInput!, create: TestSetScriptCreateInput!, update: TestSetScriptUpdateInput!): TestSetScript!
   upsertTestSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!, create: TestSessionTestCaseResultAttachmentCreateInput!, update: TestSessionTestCaseResultAttachmentUpdateInput!): TestSessionTestCaseResultAttachment!
+  upsertTestSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptWhereUniqueInput!, create: TestSessionTestCaseResultTranscriptCreateInput!, update: TestSessionTestCaseResultTranscriptUpdateInput!): TestSessionTestCaseResultTranscript!
   upsertChatbot(where: ChatbotWhereUniqueInput!, create: ChatbotCreateInput!, update: ChatbotUpdateInput!): Chatbot!
   upsertTestSet(where: TestSetWhereUniqueInput!, create: TestSetCreateInput!, update: TestSetUpdateInput!): TestSet!
   upsertDeviceSet(where: DeviceSetWhereUniqueInput!, create: DeviceSetCreateInput!, update: DeviceSetUpdateInput!): DeviceSet!
@@ -3422,6 +3430,7 @@ type Mutation {
   updateManyTestSetFolders(data: TestSetFolderUpdateManyMutationInput!, where: TestSetFolderWhereInput): BatchPayload!
   updateManyTestSetScripts(data: TestSetScriptUpdateManyMutationInput!, where: TestSetScriptWhereInput): BatchPayload!
   updateManyTestSessionTestCaseResultAttachments(data: TestSessionTestCaseResultAttachmentUpdateManyMutationInput!, where: TestSessionTestCaseResultAttachmentWhereInput): BatchPayload!
+  updateManyTestSessionTestCaseResultTranscripts(data: TestSessionTestCaseResultTranscriptUpdateManyMutationInput!, where: TestSessionTestCaseResultTranscriptWhereInput): BatchPayload!
   updateManyChatbots(data: ChatbotUpdateManyMutationInput!, where: ChatbotWhereInput): BatchPayload!
   updateManyTestSets(data: TestSetUpdateManyMutationInput!, where: TestSetWhereInput): BatchPayload!
   updateManyDeviceSets(data: DeviceSetUpdateManyMutationInput!, where: DeviceSetWhereInput): BatchPayload!
@@ -3442,6 +3451,7 @@ type Mutation {
   deleteManyTestSetFolders(where: TestSetFolderWhereInput): BatchPayload!
   deleteManyTestSetScripts(where: TestSetScriptWhereInput): BatchPayload!
   deleteManyTestSessionTestCaseResultAttachments(where: TestSessionTestCaseResultAttachmentWhereInput): BatchPayload!
+  deleteManyTestSessionTestCaseResultTranscripts(where: TestSessionTestCaseResultTranscriptWhereInput): BatchPayload!
   deleteManyChatbots(where: ChatbotWhereInput): BatchPayload!
   deleteManyTestSets(where: TestSetWhereInput): BatchPayload!
   deleteManyDeviceSets(where: DeviceSetWhereInput): BatchPayload!
@@ -3492,6 +3502,7 @@ type Query {
   testSetFolders(where: TestSetFolderWhereInput, orderBy: TestSetFolderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetFolder]!
   testSetScripts(where: TestSetScriptWhereInput, orderBy: TestSetScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetScript]!
   testSessionTestCaseResultAttachments(where: TestSessionTestCaseResultAttachmentWhereInput, orderBy: TestSessionTestCaseResultAttachmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResultAttachment]!
+  testSessionTestCaseResultTranscripts(where: TestSessionTestCaseResultTranscriptWhereInput, orderBy: TestSessionTestCaseResultTranscriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResultTranscript]!
   chatbots(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chatbot]!
   testSets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSet]!
   deviceSets(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DeviceSet]!
@@ -3512,6 +3523,7 @@ type Query {
   testSetFolder(where: TestSetFolderWhereUniqueInput!): TestSetFolder
   testSetScript(where: TestSetScriptWhereUniqueInput!): TestSetScript
   testSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
+  testSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptWhereUniqueInput!): TestSessionTestCaseResultTranscript
   chatbot(where: ChatbotWhereUniqueInput!): Chatbot
   testSet(where: TestSetWhereUniqueInput!): TestSet
   deviceSet(where: DeviceSetWhereUniqueInput!): DeviceSet
@@ -3532,6 +3544,7 @@ type Query {
   testSetFoldersConnection(where: TestSetFolderWhereInput, orderBy: TestSetFolderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetFolderConnection!
   testSetScriptsConnection(where: TestSetScriptWhereInput, orderBy: TestSetScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetScriptConnection!
   testSessionTestCaseResultAttachmentsConnection(where: TestSessionTestCaseResultAttachmentWhereInput, orderBy: TestSessionTestCaseResultAttachmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionTestCaseResultAttachmentConnection!
+  testSessionTestCaseResultTranscriptsConnection(where: TestSessionTestCaseResultTranscriptWhereInput, orderBy: TestSessionTestCaseResultTranscriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionTestCaseResultTranscriptConnection!
   chatbotsConnection(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatbotConnection!
   testSetsConnection(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetConnection!
   deviceSetsConnection(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeviceSetConnection!
@@ -3561,6 +3574,7 @@ type Subscription {
   testSetFolder(where: TestSetFolderSubscriptionWhereInput): TestSetFolderSubscriptionPayload
   testSetScript(where: TestSetScriptSubscriptionWhereInput): TestSetScriptSubscriptionPayload
   testSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentSubscriptionWhereInput): TestSessionTestCaseResultAttachmentSubscriptionPayload
+  testSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptSubscriptionWhereInput): TestSessionTestCaseResultTranscriptSubscriptionPayload
   chatbot(where: ChatbotSubscriptionWhereInput): ChatbotSubscriptionPayload
   testSet(where: TestSetSubscriptionWhereInput): TestSetSubscriptionPayload
   deviceSet(where: DeviceSetSubscriptionWhereInput): DeviceSetSubscriptionPayload
@@ -5651,7 +5665,8 @@ type TestSessionTestCaseResult implements Node {
   testcaseSource: String!
   success: Boolean!
   err: String
-  messages: String
+  duration: Int
+  steps(where: TestSessionTestCaseResultTranscriptWhereInput, orderBy: TestSessionTestCaseResultTranscriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResultTranscript!]
   attachments(where: TestSessionTestCaseResultAttachmentWhereInput, orderBy: TestSessionTestCaseResultAttachmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResultAttachment!]
   testSet: TestSet
   testSetScript: TestSetScript
@@ -6265,10 +6280,11 @@ input TestSessionTestCaseResultCreateInput {
   testcaseSource: String!
   success: Boolean!
   err: String
-  messages: String
+  duration: Int
   testSetFilename: String
   deviceName: String
   testSession: TestSessionCreateOneWithoutResultsInput!
+  steps: TestSessionTestCaseResultTranscriptCreateManyInput
   attachments: TestSessionTestCaseResultAttachmentCreateManyInput
   testSet: TestSetCreateOneInput
   testSetScript: TestSetScriptCreateOneInput
@@ -6288,9 +6304,10 @@ input TestSessionTestCaseResultCreateWithoutTestSessionInput {
   testcaseSource: String!
   success: Boolean!
   err: String
-  messages: String
+  duration: Int
   testSetFilename: String
   deviceName: String
+  steps: TestSessionTestCaseResultTranscriptCreateManyInput
   attachments: TestSessionTestCaseResultAttachmentCreateManyInput
   testSet: TestSetCreateOneInput
   testSetScript: TestSetScriptCreateOneInput
@@ -6324,8 +6341,8 @@ enum TestSessionTestCaseResultOrderByInput {
   success_DESC
   err_ASC
   err_DESC
-  messages_ASC
-  messages_DESC
+  duration_ASC
+  duration_DESC
   testSetFilename_ASC
   testSetFilename_DESC
   deviceName_ASC
@@ -6340,7 +6357,7 @@ type TestSessionTestCaseResultPreviousValues {
   testcaseSource: String!
   success: Boolean!
   err: String
-  messages: String
+  duration: Int
   testSetFilename: String
   deviceName: String
 }
@@ -6562,46 +6579,28 @@ input TestSessionTestCaseResultScalarWhereInput {
 
   """All values not ending with the given string."""
   err_not_ends_with: String
-  messages: String
+  duration: Int
 
   """All values that are not equal to given value."""
-  messages_not: String
+  duration_not: Int
 
   """All values that are contained in given list."""
-  messages_in: [String!]
+  duration_in: [Int!]
 
   """All values that are not contained in given list."""
-  messages_not_in: [String!]
+  duration_not_in: [Int!]
 
   """All values less than the given value."""
-  messages_lt: String
+  duration_lt: Int
 
   """All values less than or equal the given value."""
-  messages_lte: String
+  duration_lte: Int
 
   """All values greater than the given value."""
-  messages_gt: String
+  duration_gt: Int
 
   """All values greater than or equal the given value."""
-  messages_gte: String
-
-  """All values containing the given string."""
-  messages_contains: String
-
-  """All values not containing the given string."""
-  messages_not_contains: String
-
-  """All values starting with the given string."""
-  messages_starts_with: String
-
-  """All values not starting with the given string."""
-  messages_not_starts_with: String
-
-  """All values ending with the given string."""
-  messages_ends_with: String
-
-  """All values not ending with the given string."""
-  messages_not_ends_with: String
+  duration_gte: Int
   testSetFilename: String
 
   """All values that are not equal to given value."""
@@ -6723,15 +6722,851 @@ input TestSessionTestCaseResultSubscriptionWhereInput {
   node: TestSessionTestCaseResultWhereInput
 }
 
+type TestSessionTestCaseResultTranscript implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  step: Int!
+  sender: String!
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
+}
+
+"""A connection to a list of items."""
+type TestSessionTestCaseResultTranscriptConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TestSessionTestCaseResultTranscriptEdge]!
+  aggregate: AggregateTestSessionTestCaseResultTranscript!
+}
+
+input TestSessionTestCaseResultTranscriptCreateInput {
+  step: Int!
+  sender: String!
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
+}
+
+input TestSessionTestCaseResultTranscriptCreateManyInput {
+  create: [TestSessionTestCaseResultTranscriptCreateInput!]
+  connect: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type TestSessionTestCaseResultTranscriptEdge {
+  """The item at the end of the edge."""
+  node: TestSessionTestCaseResultTranscript!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TestSessionTestCaseResultTranscriptOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  step_ASC
+  step_DESC
+  sender_ASC
+  sender_DESC
+  expected_ASC
+  expected_DESC
+  actual_ASC
+  actual_DESC
+  stepDuration_ASC
+  stepDuration_DESC
+  botDuration_ASC
+  botDuration_DESC
+  err_ASC
+  err_DESC
+}
+
+type TestSessionTestCaseResultTranscriptPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  step: Int!
+  sender: String!
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
+}
+
+input TestSessionTestCaseResultTranscriptScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestSessionTestCaseResultTranscriptScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestSessionTestCaseResultTranscriptScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestSessionTestCaseResultTranscriptScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  step: Int
+
+  """All values that are not equal to given value."""
+  step_not: Int
+
+  """All values that are contained in given list."""
+  step_in: [Int!]
+
+  """All values that are not contained in given list."""
+  step_not_in: [Int!]
+
+  """All values less than the given value."""
+  step_lt: Int
+
+  """All values less than or equal the given value."""
+  step_lte: Int
+
+  """All values greater than the given value."""
+  step_gt: Int
+
+  """All values greater than or equal the given value."""
+  step_gte: Int
+  sender: String
+
+  """All values that are not equal to given value."""
+  sender_not: String
+
+  """All values that are contained in given list."""
+  sender_in: [String!]
+
+  """All values that are not contained in given list."""
+  sender_not_in: [String!]
+
+  """All values less than the given value."""
+  sender_lt: String
+
+  """All values less than or equal the given value."""
+  sender_lte: String
+
+  """All values greater than the given value."""
+  sender_gt: String
+
+  """All values greater than or equal the given value."""
+  sender_gte: String
+
+  """All values containing the given string."""
+  sender_contains: String
+
+  """All values not containing the given string."""
+  sender_not_contains: String
+
+  """All values starting with the given string."""
+  sender_starts_with: String
+
+  """All values not starting with the given string."""
+  sender_not_starts_with: String
+
+  """All values ending with the given string."""
+  sender_ends_with: String
+
+  """All values not ending with the given string."""
+  sender_not_ends_with: String
+  expected: String
+
+  """All values that are not equal to given value."""
+  expected_not: String
+
+  """All values that are contained in given list."""
+  expected_in: [String!]
+
+  """All values that are not contained in given list."""
+  expected_not_in: [String!]
+
+  """All values less than the given value."""
+  expected_lt: String
+
+  """All values less than or equal the given value."""
+  expected_lte: String
+
+  """All values greater than the given value."""
+  expected_gt: String
+
+  """All values greater than or equal the given value."""
+  expected_gte: String
+
+  """All values containing the given string."""
+  expected_contains: String
+
+  """All values not containing the given string."""
+  expected_not_contains: String
+
+  """All values starting with the given string."""
+  expected_starts_with: String
+
+  """All values not starting with the given string."""
+  expected_not_starts_with: String
+
+  """All values ending with the given string."""
+  expected_ends_with: String
+
+  """All values not ending with the given string."""
+  expected_not_ends_with: String
+  actual: String
+
+  """All values that are not equal to given value."""
+  actual_not: String
+
+  """All values that are contained in given list."""
+  actual_in: [String!]
+
+  """All values that are not contained in given list."""
+  actual_not_in: [String!]
+
+  """All values less than the given value."""
+  actual_lt: String
+
+  """All values less than or equal the given value."""
+  actual_lte: String
+
+  """All values greater than the given value."""
+  actual_gt: String
+
+  """All values greater than or equal the given value."""
+  actual_gte: String
+
+  """All values containing the given string."""
+  actual_contains: String
+
+  """All values not containing the given string."""
+  actual_not_contains: String
+
+  """All values starting with the given string."""
+  actual_starts_with: String
+
+  """All values not starting with the given string."""
+  actual_not_starts_with: String
+
+  """All values ending with the given string."""
+  actual_ends_with: String
+
+  """All values not ending with the given string."""
+  actual_not_ends_with: String
+  stepDuration: Int
+
+  """All values that are not equal to given value."""
+  stepDuration_not: Int
+
+  """All values that are contained in given list."""
+  stepDuration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stepDuration_not_in: [Int!]
+
+  """All values less than the given value."""
+  stepDuration_lt: Int
+
+  """All values less than or equal the given value."""
+  stepDuration_lte: Int
+
+  """All values greater than the given value."""
+  stepDuration_gt: Int
+
+  """All values greater than or equal the given value."""
+  stepDuration_gte: Int
+  botDuration: Int
+
+  """All values that are not equal to given value."""
+  botDuration_not: Int
+
+  """All values that are contained in given list."""
+  botDuration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  botDuration_not_in: [Int!]
+
+  """All values less than the given value."""
+  botDuration_lt: Int
+
+  """All values less than or equal the given value."""
+  botDuration_lte: Int
+
+  """All values greater than the given value."""
+  botDuration_gt: Int
+
+  """All values greater than or equal the given value."""
+  botDuration_gte: Int
+  err: String
+
+  """All values that are not equal to given value."""
+  err_not: String
+
+  """All values that are contained in given list."""
+  err_in: [String!]
+
+  """All values that are not contained in given list."""
+  err_not_in: [String!]
+
+  """All values less than the given value."""
+  err_lt: String
+
+  """All values less than or equal the given value."""
+  err_lte: String
+
+  """All values greater than the given value."""
+  err_gt: String
+
+  """All values greater than or equal the given value."""
+  err_gte: String
+
+  """All values containing the given string."""
+  err_contains: String
+
+  """All values not containing the given string."""
+  err_not_contains: String
+
+  """All values starting with the given string."""
+  err_starts_with: String
+
+  """All values not starting with the given string."""
+  err_not_starts_with: String
+
+  """All values ending with the given string."""
+  err_ends_with: String
+
+  """All values not ending with the given string."""
+  err_not_ends_with: String
+}
+
+type TestSessionTestCaseResultTranscriptSubscriptionPayload {
+  mutation: MutationType!
+  node: TestSessionTestCaseResultTranscript
+  updatedFields: [String!]
+  previousValues: TestSessionTestCaseResultTranscriptPreviousValues
+}
+
+input TestSessionTestCaseResultTranscriptSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestSessionTestCaseResultTranscriptSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestSessionTestCaseResultTranscriptSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestSessionTestCaseResultTranscriptSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TestSessionTestCaseResultTranscriptWhereInput
+}
+
+input TestSessionTestCaseResultTranscriptUpdateDataInput {
+  step: Int
+  sender: String
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
+}
+
+input TestSessionTestCaseResultTranscriptUpdateInput {
+  step: Int
+  sender: String
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
+}
+
+input TestSessionTestCaseResultTranscriptUpdateManyDataInput {
+  step: Int
+  sender: String
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
+}
+
+input TestSessionTestCaseResultTranscriptUpdateManyInput {
+  create: [TestSessionTestCaseResultTranscriptCreateInput!]
+  connect: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
+  disconnect: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
+  delete: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
+  update: [TestSessionTestCaseResultTranscriptUpdateWithWhereUniqueNestedInput!]
+  updateMany: [TestSessionTestCaseResultTranscriptUpdateManyWithWhereNestedInput!]
+  deleteMany: [TestSessionTestCaseResultTranscriptScalarWhereInput!]
+  upsert: [TestSessionTestCaseResultTranscriptUpsertWithWhereUniqueNestedInput!]
+}
+
+input TestSessionTestCaseResultTranscriptUpdateManyMutationInput {
+  step: Int
+  sender: String
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
+}
+
+input TestSessionTestCaseResultTranscriptUpdateManyWithWhereNestedInput {
+  where: TestSessionTestCaseResultTranscriptScalarWhereInput!
+  data: TestSessionTestCaseResultTranscriptUpdateManyDataInput!
+}
+
+input TestSessionTestCaseResultTranscriptUpdateWithWhereUniqueNestedInput {
+  where: TestSessionTestCaseResultTranscriptWhereUniqueInput!
+  data: TestSessionTestCaseResultTranscriptUpdateDataInput!
+}
+
+input TestSessionTestCaseResultTranscriptUpsertWithWhereUniqueNestedInput {
+  where: TestSessionTestCaseResultTranscriptWhereUniqueInput!
+  update: TestSessionTestCaseResultTranscriptUpdateDataInput!
+  create: TestSessionTestCaseResultTranscriptCreateInput!
+}
+
+input TestSessionTestCaseResultTranscriptWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestSessionTestCaseResultTranscriptWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestSessionTestCaseResultTranscriptWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestSessionTestCaseResultTranscriptWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  step: Int
+
+  """All values that are not equal to given value."""
+  step_not: Int
+
+  """All values that are contained in given list."""
+  step_in: [Int!]
+
+  """All values that are not contained in given list."""
+  step_not_in: [Int!]
+
+  """All values less than the given value."""
+  step_lt: Int
+
+  """All values less than or equal the given value."""
+  step_lte: Int
+
+  """All values greater than the given value."""
+  step_gt: Int
+
+  """All values greater than or equal the given value."""
+  step_gte: Int
+  sender: String
+
+  """All values that are not equal to given value."""
+  sender_not: String
+
+  """All values that are contained in given list."""
+  sender_in: [String!]
+
+  """All values that are not contained in given list."""
+  sender_not_in: [String!]
+
+  """All values less than the given value."""
+  sender_lt: String
+
+  """All values less than or equal the given value."""
+  sender_lte: String
+
+  """All values greater than the given value."""
+  sender_gt: String
+
+  """All values greater than or equal the given value."""
+  sender_gte: String
+
+  """All values containing the given string."""
+  sender_contains: String
+
+  """All values not containing the given string."""
+  sender_not_contains: String
+
+  """All values starting with the given string."""
+  sender_starts_with: String
+
+  """All values not starting with the given string."""
+  sender_not_starts_with: String
+
+  """All values ending with the given string."""
+  sender_ends_with: String
+
+  """All values not ending with the given string."""
+  sender_not_ends_with: String
+  expected: String
+
+  """All values that are not equal to given value."""
+  expected_not: String
+
+  """All values that are contained in given list."""
+  expected_in: [String!]
+
+  """All values that are not contained in given list."""
+  expected_not_in: [String!]
+
+  """All values less than the given value."""
+  expected_lt: String
+
+  """All values less than or equal the given value."""
+  expected_lte: String
+
+  """All values greater than the given value."""
+  expected_gt: String
+
+  """All values greater than or equal the given value."""
+  expected_gte: String
+
+  """All values containing the given string."""
+  expected_contains: String
+
+  """All values not containing the given string."""
+  expected_not_contains: String
+
+  """All values starting with the given string."""
+  expected_starts_with: String
+
+  """All values not starting with the given string."""
+  expected_not_starts_with: String
+
+  """All values ending with the given string."""
+  expected_ends_with: String
+
+  """All values not ending with the given string."""
+  expected_not_ends_with: String
+  actual: String
+
+  """All values that are not equal to given value."""
+  actual_not: String
+
+  """All values that are contained in given list."""
+  actual_in: [String!]
+
+  """All values that are not contained in given list."""
+  actual_not_in: [String!]
+
+  """All values less than the given value."""
+  actual_lt: String
+
+  """All values less than or equal the given value."""
+  actual_lte: String
+
+  """All values greater than the given value."""
+  actual_gt: String
+
+  """All values greater than or equal the given value."""
+  actual_gte: String
+
+  """All values containing the given string."""
+  actual_contains: String
+
+  """All values not containing the given string."""
+  actual_not_contains: String
+
+  """All values starting with the given string."""
+  actual_starts_with: String
+
+  """All values not starting with the given string."""
+  actual_not_starts_with: String
+
+  """All values ending with the given string."""
+  actual_ends_with: String
+
+  """All values not ending with the given string."""
+  actual_not_ends_with: String
+  stepDuration: Int
+
+  """All values that are not equal to given value."""
+  stepDuration_not: Int
+
+  """All values that are contained in given list."""
+  stepDuration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stepDuration_not_in: [Int!]
+
+  """All values less than the given value."""
+  stepDuration_lt: Int
+
+  """All values less than or equal the given value."""
+  stepDuration_lte: Int
+
+  """All values greater than the given value."""
+  stepDuration_gt: Int
+
+  """All values greater than or equal the given value."""
+  stepDuration_gte: Int
+  botDuration: Int
+
+  """All values that are not equal to given value."""
+  botDuration_not: Int
+
+  """All values that are contained in given list."""
+  botDuration_in: [Int!]
+
+  """All values that are not contained in given list."""
+  botDuration_not_in: [Int!]
+
+  """All values less than the given value."""
+  botDuration_lt: Int
+
+  """All values less than or equal the given value."""
+  botDuration_lte: Int
+
+  """All values greater than the given value."""
+  botDuration_gt: Int
+
+  """All values greater than or equal the given value."""
+  botDuration_gte: Int
+  err: String
+
+  """All values that are not equal to given value."""
+  err_not: String
+
+  """All values that are contained in given list."""
+  err_in: [String!]
+
+  """All values that are not contained in given list."""
+  err_not_in: [String!]
+
+  """All values less than the given value."""
+  err_lt: String
+
+  """All values less than or equal the given value."""
+  err_lte: String
+
+  """All values greater than the given value."""
+  err_gt: String
+
+  """All values greater than or equal the given value."""
+  err_gte: String
+
+  """All values containing the given string."""
+  err_contains: String
+
+  """All values not containing the given string."""
+  err_not_contains: String
+
+  """All values starting with the given string."""
+  err_starts_with: String
+
+  """All values not starting with the given string."""
+  err_not_starts_with: String
+
+  """All values ending with the given string."""
+  err_ends_with: String
+
+  """All values not ending with the given string."""
+  err_not_ends_with: String
+}
+
+input TestSessionTestCaseResultTranscriptWhereUniqueInput {
+  id: ID
+}
+
 input TestSessionTestCaseResultUpdateInput {
   testcaseName: String
   testcaseSource: String
   success: Boolean
   err: String
-  messages: String
+  duration: Int
   testSetFilename: String
   deviceName: String
   testSession: TestSessionUpdateOneRequiredWithoutResultsInput
+  steps: TestSessionTestCaseResultTranscriptUpdateManyInput
   attachments: TestSessionTestCaseResultAttachmentUpdateManyInput
   testSet: TestSetUpdateOneInput
   testSetScript: TestSetScriptUpdateOneInput
@@ -6746,7 +7581,7 @@ input TestSessionTestCaseResultUpdateManyDataInput {
   testcaseSource: String
   success: Boolean
   err: String
-  messages: String
+  duration: Int
   testSetFilename: String
   deviceName: String
 }
@@ -6756,7 +7591,7 @@ input TestSessionTestCaseResultUpdateManyMutationInput {
   testcaseSource: String
   success: Boolean
   err: String
-  messages: String
+  duration: Int
   testSetFilename: String
   deviceName: String
 }
@@ -6782,9 +7617,10 @@ input TestSessionTestCaseResultUpdateWithoutTestSessionDataInput {
   testcaseSource: String
   success: Boolean
   err: String
-  messages: String
+  duration: Int
   testSetFilename: String
   deviceName: String
+  steps: TestSessionTestCaseResultTranscriptUpdateManyInput
   attachments: TestSessionTestCaseResultAttachmentUpdateManyInput
   testSet: TestSetUpdateOneInput
   testSetScript: TestSetScriptUpdateOneInput
@@ -7022,46 +7858,28 @@ input TestSessionTestCaseResultWhereInput {
 
   """All values not ending with the given string."""
   err_not_ends_with: String
-  messages: String
+  duration: Int
 
   """All values that are not equal to given value."""
-  messages_not: String
+  duration_not: Int
 
   """All values that are contained in given list."""
-  messages_in: [String!]
+  duration_in: [Int!]
 
   """All values that are not contained in given list."""
-  messages_not_in: [String!]
+  duration_not_in: [Int!]
 
   """All values less than the given value."""
-  messages_lt: String
+  duration_lt: Int
 
   """All values less than or equal the given value."""
-  messages_lte: String
+  duration_lte: Int
 
   """All values greater than the given value."""
-  messages_gt: String
+  duration_gt: Int
 
   """All values greater than or equal the given value."""
-  messages_gte: String
-
-  """All values containing the given string."""
-  messages_contains: String
-
-  """All values not containing the given string."""
-  messages_not_contains: String
-
-  """All values starting with the given string."""
-  messages_starts_with: String
-
-  """All values not starting with the given string."""
-  messages_not_starts_with: String
-
-  """All values ending with the given string."""
-  messages_ends_with: String
-
-  """All values not ending with the given string."""
-  messages_not_ends_with: String
+  duration_gte: Int
   testSetFilename: String
 
   """All values that are not equal to given value."""
@@ -7143,6 +7961,9 @@ input TestSessionTestCaseResultWhereInput {
   """All values not ending with the given string."""
   deviceName_not_ends_with: String
   testSession: TestSessionWhereInput
+  steps_every: TestSessionTestCaseResultTranscriptWhereInput
+  steps_some: TestSessionTestCaseResultTranscriptWhereInput
+  steps_none: TestSessionTestCaseResultTranscriptWhereInput
   attachments_every: TestSessionTestCaseResultAttachmentWhereInput
   attachments_some: TestSessionTestCaseResultAttachmentWhereInput
   attachments_none: TestSessionTestCaseResultAttachmentWhereInput

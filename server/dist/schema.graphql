@@ -13,7 +13,7 @@
 # import TestSession, TestSessionCreateInput, TestSessionWhereInput, TestSessionOrderByInput from "./generated/prisma.graphql"
 # import TestSessionTestCaseResult, TestSessionTestCaseResultWhereInput, TestSessionTestCaseResultOrderByInput from "./generated/prisma.graphql"
 # import TestSessionSubscriptionPayload from "./generated/prisma.graphql"
-# import TestSessionJob from "./generated/prisma.graphql"
+# import TestSessionJob, TestSessionJobLog, TestSessionJobLogOrderByInput from "./generated/prisma.graphql"
 
 # import TestSet, TestSetCreateInput, TestSetUpdateInput from "./generated/prisma.graphql"
 # import TestSetScript, TestSetScriptCreateInput, TestSetScriptUpdateInput from "./generated/prisma.graphql"
@@ -46,6 +46,7 @@ type Query {
   testsessiontestcaseresults(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, first: Int): [TestSessionTestCaseResult!]! @isAuthenticated
   testsessiontestcaseresult(id: ID!): TestSessionTestCaseResult @isAuthenticated
   testsessionjob(id: ID!): TestSessionJob @isAuthenticated
+  testsessionjoblogs(jobId: ID!, orderBy: TestSessionJobLogOrderByInput, skip: Int, first: Int): [TestSessionJobLog!]! @isAuthenticated
   testsets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, first: Int): [TestSet!]! @isAuthenticated
   testset(id: ID!): TestSet @isAuthenticated
   testsetscript(id: ID!): TestSetScript @isAuthenticated
@@ -96,6 +97,7 @@ type Mutation {
   deleteChatbot(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
   createTestSession(testSession: TestSessionCreateInput!): TestSession! @hasRole(roles: ["ADMIN","USER","TESTER"])
   deleteTestSession(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
+  cancelTestSession(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
   createTestSet(testSet: TestSetCreateInput!): TestSet! @hasRole(roles: ["ADMIN","USER"])
   updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @hasRole(roles: ["ADMIN","USER"])
   deleteTestSet(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])

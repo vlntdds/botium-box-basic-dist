@@ -94,7 +94,8 @@ type TestSessionTestCaseResult {
   testcaseSource: String!
   success: Boolean!
   err: String
-  messages: String
+  duration: Int
+  steps: [TestSessionTestCaseResultTranscript!]!
   attachments: [TestSessionTestCaseResultAttachment!]!
   testSet: TestSet
   testSetScript: TestSetScript
@@ -104,6 +105,19 @@ type TestSessionTestCaseResult {
   testSetFilename: String
   deviceSet: DeviceSet
   deviceName: String
+}
+
+type TestSessionTestCaseResultTranscript {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  step: Int!
+  sender: String!
+  expected: String
+  actual: String
+  stepDuration: Int
+  botDuration: Int
+  err: String
 }
 
 type TestSessionTestCaseResultAttachment {
