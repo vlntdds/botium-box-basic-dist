@@ -50,10 +50,33 @@ You can run Botium Box on your own server.
 
 ### Prerequisites
 
-* docker
-* docker-compose
+* [docker](https://www.docker.com/get-started)
+* [docker-compose](https://docs.docker.com/compose/install/)
+* [Node.js](https://nodejs.org/en/download/)
 
-### Build and run
+### Download, build and run from NPM registry (recommended)
+
+__Prepare Backend services__
+
+1. Download [docker-compose.yml](https://github.com/codeforequity-at/botium-box-basic-dist/blob/master/server/database/docker-compose.yml) and save to your local hard drive.
+2. Start backend services (includes Prisma, MySQL and Redis) by running docker-compose:
+```
+> docker-compose up
+```
+
+__Download and run Botium Box__
+
+1. Download Botium Box:
+```
+> npm install -g botium-box-basic-dist
+```
+2. Run Botium Box:
+```
+> botium-box-cli start --pe http://127.0.0.1:4466/box/dev -r redis://127.0.0.1:6379 -p 8080
+```
+3. Point your browser to http://127.0.0.1:8080
+
+### Download, build and run from Git repository
 
 ```
 > git clone https://github.com/codeforequity-at/botium-box-basic-dist.git && cd botium-box-basic-dist
@@ -65,6 +88,12 @@ You can run Botium Box on your own server.
 Botium Box will now run on http://localhost:4000
 
 _Installation and startup can take a while, especially on first usage._
+
+## Botium Box Hybrid Installation
+
+It is possible to mix the above architecture: Prisma, Redis and Botium Box are loosly coupled, you can choose whatever your infrastructure suggests as best option - Prisma and Redis in the cloud, Botium Box locally. Or run Prisma locally, Botium Box in the cloud and use an existing Redis service - it's totally up to you.
+
+__The only thing you have to make sure is connectivity between Botium Box and Prisma as well as Redis service.__
 
 ## Login to Botium Box
 
