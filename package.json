@@ -1,6 +1,15 @@
 {
   "name": "botium-box-basic-dist",
+  "version": "0.0.1",
+  "description": "Botium Box Community Edition",
+  "engines": {
+    "node": ">=8.3"
+  },
+  "bin": {
+    "botium-box-cli": "./bin/botium-box-cli.js"
+  },
   "scripts": {
+    "eslint": "eslint \"./src/**/*.js\" \"./bin/**/*.js\"",
     "start:agent": "cd agent && npm run run:dist",
     "start:server": "cd server && npm run prisma-deploy && npm run prisma-seed && npm run run:dist",
     "start": "npm-run-all -p start:agent start:server",
@@ -8,10 +17,21 @@
     "prepare:server": "cd server && npm install --production",
     "postinstall": "npm-run-all prepare:agent prepare:server",
     "start-standalone:backend": "cd server/database && cross-env docker-compose up",
-    "start-standalone:frontend": "./wait-for-it.sh -s 127.0.0.1:4466 -- cross-env DEBUG=botium* PRISMA_ENDPOINT=http://127.0.0.1:4466/box/standalone PRISMA_SECRET=mysecret123 JWT_SECRET=jwtsecret123 npm start"
+    "start-standalone:frontend": "./wait-for-it.sh -s 127.0.0.1:4466 -- cross-env DEBUG=botium* PRISMA_ENDPOINT=http://127.0.0.1:4466/box/standalone PRISMA_SECRET=mysecret123 JWT_SECRET=jwtsecret123 BOTIUMBOX_QUEUE_REDISURL=redis://127.0.0.1:6379 npm start"
   },
   "dependencies": {
+    "cross-env": "^5.2.0",
+    "debug": "^4.1.1",
     "npm-run-all": "^4.1.3",
-    "cross-env": "^5.2.0"
+    "opn": "^5.4.0",
+    "yargs": "^12.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }
