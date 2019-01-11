@@ -3,6 +3,9 @@ FROM node:latest
 WORKDIR /app
 COPY . /app
 
+VOLUME /app/botiumwork
+VOLUME /app/testsets
+
 ARG BOTIUMBOX_QUEUE_REDISURL=redis://redisuser:redispassword@redishost:redisport
 ARG PRISMA_ENDPOINT=https://my-prisma-endpoint/demo/dev
 ARG PRISMA_MANAGEMENT_API_SECRET=
