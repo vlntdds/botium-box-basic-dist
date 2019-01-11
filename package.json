@@ -1,6 +1,6 @@
 {
-  "name": "botium-box-basic-dist",
-  "version": "0.0.1",
+  "name": "botium-box",
+  "version": "0.0.2",
   "description": "Botium Box Community Edition",
   "engines": {
     "node": ">=8.3"

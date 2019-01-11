@@ -68,7 +68,7 @@ __Download and run Botium Box__
 
 1. Download Botium Box:
 ```
-> npm install -g botium-box-basic-dist
+> npm install -g botium-box
 ```
 2. Run Botium Box:
 ```
