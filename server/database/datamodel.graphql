@@ -114,6 +114,7 @@ type TestSessionTestCaseResultTranscript {
   step: Int!
   sender: String!
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int

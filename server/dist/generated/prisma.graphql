@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/box/dev
-# timestamp: Fri Dec 28 2018 20:01:26 GMT+0100 (W. Europe Standard Time)
+# timestamp: Tue Jan 15 2019 10:52:52 GMT+0100 (W. Europe Standard Time)
 
 type Agent implements Node {
   id: ID!
@@ -6729,6 +6729,7 @@ type TestSessionTestCaseResultTranscript implements Node {
   step: Int!
   sender: String!
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int
@@ -6749,6 +6750,7 @@ input TestSessionTestCaseResultTranscriptCreateInput {
   step: Int!
   sender: String!
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int
@@ -6782,6 +6784,8 @@ enum TestSessionTestCaseResultTranscriptOrderByInput {
   sender_DESC
   expected_ASC
   expected_DESC
+  not_ASC
+  not_DESC
   actual_ASC
   actual_DESC
   stepDuration_ASC
@@ -6799,6 +6803,7 @@ type TestSessionTestCaseResultTranscriptPreviousValues {
   step: Int!
   sender: String!
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int
@@ -7000,6 +7005,10 @@ input TestSessionTestCaseResultTranscriptScalarWhereInput {
 
   """All values not ending with the given string."""
   expected_not_ends_with: String
+  not: Boolean
+
+  """All values that are not equal to given value."""
+  not_not: Boolean
   actual: String
 
   """All values that are not equal to given value."""
@@ -7169,6 +7178,7 @@ input TestSessionTestCaseResultTranscriptUpdateDataInput {
   step: Int
   sender: String
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int
@@ -7179,6 +7189,7 @@ input TestSessionTestCaseResultTranscriptUpdateInput {
   step: Int
   sender: String
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int
@@ -7189,6 +7200,7 @@ input TestSessionTestCaseResultTranscriptUpdateManyDataInput {
   step: Int
   sender: String
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int
@@ -7210,6 +7222,7 @@ input TestSessionTestCaseResultTranscriptUpdateManyMutationInput {
   step: Int
   sender: String
   expected: String
+  not: Boolean
   actual: String
   stepDuration: Int
   botDuration: Int
@@ -7427,6 +7440,10 @@ input TestSessionTestCaseResultTranscriptWhereInput {
 
   """All values not ending with the given string."""
   expected_not_ends_with: String
+  not: Boolean
+
+  """All values that are not equal to given value."""
+  not_not: Boolean
   actual: String
 
   """All values that are not equal to given value."""

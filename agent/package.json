@@ -26,7 +26,7 @@
     "run:dist": "node dist/botium-box-agent.js",
     "publish:free-dist": "npm run build:free-dist && mkdir -p ~/botium-box-basic-dist/agent  && cp -Rf dist package.json ~/botium-box-basic-dist/agent && cp .env.botium-box-basic-dist ~/botium-box-basic-dist/agent/.env && cp botium.json.botium-box-basic-dist ~/botium-box-basic-dist/agent/botium.json",
     "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/agent  && cp -Rf dist package.json botium.json ~/botium-box-dist/premium/agent && cp .env.botium-box-premium-dist ~/botium-box-dist/premium/agent/.env",
-    "postinstall": "run-for-every-file --src \"../packages\" --file \"**/*.tgz\" --run \"npm install --no-save {{src-file}}\""
+    "postinstall": "run-for-every-file --src \"../packages\" --file \"**/*.tgz\" --run \"npm install --no-optional --production --no-save {{src-file}}\""
   },
   "author": "",
   "license": "ISC",
@@ -44,7 +44,7 @@
     "botium-connector-koreai-webhook": "0.0.2",
     "botium-connector-watson": "0.0.4",
     "botium-connector-webdriverio": "0.0.10",
-    "botium-core": "1.4.2",
+    "botium-core": "1.4.3",
     "debug": "^4.1.0",
     "dotenv-flow": "^0.1.0",
     "intercept-stdout": "^0.1.2",

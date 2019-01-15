@@ -16,7 +16,7 @@ ENV PRISMA_SECRET $PRISMA_SECRET
 ENV JWT_SECRET $JWT_SECRET
 
 RUN npm set unsafe-perm true
-RUN npm install
+RUN npm install --no-optional --production
 
 EXPOSE 4000
 
