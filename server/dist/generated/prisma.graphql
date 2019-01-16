@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/box/dev
-# timestamp: Tue Jan 15 2019 10:52:52 GMT+0100 (W. Europe Standard Time)
+# timestamp: Wed Jan 16 2019 13:13:51 GMT+0100 (W. Europe Standard Time)
 
 type Agent implements Node {
   id: ID!
@@ -4363,6 +4363,7 @@ type TestSession implements Node {
   capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
   sources(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
   envs(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
+  chartData: String
 }
 
 """A connection to a list of items."""
@@ -4380,6 +4381,7 @@ input TestSessionCreateInput {
   description: String
   batchCount: Int
   status: TestSessionStatus!
+  chartData: String
   tags: TestSessionCreatetagsInput
   chatbot: ChatbotCreateOneInput!
   testSets: TestSetCreateManyInput
@@ -4412,6 +4414,7 @@ input TestSessionCreateWithoutJobsInput {
   description: String
   batchCount: Int
   status: TestSessionStatus!
+  chartData: String
   tags: TestSessionCreatetagsInput
   chatbot: ChatbotCreateOneInput!
   testSets: TestSetCreateManyInput
@@ -4429,6 +4432,7 @@ input TestSessionCreateWithoutResultsInput {
   description: String
   batchCount: Int
   status: TestSessionStatus!
+  chartData: String
   tags: TestSessionCreatetagsInput
   chatbot: ChatbotCreateOneInput!
   testSets: TestSetCreateManyInput
@@ -5597,6 +5601,8 @@ enum TestSessionOrderByInput {
   batchCount_DESC
   status_ASC
   status_DESC
+  chartData_ASC
+  chartData_DESC
 }
 
 type TestSessionPreviousValues {
@@ -5608,6 +5614,7 @@ type TestSessionPreviousValues {
   tags: [String!]!
   batchCount: Int
   status: TestSessionStatus!
+  chartData: String
 }
 
 enum TestSessionStatus {
@@ -8001,6 +8008,7 @@ input TestSessionUpdateInput {
   description: String
   batchCount: Int
   status: TestSessionStatus
+  chartData: String
   tags: TestSessionUpdatetagsInput
   chatbot: ChatbotUpdateOneRequiredInput
   testSets: TestSetUpdateManyInput
@@ -8019,6 +8027,7 @@ input TestSessionUpdateManyMutationInput {
   description: String
   batchCount: Int
   status: TestSessionStatus
+  chartData: String
   tags: TestSessionUpdatetagsInput
 }
 
@@ -8045,6 +8054,7 @@ input TestSessionUpdateWithoutJobsDataInput {
   description: String
   batchCount: Int
   status: TestSessionStatus
+  chartData: String
   tags: TestSessionUpdatetagsInput
   chatbot: ChatbotUpdateOneRequiredInput
   testSets: TestSetUpdateManyInput
@@ -8062,6 +8072,7 @@ input TestSessionUpdateWithoutResultsDataInput {
   description: String
   batchCount: Int
   status: TestSessionStatus
+  chartData: String
   tags: TestSessionUpdatetagsInput
   chatbot: ChatbotUpdateOneRequiredInput
   testSets: TestSetUpdateManyInput
@@ -8289,6 +8300,46 @@ input TestSessionWhereInput {
 
   """All values that are not contained in given list."""
   status_not_in: [TestSessionStatus!]
+  chartData: String
+
+  """All values that are not equal to given value."""
+  chartData_not: String
+
+  """All values that are contained in given list."""
+  chartData_in: [String!]
+
+  """All values that are not contained in given list."""
+  chartData_not_in: [String!]
+
+  """All values less than the given value."""
+  chartData_lt: String
+
+  """All values less than or equal the given value."""
+  chartData_lte: String
+
+  """All values greater than the given value."""
+  chartData_gt: String
+
+  """All values greater than or equal the given value."""
+  chartData_gte: String
+
+  """All values containing the given string."""
+  chartData_contains: String
+
+  """All values not containing the given string."""
+  chartData_not_contains: String
+
+  """All values starting with the given string."""
+  chartData_starts_with: String
+
+  """All values not starting with the given string."""
+  chartData_not_starts_with: String
+
+  """All values ending with the given string."""
+  chartData_ends_with: String
+
+  """All values not ending with the given string."""
+  chartData_not_ends_with: String
   chatbot: ChatbotWhereInput
   testSets_every: TestSetWhereInput
   testSets_some: TestSetWhereInput

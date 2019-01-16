@@ -76,6 +76,7 @@ type TestSession {
   capabilities: [Capability!]! @relation(name: "TestSessionCapabilities")
   sources: [Capability!]! @relation(name: "TestSessionSources")
   envs: [Capability!]! @relation(name: "TestSessionEnvs")
+  chartData: String
 }
 
 enum TestSessionStatus {
