@@ -29,6 +29,10 @@
     "JWT_SECRET": {
       "description": "JWT Secret (generated)",
       "generator": "secret"
+    },
+    "BOTIUMBOX_AGENT_NAME": {
+      "description": "Name of the integrated Botium Box Agent (you don't have to change this usually).",
+      "value": "Default Agent"
     }
   },
   "formation": {
