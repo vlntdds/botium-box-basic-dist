@@ -164,7 +164,7 @@ type TestSet {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  name: String!
+  name: String! @unique
   description: String
   expandConvos: Boolean @default(value: "true")
   expandUtterancesToConvos: Boolean @default(value: "false")

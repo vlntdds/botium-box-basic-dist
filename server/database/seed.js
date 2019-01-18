@@ -232,12 +232,51 @@ const chatbotsData = [
   {
     name: 'Echo Bot',
     description: "Chatbot simulator for evaluating Botium and Botium Box features. Sample commands: 'buttons', 'show me buttons', 'picture', 'show me a picture', 'card', 'show me a card'. Otherwise the input is echoed back.",
+    tags: {
+      set: [ 'Demo' ]
+    },
     capabilities: {
       create: [
         {
           name: 'CONTAINERMODE',
           type: 'STRING',
           stringValue: 'echo'
+        }
+      ]
+    }
+  },
+  {
+    name: 'I am Botium',
+    description: 'A simple smalltalk chatbot for evaluating Botium and Botium Box features.',
+    tags: {
+      set: [ 'Demo' ]
+    },
+    capabilities: {
+      create: [
+        {
+          name: 'CONTAINERMODE',
+          type: 'STRING',
+          stringValue: 'simplerest'
+        },
+        {
+          name: 'SIMPLEREST_URL',
+          type: 'STRING',
+          stringValue: 'http://ec2-63-32-190-175.eu-west-1.compute.amazonaws.com:3002/reply'
+        },
+        {
+          name: 'SIMPLEREST_METHOD',
+          type: 'STRING',
+          stringValue: 'POST'
+        },
+        {
+          name: 'SIMPLEREST_RESPONSE_JSONPATH',
+          type: 'STRING',
+          stringValue: '$.reply'
+        },
+        {
+          name: 'SIMPLEREST_BODY_TEMPLATE',
+          type: 'JSON',
+          jsonValue: '{ "username": "botium", "message": "{{msg.messageText}}" }'
         }
       ]
     }
@@ -295,6 +334,60 @@ const testsetData = [
         }
       ]
     }
+  },
+  {
+    name: 'I am Botium (Smalltalk)',
+    description: 'I am Botium Smalltalk Testset (how are you ? what is your name ? ...)',
+    tags: {
+      set: [ 'Demo' ]
+    },
+    expandConvos: false,
+    expandUtterancesToConvos: true,
+    expandUtterancesIncomprehension: 'INCOMPREHENSION',
+    repositories: {
+      create: [
+        {
+          name: 'Botium Utterances - Smalltalk',
+          giturl: 'https://github.com/codeforequity-at/botium-utterances.git',
+          gitbranch: 'master',
+          gitdir: 'convos/smalltalk',
+          globFilter: '**/*.en.utterances.txt'
+        }
+      ]
+    },
+    scripts: {
+      create: [
+        {
+          name: 'INCOMPREHENSION',
+          scriptType: 'SCRIPTING_TYPE_UTTERANCES',
+          script: 'INCOMPREHENSION\nlol\nokay\nso...\ngo on\numm\ninteresting\nreally?\n'
+        }
+      ]
+    }
+  }
+]
+
+const testProjectData = [
+  {
+    name: 'I am Botium - Test Suite',
+    description: 'Test Suite for I am Botium chatbot',
+    code: '',
+    tags: {
+      set: [ 'Demo' ]
+    },
+    batchCount: 3,
+    chatbot: {
+      connect: {
+        name: 'I am Botium'
+      }
+    },
+    testSets: {
+      connect: [
+        {
+          name: 'I am Botium (Smalltalk)'
+        }
+      ]
+    }
   }
 ]
 
@@ -339,5 +432,6 @@ async function createRecords (entityName, entities, queryFn, keyField, createFn)
   await createRecords('deviceset', deviceSetsData, db.query.deviceSets, 'name', db.mutation.createDeviceSet)
   await createRecords('chatbot', chatbotsData, db.query.chatbots, 'name', db.mutation.createChatbot)
   await createRecords('testset', testsetData, db.query.testSets, 'name', db.mutation.createTestSet)
+  await createRecords('testproject', testProjectData, db.query.testProjects, 'name', db.mutation.createTestProject)
   await createRecords('settings', settingsData, db.query.systemSettingses, null, db.mutation.createSystemSettings)
 })()

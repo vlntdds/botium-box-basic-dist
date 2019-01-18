@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/box/dev
-# timestamp: Wed Jan 16 2019 13:13:51 GMT+0100 (W. Europe Standard Time)
+# timestamp: Wed Jan 16 2019 17:47:05 GMT+0100 (W. Europe Standard Time)
 
 type Agent implements Node {
   id: ID!
@@ -12255,6 +12255,7 @@ input TestSetWhereInput {
 
 input TestSetWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type User implements Node {
