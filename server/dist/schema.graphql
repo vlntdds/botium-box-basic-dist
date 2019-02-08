@@ -40,7 +40,7 @@ type Query {
   agent(id: ID!): Agent @isAuthenticated
   chatbots(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, first: Int): [Chatbot!]! @isAuthenticated
   chatbot(id: ID!): Chatbot @isAuthenticated
-  availablewatsonworkspaces(url: String!, version: String!, username: String!, password: String!): [DropDownValue!]! @isAuthenticated
+  availablewatsonworkspaces(url: String!, version: String!, apikey: String, username: String, password: String): [DropDownValue!]! @isAuthenticated
   testsessions(where: TestSessionWhereInput, orderBy: TestSessionOrderByInput, skip: Int, first: Int): [TestSession!]! @isAuthenticated
   testsession(id: ID!): TestSession @isAuthenticated
   testsessiontestcaseresults(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, first: Int): [TestSessionTestCaseResult!]! @isAuthenticated

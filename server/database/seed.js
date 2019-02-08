@@ -67,6 +67,13 @@ const deviceProvidersData = [
     url: 'http://ondemand.saucelabs.com:80/wd/hub',
     username: 'YOUR_SAUCELABS_USERNAME',
     password: 'YOUR_SAUCELABS_ACCESS_KEY'
+  },
+  {
+    name: 'Saucelabs.com Real Device Cloud',
+    type: 'TESTOBJECTS',
+    url: 'https://eu1.appium.testobject.com/wd/hub',
+    username: 'YOUR_TESTOBJECTS_USERNAME',
+    password: 'YOUR_TESTOBJECTS_PROJECT_API_KEY'
   }
 ]
 
@@ -222,6 +229,118 @@ const deviceSetsData = [
           name: 'Firefox 45, Linux',
           type: 'DESKTOP',
           capabilities: '{"browserName":"firefox","platform":"Linux","version":"45"}'
+        }
+      ]
+    }
+  },
+  {
+    name: 'Real Devices - iPhone Core Devices',
+    description: 'iPhone Core Devices on Saucelabs.com Real Device Cloud',
+    tags: {
+      set: [ 'iOS', 'Saucelabs', 'RealDevices' ]
+    },
+    provider: {
+      connect: {
+        name: 'Saucelabs.com Real Device Cloud'
+      }
+    },
+    devices: {
+      create: [
+        {
+          'name': 'iPhone SE, IOS, 11.4.1',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"iPhone SE","platformName":"IOS","platformVersion":"11.4.1"}'
+        },
+        {
+          'name': 'iPhone 6S Plus, IOS, 11.4.1',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"iPhone 6S Plus","platformName":"IOS","platformVersion":"11.4.1"}'
+        },
+        {
+          'name': 'iPhone 8, IOS, 12.1.2',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"iPhone 8","platformName":"IOS","platformVersion":"12.1.2"}'
+        },
+        {
+          'name': 'iPhone X, IOS, 12.1.2',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"iPhone X","platformName":"IOS","platformVersion":"12.1.2"}'
+        },
+        {
+          'name': 'iPhone XS Max, IOS, 12.1.2',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"iPhone XS Max","platformName":"IOS","platformVersion":"12.1.2"}'
+        }
+      ]
+    }
+  },
+  {
+    name: 'Real Devices - Android Core Devices',
+    description: 'Android Core Devices on Saucelabs.com Real Device Cloud',
+    tags: {
+      set: [ 'Android', 'Saucelabs', 'RealDevices' ]
+    },
+    provider: {
+      connect: {
+        name: 'Saucelabs.com Real Device Cloud'
+      }
+    },
+    devices: {
+      create: [
+        {
+          'name': 'Samsung Galaxy S8, ANDROID, 8.0.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Samsung Galaxy S8","platformName":"ANDROID","platformVersion":"8.0.0"}'
+        },
+        {
+          'name': 'Samsung Galaxy S6 Edge, ANDROID, 7.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Samsung Galaxy S6 Edge","platformName":"ANDROID","platformVersion":"7.0"}'
+        },
+        {
+          'name': 'Samsung Galaxy A5 (2017), ANDROID, 8.0.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Samsung Galaxy A5 (2017)","platformName":"ANDROID","platformVersion":"8.0.0"}'
+        },
+        {
+          'name': 'Google Pixel 2, ANDROID, 9',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Google Pixel 2","platformName":"ANDROID","platformVersion":"9"}'
+        },
+        {
+          'name': 'Motorola Moto E (2nd gen), ANDROID, 6.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Motorola Moto E (2nd gen)","platformName":"ANDROID","platformVersion":"6.0"}'
+        },
+        {
+          'name': 'Motorola Moto X (2nd gen), ANDROID, 6.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Motorola Moto X (2nd gen)","platformName":"ANDROID","platformVersion":"6.0"}'
+        },
+        {
+          'name': 'Huawei P10, ANDROID, 7.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Huawei P10","platformName":"ANDROID","platformVersion":"7.0"}'
+        },
+        {
+          'name': 'Huawei Mate 10 Pro, ANDROID, 8.0.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Huawei Mate 10 Pro","platformName":"ANDROID","platformVersion":"8.0.0"}'
+        },
+        {
+          'name': 'Huawei P8 Lite 2017, ANDROID, 7.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Huawei P8 Lite 2017","platformName":"ANDROID","platformVersion":"7.0"}'
+        },
+        {
+          'name': 'Sony Xperia XA, ANDROID, 7.0',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"Sony Xperia XA","platformName":"ANDROID","platformVersion":"7.0"}'
+        },
+        {
+          'name': 'HTC One, ANDROID, 5.0.2',
+          'type': 'MOBILEAPP',
+          'capabilities': '{"deviceName":"HTC One","platformName":"ANDROID","platformVersion":"5.0.2"}'
         }
       ]
     }
