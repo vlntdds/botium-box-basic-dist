@@ -23,8 +23,7 @@
     "publish:free-dist": "npm run build:free-dist && mkdir -p ~/botium-box-basic-dist/server/dist/generated && cp -Rf dist database package.json .graphqlconfig.yml ~/botium-box-basic-dist/server && cp LICENSES-3RDPARTY-SERVER.txt ~/botium-box-basic-dist && cp src/generated/prisma.graphql ~/botium-box-basic-dist/server/dist/generated && cp src/schema.graphql ~/botium-box-basic-dist/server/dist && cp .env.botium-box-basic-dist ~/botium-box-basic-dist/server/.env",
     "publish:premium-dist": "npm run build:premium-dist && mkdir -p ~/botium-box-dist/premium/server/dist/generated && cp -Rf dist database package.json .graphqlconfig.yml ~/botium-box-dist/premium/server && cp LICENSES-3RDPARTY-SERVER.txt ~/botium-box-dist/premium && cp src/generated/prisma.graphql ~/botium-box-dist/premium/server/dist/generated && cp src/schema.graphql ~/botium-box-dist/premium/server/dist && cp .env.botium-box-premium-dist ~/botium-box-dist/premium/server/.env",
     "postbuild:free-dist": "mkdir -p ./dist/generated && cp src/generated/prisma.graphql ./dist/generated && cp src/schema.graphql ./dist",
-    "postbuild:premium-dist": "mkdir -p ./dist/generated && cp src/generated/prisma.graphql ./dist/generated && cp src/schema.graphql ./dist",
-    "postinstall": "npm install --no-optional --production --no-save ../../packages/*.tgz"
+    "postbuild:premium-dist": "mkdir -p ./dist/generated && cp src/generated/prisma.graphql ./dist/generated && cp src/schema.graphql ./dist"
   },
   "dependencies": {
     "async": "^2.6.1",
