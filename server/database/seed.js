@@ -488,9 +488,30 @@ const testsetData = [
 
 const testProjectData = [
   {
+    name: 'Echo Bot - Test Suite',
+    description: 'Test Suite for Echo chatbot',
+    code: 'Echo-Bot-Test-Suite',
+    tags: {
+      set: [ 'Demo' ]
+    },
+    batchCount: 3,
+    chatbot: {
+      connect: {
+        name: 'Echo Bot'
+      }
+    },
+    testSets: {
+      connect: [
+        {
+          name: 'Echo Sample'
+        }
+      ]
+    }
+  },
+  {
     name: 'I am Botium - Test Suite',
     description: 'Test Suite for I am Botium chatbot',
-    code: '',
+    code: 'I-am-Botium-Test-Suite',
     tags: {
       set: [ 'Demo' ]
     },
