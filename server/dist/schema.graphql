@@ -102,6 +102,7 @@ type Mutation {
   updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @hasRole(roles: ["ADMIN","USER"])
   deleteTestSet(id: ID!): Boolean! @hasRole(roles: ["ADMIN"])
   cloneTestSet(id: ID!, options: CloneTestSetOptionsChoosen!): TestSet! @hasRole(roles: ["ADMIN","USER"])
+  updateTestSetStats(id: ID!): TestSet! @hasRole(roles: ["ADMIN","USER"])
   createTestSetScript(testSetScript: TestSetScriptCreateInput!): TestSetScript! @hasRole(roles: ["ADMIN","USER"])
   updateTestSetScript(id: ID!, testSetScript: TestSetScriptUpdateInput!): TestSetScript! @hasRole(roles: ["ADMIN","USER"])
   deleteTestSetScript(id: ID!): Boolean! @hasRole(roles: ["ADMIN","USER"])

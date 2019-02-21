@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/box/dev
-# timestamp: Wed Jan 16 2019 17:47:05 GMT+0100 (W. Europe Standard Time)
+# timestamp: Tue Feb 12 2019 14:21:42 GMT+0100 (W. Europe Standard Time)
 
 type Agent implements Node {
   id: ID!
@@ -419,6 +419,10 @@ type AggregateTestSessionTestCaseResultTranscript {
 }
 
 type AggregateTestSet {
+  count: Int!
+}
+
+type AggregateTestSetCompiledConvo {
   count: Int!
 }
 
@@ -1194,6 +1198,7 @@ input CapabilityUpdateManyDataInput {
 input CapabilityUpdateManyInput {
   create: [CapabilityCreateInput!]
   connect: [CapabilityWhereUniqueInput!]
+  set: [CapabilityWhereUniqueInput!]
   disconnect: [CapabilityWhereUniqueInput!]
   delete: [CapabilityWhereUniqueInput!]
   update: [CapabilityUpdateWithWhereUniqueNestedInput!]
@@ -2131,6 +2136,7 @@ input DeviceDescriptorUpdateManyDataInput {
 input DeviceDescriptorUpdateManyInput {
   create: [DeviceDescriptorCreateInput!]
   connect: [DeviceDescriptorWhereUniqueInput!]
+  set: [DeviceDescriptorWhereUniqueInput!]
   disconnect: [DeviceDescriptorWhereUniqueInput!]
   delete: [DeviceDescriptorWhereUniqueInput!]
   update: [DeviceDescriptorUpdateWithWhereUniqueNestedInput!]
@@ -3088,6 +3094,7 @@ input DeviceSetUpdateManyDataInput {
 input DeviceSetUpdateManyInput {
   create: [DeviceSetCreateInput!]
   connect: [DeviceSetWhereUniqueInput!]
+  set: [DeviceSetWhereUniqueInput!]
   disconnect: [DeviceSetWhereUniqueInput!]
   delete: [DeviceSetWhereUniqueInput!]
   update: [DeviceSetUpdateWithWhereUniqueNestedInput!]
@@ -3350,6 +3357,7 @@ type Mutation {
   createChatbot(data: ChatbotCreateInput!): Chatbot!
   createTestSet(data: TestSetCreateInput!): TestSet!
   createDeviceSet(data: DeviceSetCreateInput!): DeviceSet!
+  createTestSetCompiledConvo(data: TestSetCompiledConvoCreateInput!): TestSetCompiledConvo!
   createCapability(data: CapabilityCreateInput!): Capability!
   createTestSetExcel(data: TestSetExcelCreateInput!): TestSetExcel!
   createDeviceProvider(data: DeviceProviderCreateInput!): DeviceProvider!
@@ -3371,6 +3379,7 @@ type Mutation {
   updateChatbot(data: ChatbotUpdateInput!, where: ChatbotWhereUniqueInput!): Chatbot
   updateTestSet(data: TestSetUpdateInput!, where: TestSetWhereUniqueInput!): TestSet
   updateDeviceSet(data: DeviceSetUpdateInput!, where: DeviceSetWhereUniqueInput!): DeviceSet
+  updateTestSetCompiledConvo(data: TestSetCompiledConvoUpdateInput!, where: TestSetCompiledConvoWhereUniqueInput!): TestSetCompiledConvo
   updateCapability(data: CapabilityUpdateInput!, where: CapabilityWhereUniqueInput!): Capability
   updateTestSetExcel(data: TestSetExcelUpdateInput!, where: TestSetExcelWhereUniqueInput!): TestSetExcel
   updateDeviceProvider(data: DeviceProviderUpdateInput!, where: DeviceProviderWhereUniqueInput!): DeviceProvider
@@ -3392,6 +3401,7 @@ type Mutation {
   deleteChatbot(where: ChatbotWhereUniqueInput!): Chatbot
   deleteTestSet(where: TestSetWhereUniqueInput!): TestSet
   deleteDeviceSet(where: DeviceSetWhereUniqueInput!): DeviceSet
+  deleteTestSetCompiledConvo(where: TestSetCompiledConvoWhereUniqueInput!): TestSetCompiledConvo
   deleteCapability(where: CapabilityWhereUniqueInput!): Capability
   deleteTestSetExcel(where: TestSetExcelWhereUniqueInput!): TestSetExcel
   deleteDeviceProvider(where: DeviceProviderWhereUniqueInput!): DeviceProvider
@@ -3413,6 +3423,7 @@ type Mutation {
   upsertChatbot(where: ChatbotWhereUniqueInput!, create: ChatbotCreateInput!, update: ChatbotUpdateInput!): Chatbot!
   upsertTestSet(where: TestSetWhereUniqueInput!, create: TestSetCreateInput!, update: TestSetUpdateInput!): TestSet!
   upsertDeviceSet(where: DeviceSetWhereUniqueInput!, create: DeviceSetCreateInput!, update: DeviceSetUpdateInput!): DeviceSet!
+  upsertTestSetCompiledConvo(where: TestSetCompiledConvoWhereUniqueInput!, create: TestSetCompiledConvoCreateInput!, update: TestSetCompiledConvoUpdateInput!): TestSetCompiledConvo!
   upsertCapability(where: CapabilityWhereUniqueInput!, create: CapabilityCreateInput!, update: CapabilityUpdateInput!): Capability!
   upsertTestSetExcel(where: TestSetExcelWhereUniqueInput!, create: TestSetExcelCreateInput!, update: TestSetExcelUpdateInput!): TestSetExcel!
   upsertDeviceProvider(where: DeviceProviderWhereUniqueInput!, create: DeviceProviderCreateInput!, update: DeviceProviderUpdateInput!): DeviceProvider!
@@ -3434,6 +3445,7 @@ type Mutation {
   updateManyChatbots(data: ChatbotUpdateManyMutationInput!, where: ChatbotWhereInput): BatchPayload!
   updateManyTestSets(data: TestSetUpdateManyMutationInput!, where: TestSetWhereInput): BatchPayload!
   updateManyDeviceSets(data: DeviceSetUpdateManyMutationInput!, where: DeviceSetWhereInput): BatchPayload!
+  updateManyTestSetCompiledConvoes(data: TestSetCompiledConvoUpdateManyMutationInput!, where: TestSetCompiledConvoWhereInput): BatchPayload!
   updateManyCapabilities(data: CapabilityUpdateManyMutationInput!, where: CapabilityWhereInput): BatchPayload!
   updateManyTestSetExcels(data: TestSetExcelUpdateManyMutationInput!, where: TestSetExcelWhereInput): BatchPayload!
   updateManyDeviceProviders(data: DeviceProviderUpdateManyMutationInput!, where: DeviceProviderWhereInput): BatchPayload!
@@ -3455,6 +3467,7 @@ type Mutation {
   deleteManyChatbots(where: ChatbotWhereInput): BatchPayload!
   deleteManyTestSets(where: TestSetWhereInput): BatchPayload!
   deleteManyDeviceSets(where: DeviceSetWhereInput): BatchPayload!
+  deleteManyTestSetCompiledConvoes(where: TestSetCompiledConvoWhereInput): BatchPayload!
   deleteManyCapabilities(where: CapabilityWhereInput): BatchPayload!
   deleteManyTestSetExcels(where: TestSetExcelWhereInput): BatchPayload!
   deleteManyDeviceProviders(where: DeviceProviderWhereInput): BatchPayload!
@@ -3506,6 +3519,7 @@ type Query {
   chatbots(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chatbot]!
   testSets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSet]!
   deviceSets(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DeviceSet]!
+  testSetCompiledConvoes(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetCompiledConvo]!
   capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability]!
   testSetExcels(where: TestSetExcelWhereInput, orderBy: TestSetExcelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetExcel]!
   deviceProviders(where: DeviceProviderWhereInput, orderBy: DeviceProviderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DeviceProvider]!
@@ -3527,6 +3541,7 @@ type Query {
   chatbot(where: ChatbotWhereUniqueInput!): Chatbot
   testSet(where: TestSetWhereUniqueInput!): TestSet
   deviceSet(where: DeviceSetWhereUniqueInput!): DeviceSet
+  testSetCompiledConvo(where: TestSetCompiledConvoWhereUniqueInput!): TestSetCompiledConvo
   capability(where: CapabilityWhereUniqueInput!): Capability
   testSetExcel(where: TestSetExcelWhereUniqueInput!): TestSetExcel
   deviceProvider(where: DeviceProviderWhereUniqueInput!): DeviceProvider
@@ -3548,6 +3563,7 @@ type Query {
   chatbotsConnection(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatbotConnection!
   testSetsConnection(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetConnection!
   deviceSetsConnection(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeviceSetConnection!
+  testSetCompiledConvoesConnection(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetCompiledConvoConnection!
   capabilitiesConnection(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CapabilityConnection!
   testSetExcelsConnection(where: TestSetExcelWhereInput, orderBy: TestSetExcelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetExcelConnection!
   deviceProvidersConnection(where: DeviceProviderWhereInput, orderBy: DeviceProviderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeviceProviderConnection!
@@ -3578,6 +3594,7 @@ type Subscription {
   chatbot(where: ChatbotSubscriptionWhereInput): ChatbotSubscriptionPayload
   testSet(where: TestSetSubscriptionWhereInput): TestSetSubscriptionPayload
   deviceSet(where: DeviceSetSubscriptionWhereInput): DeviceSetSubscriptionPayload
+  testSetCompiledConvo(where: TestSetCompiledConvoSubscriptionWhereInput): TestSetCompiledConvoSubscriptionPayload
   capability(where: CapabilitySubscriptionWhereInput): CapabilitySubscriptionPayload
   testSetExcel(where: TestSetExcelSubscriptionWhereInput): TestSetExcelSubscriptionPayload
   deviceProvider(where: DeviceProviderSubscriptionWhereInput): DeviceProviderSubscriptionPayload
@@ -4777,6 +4794,7 @@ input TestSessionJobLogUpdateManyMutationInput {
 input TestSessionJobLogUpdateManyWithoutTestSessionJobInput {
   create: [TestSessionJobLogCreateWithoutTestSessionJobInput!]
   connect: [TestSessionJobLogWhereUniqueInput!]
+  set: [TestSessionJobLogWhereUniqueInput!]
   disconnect: [TestSessionJobLogWhereUniqueInput!]
   delete: [TestSessionJobLogWhereUniqueInput!]
   update: [TestSessionJobLogUpdateWithWhereUniqueWithoutTestSessionJobInput!]
@@ -5289,6 +5307,7 @@ input TestSessionJobUpdateManyMutationInput {
 input TestSessionJobUpdateManyWithoutTestSessionInput {
   create: [TestSessionJobCreateWithoutTestSessionInput!]
   connect: [TestSessionJobWhereUniqueInput!]
+  set: [TestSessionJobWhereUniqueInput!]
   disconnect: [TestSessionJobWhereUniqueInput!]
   delete: [TestSessionJobWhereUniqueInput!]
   update: [TestSessionJobUpdateWithWhereUniqueWithoutTestSessionInput!]
@@ -6023,6 +6042,7 @@ input TestSessionTestCaseResultAttachmentUpdateManyDataInput {
 input TestSessionTestCaseResultAttachmentUpdateManyInput {
   create: [TestSessionTestCaseResultAttachmentCreateInput!]
   connect: [TestSessionTestCaseResultAttachmentWhereUniqueInput!]
+  set: [TestSessionTestCaseResultAttachmentWhereUniqueInput!]
   disconnect: [TestSessionTestCaseResultAttachmentWhereUniqueInput!]
   delete: [TestSessionTestCaseResultAttachmentWhereUniqueInput!]
   update: [TestSessionTestCaseResultAttachmentUpdateWithWhereUniqueNestedInput!]
@@ -7217,6 +7237,7 @@ input TestSessionTestCaseResultTranscriptUpdateManyDataInput {
 input TestSessionTestCaseResultTranscriptUpdateManyInput {
   create: [TestSessionTestCaseResultTranscriptCreateInput!]
   connect: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
+  set: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
   disconnect: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
   delete: [TestSessionTestCaseResultTranscriptWhereUniqueInput!]
   update: [TestSessionTestCaseResultTranscriptUpdateWithWhereUniqueNestedInput!]
@@ -7623,6 +7644,7 @@ input TestSessionTestCaseResultUpdateManyMutationInput {
 input TestSessionTestCaseResultUpdateManyWithoutTestSessionInput {
   create: [TestSessionTestCaseResultCreateWithoutTestSessionInput!]
   connect: [TestSessionTestCaseResultWhereUniqueInput!]
+  set: [TestSessionTestCaseResultWhereUniqueInput!]
   disconnect: [TestSessionTestCaseResultWhereUniqueInput!]
   delete: [TestSessionTestCaseResultWhereUniqueInput!]
   update: [TestSessionTestCaseResultUpdateWithWhereUniqueWithoutTestSessionInput!]
@@ -8384,6 +8406,704 @@ type TestSet implements Node {
   repositories(where: TestSetRepositoryWhereInput, orderBy: TestSetRepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetRepository!]
   folders(where: TestSetFolderWhereInput, orderBy: TestSetFolderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetFolder!]
   excels(where: TestSetExcelWhereInput, orderBy: TestSetExcelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetExcel!]
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
+  statsCompiledConvos(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetCompiledConvo!]
+}
+
+type TestSetCompiledConvo implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  order: Int
+  description: String
+  sourceTag: String
+  stepCount: Int!
+}
+
+"""A connection to a list of items."""
+type TestSetCompiledConvoConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TestSetCompiledConvoEdge]!
+  aggregate: AggregateTestSetCompiledConvo!
+}
+
+input TestSetCompiledConvoCreateInput {
+  name: String!
+  order: Int
+  description: String
+  sourceTag: String
+  stepCount: Int!
+}
+
+input TestSetCompiledConvoCreateManyInput {
+  create: [TestSetCompiledConvoCreateInput!]
+  connect: [TestSetCompiledConvoWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type TestSetCompiledConvoEdge {
+  """The item at the end of the edge."""
+  node: TestSetCompiledConvo!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TestSetCompiledConvoOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  order_ASC
+  order_DESC
+  description_ASC
+  description_DESC
+  sourceTag_ASC
+  sourceTag_DESC
+  stepCount_ASC
+  stepCount_DESC
+}
+
+type TestSetCompiledConvoPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  order: Int
+  description: String
+  sourceTag: String
+  stepCount: Int!
+}
+
+input TestSetCompiledConvoScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestSetCompiledConvoScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestSetCompiledConvoScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestSetCompiledConvoScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  order: Int
+
+  """All values that are not equal to given value."""
+  order_not: Int
+
+  """All values that are contained in given list."""
+  order_in: [Int!]
+
+  """All values that are not contained in given list."""
+  order_not_in: [Int!]
+
+  """All values less than the given value."""
+  order_lt: Int
+
+  """All values less than or equal the given value."""
+  order_lte: Int
+
+  """All values greater than the given value."""
+  order_gt: Int
+
+  """All values greater than or equal the given value."""
+  order_gte: Int
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  sourceTag: String
+
+  """All values that are not equal to given value."""
+  sourceTag_not: String
+
+  """All values that are contained in given list."""
+  sourceTag_in: [String!]
+
+  """All values that are not contained in given list."""
+  sourceTag_not_in: [String!]
+
+  """All values less than the given value."""
+  sourceTag_lt: String
+
+  """All values less than or equal the given value."""
+  sourceTag_lte: String
+
+  """All values greater than the given value."""
+  sourceTag_gt: String
+
+  """All values greater than or equal the given value."""
+  sourceTag_gte: String
+
+  """All values containing the given string."""
+  sourceTag_contains: String
+
+  """All values not containing the given string."""
+  sourceTag_not_contains: String
+
+  """All values starting with the given string."""
+  sourceTag_starts_with: String
+
+  """All values not starting with the given string."""
+  sourceTag_not_starts_with: String
+
+  """All values ending with the given string."""
+  sourceTag_ends_with: String
+
+  """All values not ending with the given string."""
+  sourceTag_not_ends_with: String
+  stepCount: Int
+
+  """All values that are not equal to given value."""
+  stepCount_not: Int
+
+  """All values that are contained in given list."""
+  stepCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stepCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  stepCount_lt: Int
+
+  """All values less than or equal the given value."""
+  stepCount_lte: Int
+
+  """All values greater than the given value."""
+  stepCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  stepCount_gte: Int
+}
+
+type TestSetCompiledConvoSubscriptionPayload {
+  mutation: MutationType!
+  node: TestSetCompiledConvo
+  updatedFields: [String!]
+  previousValues: TestSetCompiledConvoPreviousValues
+}
+
+input TestSetCompiledConvoSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestSetCompiledConvoSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestSetCompiledConvoSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestSetCompiledConvoSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TestSetCompiledConvoWhereInput
+}
+
+input TestSetCompiledConvoUpdateDataInput {
+  name: String
+  order: Int
+  description: String
+  sourceTag: String
+  stepCount: Int
+}
+
+input TestSetCompiledConvoUpdateInput {
+  name: String
+  order: Int
+  description: String
+  sourceTag: String
+  stepCount: Int
+}
+
+input TestSetCompiledConvoUpdateManyDataInput {
+  name: String
+  order: Int
+  description: String
+  sourceTag: String
+  stepCount: Int
+}
+
+input TestSetCompiledConvoUpdateManyInput {
+  create: [TestSetCompiledConvoCreateInput!]
+  connect: [TestSetCompiledConvoWhereUniqueInput!]
+  set: [TestSetCompiledConvoWhereUniqueInput!]
+  disconnect: [TestSetCompiledConvoWhereUniqueInput!]
+  delete: [TestSetCompiledConvoWhereUniqueInput!]
+  update: [TestSetCompiledConvoUpdateWithWhereUniqueNestedInput!]
+  updateMany: [TestSetCompiledConvoUpdateManyWithWhereNestedInput!]
+  deleteMany: [TestSetCompiledConvoScalarWhereInput!]
+  upsert: [TestSetCompiledConvoUpsertWithWhereUniqueNestedInput!]
+}
+
+input TestSetCompiledConvoUpdateManyMutationInput {
+  name: String
+  order: Int
+  description: String
+  sourceTag: String
+  stepCount: Int
+}
+
+input TestSetCompiledConvoUpdateManyWithWhereNestedInput {
+  where: TestSetCompiledConvoScalarWhereInput!
+  data: TestSetCompiledConvoUpdateManyDataInput!
+}
+
+input TestSetCompiledConvoUpdateWithWhereUniqueNestedInput {
+  where: TestSetCompiledConvoWhereUniqueInput!
+  data: TestSetCompiledConvoUpdateDataInput!
+}
+
+input TestSetCompiledConvoUpsertWithWhereUniqueNestedInput {
+  where: TestSetCompiledConvoWhereUniqueInput!
+  update: TestSetCompiledConvoUpdateDataInput!
+  create: TestSetCompiledConvoCreateInput!
+}
+
+input TestSetCompiledConvoWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TestSetCompiledConvoWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TestSetCompiledConvoWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TestSetCompiledConvoWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  order: Int
+
+  """All values that are not equal to given value."""
+  order_not: Int
+
+  """All values that are contained in given list."""
+  order_in: [Int!]
+
+  """All values that are not contained in given list."""
+  order_not_in: [Int!]
+
+  """All values less than the given value."""
+  order_lt: Int
+
+  """All values less than or equal the given value."""
+  order_lte: Int
+
+  """All values greater than the given value."""
+  order_gt: Int
+
+  """All values greater than or equal the given value."""
+  order_gte: Int
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  sourceTag: String
+
+  """All values that are not equal to given value."""
+  sourceTag_not: String
+
+  """All values that are contained in given list."""
+  sourceTag_in: [String!]
+
+  """All values that are not contained in given list."""
+  sourceTag_not_in: [String!]
+
+  """All values less than the given value."""
+  sourceTag_lt: String
+
+  """All values less than or equal the given value."""
+  sourceTag_lte: String
+
+  """All values greater than the given value."""
+  sourceTag_gt: String
+
+  """All values greater than or equal the given value."""
+  sourceTag_gte: String
+
+  """All values containing the given string."""
+  sourceTag_contains: String
+
+  """All values not containing the given string."""
+  sourceTag_not_contains: String
+
+  """All values starting with the given string."""
+  sourceTag_starts_with: String
+
+  """All values not starting with the given string."""
+  sourceTag_not_starts_with: String
+
+  """All values ending with the given string."""
+  sourceTag_ends_with: String
+
+  """All values not ending with the given string."""
+  sourceTag_not_ends_with: String
+  stepCount: Int
+
+  """All values that are not equal to given value."""
+  stepCount_not: Int
+
+  """All values that are contained in given list."""
+  stepCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stepCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  stepCount_lt: Int
+
+  """All values less than or equal the given value."""
+  stepCount_lte: Int
+
+  """All values greater than the given value."""
+  stepCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  stepCount_gte: Int
+}
+
+input TestSetCompiledConvoWhereUniqueInput {
+  id: ID
 }
 
 """A connection to a list of items."""
@@ -8402,11 +9122,15 @@ input TestSetCreateInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoCreateManyInput
 }
 
 input TestSetCreateManyInput {
@@ -8449,10 +9173,14 @@ input TestSetCreateWithoutExcelsInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   folders: TestSetFolderCreateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoCreateManyInput
 }
 
 input TestSetCreateWithoutFoldersInput {
@@ -8461,10 +9189,14 @@ input TestSetCreateWithoutFoldersInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoCreateManyInput
 }
 
 input TestSetCreateWithoutRepositoriesInput {
@@ -8473,10 +9205,14 @@ input TestSetCreateWithoutRepositoriesInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoCreateManyInput
 }
 
 input TestSetCreateWithoutScriptsInput {
@@ -8485,10 +9221,14 @@ input TestSetCreateWithoutScriptsInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoCreateManyInput
 }
 
 """An edge in a connection."""
@@ -9051,6 +9791,7 @@ input TestSetExcelUpdateManyMutationInput {
 input TestSetExcelUpdateManyWithoutTestSetInput {
   create: [TestSetExcelCreateWithoutTestSetInput!]
   connect: [TestSetExcelWhereUniqueInput!]
+  set: [TestSetExcelWhereUniqueInput!]
   disconnect: [TestSetExcelWhereUniqueInput!]
   delete: [TestSetExcelWhereUniqueInput!]
   update: [TestSetExcelUpdateWithWhereUniqueWithoutTestSetInput!]
@@ -9812,6 +10553,7 @@ input TestSetFolderUpdateManyMutationInput {
 input TestSetFolderUpdateManyWithoutTestSetInput {
   create: [TestSetFolderCreateWithoutTestSetInput!]
   connect: [TestSetFolderWhereUniqueInput!]
+  set: [TestSetFolderWhereUniqueInput!]
   disconnect: [TestSetFolderWhereUniqueInput!]
   delete: [TestSetFolderWhereUniqueInput!]
   update: [TestSetFolderUpdateWithWhereUniqueWithoutTestSetInput!]
@@ -10093,6 +10835,12 @@ enum TestSetOrderByInput {
   expandUtterancesToConvos_DESC
   expandUtterancesIncomprehension_ASC
   expandUtterancesIncomprehension_DESC
+  statsUpdatedAt_ASC
+  statsUpdatedAt_DESC
+  statsConvoCount_ASC
+  statsConvoCount_DESC
+  statsUtterancesCount_ASC
+  statsUtterancesCount_DESC
 }
 
 type TestSetPreviousValues {
@@ -10105,6 +10853,9 @@ type TestSetPreviousValues {
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
   tags: [String!]!
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
 }
 
 type TestSetRepository implements Node {
@@ -10566,6 +11317,7 @@ input TestSetRepositoryUpdateManyMutationInput {
 input TestSetRepositoryUpdateManyWithoutTestSetInput {
   create: [TestSetRepositoryCreateWithoutTestSetInput!]
   connect: [TestSetRepositoryWhereUniqueInput!]
+  set: [TestSetRepositoryWhereUniqueInput!]
   disconnect: [TestSetRepositoryWhereUniqueInput!]
   delete: [TestSetRepositoryWhereUniqueInput!]
   update: [TestSetRepositoryUpdateWithWhereUniqueWithoutTestSetInput!]
@@ -11133,6 +11885,72 @@ input TestSetScalarWhereInput {
 
   """All values not ending with the given string."""
   expandUtterancesIncomprehension_not_ends_with: String
+  statsUpdatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  statsUpdatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  statsUpdatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  statsUpdatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  statsUpdatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  statsUpdatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  statsUpdatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  statsUpdatedAt_gte: DateTime
+  statsConvoCount: Int
+
+  """All values that are not equal to given value."""
+  statsConvoCount_not: Int
+
+  """All values that are contained in given list."""
+  statsConvoCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsConvoCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsConvoCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsConvoCount_lte: Int
+
+  """All values greater than the given value."""
+  statsConvoCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsConvoCount_gte: Int
+  statsUtterancesCount: Int
+
+  """All values that are not equal to given value."""
+  statsUtterancesCount_not: Int
+
+  """All values that are contained in given list."""
+  statsUtterancesCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsUtterancesCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsUtterancesCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsUtterancesCount_lte: Int
+
+  """All values greater than the given value."""
+  statsUtterancesCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsUtterancesCount_gte: Int
 }
 
 type TestSetScript implements Node {
@@ -11519,6 +12337,7 @@ input TestSetScriptUpdateManyMutationInput {
 input TestSetScriptUpdateManyWithoutTestSetInput {
   create: [TestSetScriptCreateWithoutTestSetInput!]
   connect: [TestSetScriptWhereUniqueInput!]
+  set: [TestSetScriptWhereUniqueInput!]
   disconnect: [TestSetScriptWhereUniqueInput!]
   delete: [TestSetScriptWhereUniqueInput!]
   update: [TestSetScriptUpdateWithWhereUniqueWithoutTestSetInput!]
@@ -11839,11 +12658,15 @@ input TestSetUpdateDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
 }
 
 input TestSetUpdateInput {
@@ -11852,11 +12675,15 @@ input TestSetUpdateInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
 }
 
 input TestSetUpdateManyDataInput {
@@ -11865,12 +12692,16 @@ input TestSetUpdateManyDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
 }
 
 input TestSetUpdateManyInput {
   create: [TestSetCreateInput!]
   connect: [TestSetWhereUniqueInput!]
+  set: [TestSetWhereUniqueInput!]
   disconnect: [TestSetWhereUniqueInput!]
   delete: [TestSetWhereUniqueInput!]
   update: [TestSetUpdateWithWhereUniqueNestedInput!]
@@ -11885,6 +12716,9 @@ input TestSetUpdateManyMutationInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
 }
 
@@ -11940,10 +12774,14 @@ input TestSetUpdateWithoutExcelsDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   folders: TestSetFolderUpdateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
 }
 
 input TestSetUpdateWithoutFoldersDataInput {
@@ -11952,10 +12790,14 @@ input TestSetUpdateWithoutFoldersDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
 }
 
 input TestSetUpdateWithoutRepositoriesDataInput {
@@ -11964,10 +12806,14 @@ input TestSetUpdateWithoutRepositoriesDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
 }
 
 input TestSetUpdateWithoutScriptsDataInput {
@@ -11976,10 +12822,14 @@ input TestSetUpdateWithoutScriptsDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  statsUpdatedAt: DateTime
+  statsConvoCount: Int
+  statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
+  statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
 }
 
 input TestSetUpdateWithWhereUniqueNestedInput {
@@ -12239,6 +13089,72 @@ input TestSetWhereInput {
 
   """All values not ending with the given string."""
   expandUtterancesIncomprehension_not_ends_with: String
+  statsUpdatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  statsUpdatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  statsUpdatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  statsUpdatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  statsUpdatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  statsUpdatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  statsUpdatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  statsUpdatedAt_gte: DateTime
+  statsConvoCount: Int
+
+  """All values that are not equal to given value."""
+  statsConvoCount_not: Int
+
+  """All values that are contained in given list."""
+  statsConvoCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsConvoCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsConvoCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsConvoCount_lte: Int
+
+  """All values greater than the given value."""
+  statsConvoCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsConvoCount_gte: Int
+  statsUtterancesCount: Int
+
+  """All values that are not equal to given value."""
+  statsUtterancesCount_not: Int
+
+  """All values that are contained in given list."""
+  statsUtterancesCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsUtterancesCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsUtterancesCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsUtterancesCount_lte: Int
+
+  """All values greater than the given value."""
+  statsUtterancesCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsUtterancesCount_gte: Int
   scripts_every: TestSetScriptWhereInput
   scripts_some: TestSetScriptWhereInput
   scripts_none: TestSetScriptWhereInput
@@ -12251,6 +13167,9 @@ input TestSetWhereInput {
   excels_every: TestSetExcelWhereInput
   excels_some: TestSetExcelWhereInput
   excels_none: TestSetExcelWhereInput
+  statsCompiledConvos_every: TestSetCompiledConvoWhereInput
+  statsCompiledConvos_some: TestSetCompiledConvoWhereInput
+  statsCompiledConvos_none: TestSetCompiledConvoWhereInput
 }
 
 input TestSetWhereUniqueInput {

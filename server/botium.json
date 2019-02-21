@@ -1,0 +1,12 @@
+{
+  "botium": {
+    "Capabilities": {
+      "ASSERTERS": [
+        {
+          "ref": "HASLINK",
+          "src": "botium-asserter-basiclink"
+        }
+      ]
+    }
+  }
+}
