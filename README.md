@@ -1,6 +1,10 @@
 # Botium Box - Community Edition
 
+[![NPM](https://nodei.co/npm/botium-box.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/botium-box/)
+
 Botium Box is running on standard components available for free. You can install it on your own server (on premise), or use cloud providers for serverless installation, or even a mixture of those approaches.
+
+**_IF YOU LIKE WHAT YOU SEE, PLEASE CONSIDER GIVING US A STAR ON GITHUB!_**
 
 ## Botium Box Serverless Installation
 
