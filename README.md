@@ -37,7 +37,9 @@ For hosting Botium Box as Docker, use these commands to build and run a Docker i
 ```
 > git clone https://github.com/codeforequity-at/botium-box-basic-dist.git && cd botium-box-basic-dist
 > docker build --build-arg BOTIUMBOX_QUEUE_REDISURL=redis://redisuser:redispassword@redishost:redisport --build-arg PRISMA_ENDPOINT=https://my-prisma-endpoint/demo/dev --build-arg PRISMA_MANAGEMENT_API_SECRET=my-prisma-management-api-secret --build-arg PRISMA_SECRET=something123 --build-arg JWT_SECRET=something123 -t botiumbox .
-> docker run -p 4000:4000 botiumbox
+> docker run -v ./botiumwork:/app/botiumwork \
+    -v ./testsets:/app/testsets \
+    -p 4000:4000 botiumbox
 ```
 
 Botium Box will now run on http://localhost:4000
@@ -81,6 +83,13 @@ __Download and run Botium Box__
 3. Point your browser to http://127.0.0.1:8080
 
 ### Download, build and run from Git repository
+
+if you run this under macOS then you need to install those first. This is basically needed, because
+there is no timeout command in the OSX bash shell. Here you find more information [wait-for-it OSX issue timeout](https://github.com/vishnubob/wait-for-it/issues/15)
+```
+> brew install coreutils
+> alias timeout=gtimeout
+```
 
 ```
 > git clone https://github.com/codeforequity-at/botium-box-basic-dist.git && cd botium-box-basic-dist
