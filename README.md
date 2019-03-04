@@ -2,6 +2,8 @@
 
 [![NPM](https://nodei.co/npm/botium-box.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/botium-box/)
 
+Chatbots are driving the industry. With Botium we are driving chatbots. Botium is a suite of open source software components that support chatbot makers in training and quality assurance.
+
 Botium Box is running on standard components available for free. You can install it on your own server (on premise), or use cloud providers for serverless installation, or even a mixture of those approaches.
 
 **_IF YOU LIKE WHAT YOU SEE, PLEASE CONSIDER GIVING US A STAR ON GITHUB!_**
@@ -32,23 +34,30 @@ Fill in the environment variables from what you know from above, and afterwards 
 
 #### Build and run Docker Container
 
-For hosting Botium Box as Docker, use these commands to build and run a Docker image:
+Botium Box requires two directories for operations. You can just let them created inside the Docker container, but this is not recommended.
+
+* A directory holding the test sets should be mounted to /app/server/testsets
+* A working directory for the Botium Box server mounted to /app/server/botiumwork and for the agents mounted to /app/agent/botiumwork
+
+Both of them can be handed over to docker with the _-v_ command line flag.
+
+For hosting Botium Box as Docker, use these commands to run the Docker image:
 
 ```
-> git clone https://github.com/codeforequity-at/botium-box-basic-dist.git && cd botium-box-basic-dist
-> docker build --build-arg BOTIUMBOX_QUEUE_REDISURL=redis://redisuser:redispassword@redishost:redisport --build-arg PRISMA_ENDPOINT=https://my-prisma-endpoint/demo/dev --build-arg PRISMA_MANAGEMENT_API_SECRET=my-prisma-management-api-secret --build-arg PRISMA_SECRET=something123 --build-arg JWT_SECRET=something123 -t botiumbox .
-> docker run -v ./botiumwork:/app/botiumwork \
-    -v ./testsets:/app/testsets \
-    -p 4000:4000 botiumbox
+> docker run -v /tmp/botiumwork:/app/server/botiumwork \
+	-v /tmp/botiumwork:/app/agent/botiumwork \
+    -v /tmp/testsets:/app/server/testsets \
+	-e BOTIUMBOX_QUEUE_REDISURL=redis://redisuser:redispassword@redishost:redisport \
+	-e PRISMA_ENDPOINT=https://my-prisma-endpoint:my-prisma-port/demo/dev \
+	-e PRISMA_MANAGEMENT_API_SECRET=my-prisma-management-api-secret \
+	-e PRISMA_SECRET=something123 \
+	-e JWT_SECRET=something123 \
+    -p 4000:4000 botium/botium-box-ce:box-latest
 ```
 
 Botium Box will now run on http://localhost:4000
 
-For some log output, run this command instead:
-
-```
-> docker run -p 4000:4000 -e DEBUG=botium* botiumbox
-```
+For some log output, you can add the _-e DEBUG=botium*_ environment variable
 
 ## Botium Box Standalone Installation
 
@@ -58,9 +67,39 @@ You can run Botium Box on your own server.
 
 * [docker](https://www.docker.com/get-started)
 * [docker-compose](https://docs.docker.com/compose/install/)
-* [Node.js](https://nodejs.org/en/download/)
+* [Node.js](https://nodejs.org/en/download/) (only when running node processes outside of docker)
 
-### Download, build and run from NPM registry (recommended)
+### Run Botium Box with Docker-Compose (recommended)
+
+The Docker-Compose file contains all prerequisites for running Botium Box and is the recommended and most easy way to run Botium Box.
+
+1. Download [docker-compose-all.yml](https://github.com/codeforequity-at/botium-box-basic-dist/blob/master/docker-compose-all.yml) and save to your local hard drive.
+2. Start Botium Box by running docker-compose:
+```
+> docker-compose -f docker-compose-all.yml up
+```
+3. Point your browser to http://127.0.0.1:4000
+
+_To make your Botium testsets and working directory point to a folder of your choice, you have to edit the docker-compose-all.yml file!_
+
+
+### Run Botium Box with standalone Docker image (not recommended)
+
+Botium Box can use "docker-in-docker" to startup in a single docker container, spawning the prerequisites in separate docker containers.
+
+_Don't use this setup in production environments!_
+
+```
+> docker run -v /tmp/botiumwork:/app/server/botiumwork \
+	-v /tmp/botiumwork:/app/agent/botiumwork \
+    -v /tmp/testsets:/app/server/testsets \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+    -p 4000:4000 botium/botium-box-ce:standalone-latest
+```
+
+Point your browser to http://127.0.0.1:4000
+
+### Download, build and run from NPM registry
 
 __Prepare Backend services__
 

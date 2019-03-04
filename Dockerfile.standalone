@@ -9,6 +9,8 @@ RUN find . -type f -print0 | xargs -0 dos2unix
 RUN npm set unsafe-perm true && npm install --no-optional --production
 
 VOLUME /app/server/testsets
+VOLUME /app/server/botiumwork
+VOLUME /app/agent/botiumwork
 
 EXPOSE 4000
 
