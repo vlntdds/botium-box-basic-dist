@@ -19,9 +19,12 @@
     "start-standalone:backend": "cd server/database && cross-env docker-compose up",
     "start-standalone:frontend": "./wait-for-it.sh -s 127.0.0.1:4466 -- cross-env DEBUG=botium* PRISMA_ENDPOINT=http://127.0.0.1:4466/box/standalone PRISMA_SECRET=mysecret123 JWT_SECRET=jwtsecret123 BOTIUMBOX_QUEUE_REDISURL=redis://127.0.0.1:6379 npm start",
     "start-standalone:frontend:docker": "HOST_IP=`/sbin/ip route|awk '/default/ { print $3 }'` && ./wait-for-it.sh -t 300 -s $HOST_IP:4466 -- cross-env DEBUG=botium* PRISMA_ENDPOINT=http://$HOST_IP:4466/box/standalone PRISMA_SECRET=mysecret123 JWT_SECRET=jwtsecret123 BOTIUMBOX_QUEUE_REDISURL=redis://$HOST_IP:6379 npm start",
-	"docker:build-standalone": "docker build -f Dockerfile.standalone . -t botium/botium-box-ce:$npm_package_version",
-	"docker:run-standalone": "docker run -p 4000:4000 -v `pwd`/server/testsets:/app/server/testsets -v /var/run/docker.sock:/var/run/docker.sock --name botium-box-ce -it botium/botium-box-ce:$npm_package_version",
-	"docker:publish-standalone": "docker push botium/botium-box-ce:$npm_package_version && docker tag botium/botium-box-ce:$npm_package_version botium/botium-box-ce:latest && docker push botium/botium-box-ce:latest"
+	  "docker:build-standalone": "docker build -f Dockerfile.standalone . -t botium/botium-box-ce:standalone-$npm_package_version",
+	  "docker:run-standalone": "docker run -p 4000:4000 -v `pwd`/server/testsets:/app/server/testsets -v /var/run/docker.sock:/var/run/docker.sock --name botium-box-ce -it botium/botium-box-ce:standalone-$npm_package_version",
+	  "docker:publish-standalone": "docker push botium/botium-box-ce:standalone-$npm_package_version && docker tag botium/botium-box-ce:standalone-$npm_package_version botium/botium-box-ce:latest && docker push botium/botium-box-ce:latest",
+	  "docker:build-box": "docker build -f Dockerfile.box . -t botium/botium-box-ce:box-$npm_package_version",
+	  "docker:run-box": "docker run -p 4000:4000 -v `pwd`/server/testsets:/app/server/testsets --name botium-box-ce -it botium/botium-box-ce:box-$npm_package_version",
+	  "docker:publish-box": "docker push botium/botium-box-ce:box-$npm_package_version"
   },
   "dependencies": {
     "cross-env": "^5.2.0",

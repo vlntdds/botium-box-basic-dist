@@ -1,4 +1,4 @@
-FROM docker:latest
+FROM docker:18.09
 
 RUN apk update && apk add nodejs npm py-pip dos2unix bash && pip install docker-compose
 
