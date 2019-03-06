@@ -8,6 +8,18 @@ Botium Box is running on standard components available for free. You can install
 
 **_IF YOU LIKE WHAT YOU SEE, PLEASE CONSIDER GIVING US A STAR ON GITHUB!_**
 
+## Quickstart
+
+This is the fastest way to launch Botium Box and all required components ([docker](https://www.docker.com/get-started) and 
+[docker-compose](https://docs.docker.com/compose/install/) required):
+
+```
+> curl --output docker-compose-all.yml https://raw.githubusercontent.com/codeforequity-at/botium-box-basic-dist/master/docker-compose-all.yml
+> docker-compose -f docker-compose-all.yml up
+```
+
+Botium Box will now run on http://127.0.0.1:4000
+
 ## Botium Box Serverless Installation
 
 Botium Box can be installed "serverless" using existing cloud services. 
@@ -55,7 +67,7 @@ For hosting Botium Box as Docker, use these commands to run the Docker image:
     -p 4000:4000 botium/botium-box-ce:box-latest
 ```
 
-Botium Box will now run on http://localhost:4000
+Botium Box will now run on http://127.0.0.1:4000
 
 For some log output, you can add the _-e DEBUG=botium*_ environment variable
 
@@ -137,7 +149,7 @@ there is no timeout command in the OSX bash shell. Here you find more informatio
 > npm run start-standalone:frontend
 ```
 
-Botium Box will now run on http://localhost:4000
+Botium Box will now run on http://127.0.0.1:4000
 
 _Installation and startup can take a while, especially on first usage._
 
