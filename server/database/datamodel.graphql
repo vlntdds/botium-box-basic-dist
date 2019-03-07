@@ -142,6 +142,9 @@ type TestSessionJob {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   logs: [TestSessionJobLog!]!
 }
 
@@ -176,6 +179,7 @@ type TestSet {
   excels: [TestSetExcel!]!
   statsUpdatedAt: DateTime,
   statsConvoCount: Int,
+  statsPartialConvoCount: Int,
   statsUtterancesCount: Int,
   statsCompiledConvos: [TestSetCompiledConvo!]
 }
@@ -204,6 +208,7 @@ type TestSetScript {
 
 enum TestSetScriptType {
   SCRIPTING_TYPE_CONVO
+  SCRIPTING_TYPE_PCONVO
   SCRIPTING_TYPE_UTTERANCES
 }
 
@@ -236,9 +241,11 @@ type TestSetExcel {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean!
-  hasUtterances: Boolean!
+  hasConvos: Boolean
+  hasPartialConvos: Boolean
+  hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int!
   startCol: Int!

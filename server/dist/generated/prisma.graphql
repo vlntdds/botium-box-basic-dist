@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/box/dev
-# timestamp: Tue Feb 12 2019 14:21:42 GMT+0100 (W. Europe Standard Time)
+# timestamp: Tue Mar 05 2019 12:23:37 GMT+0100 (W. Europe Standard Time)
 
 type Agent implements Node {
   id: ID!
@@ -4482,6 +4482,9 @@ type TestSessionJob implements Node {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   logs(where: TestSessionJobLogWhereInput, orderBy: TestSessionJobLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionJobLog!]
 }
 
@@ -4502,6 +4505,9 @@ input TestSessionJobCreateInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   testSession: TestSessionCreateOneWithoutJobsInput!
   logs: TestSessionJobLogCreateManyWithoutTestSessionJobInput
 }
@@ -4523,6 +4529,9 @@ input TestSessionJobCreateWithoutLogsInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   testSession: TestSessionCreateOneWithoutJobsInput!
 }
 
@@ -4533,6 +4542,9 @@ input TestSessionJobCreateWithoutTestSessionInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   logs: TestSessionJobLogCreateManyWithoutTestSessionJobInput
 }
 
@@ -4982,6 +4994,12 @@ enum TestSessionJobOrderByInput {
   started_DESC
   finished_ASC
   finished_DESC
+  totalCount_ASC
+  totalCount_DESC
+  failedCount_ASC
+  failedCount_DESC
+  successCount_ASC
+  successCount_DESC
 }
 
 type TestSessionJobPreviousValues {
@@ -4994,6 +5012,9 @@ type TestSessionJobPreviousValues {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
 }
 
 input TestSessionJobScalarWhereInput {
@@ -5227,6 +5248,72 @@ input TestSessionJobScalarWhereInput {
 
   """All values greater than or equal the given value."""
   finished_gte: DateTime
+  totalCount: Int
+
+  """All values that are not equal to given value."""
+  totalCount_not: Int
+
+  """All values that are contained in given list."""
+  totalCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  totalCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  totalCount_lt: Int
+
+  """All values less than or equal the given value."""
+  totalCount_lte: Int
+
+  """All values greater than the given value."""
+  totalCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  totalCount_gte: Int
+  failedCount: Int
+
+  """All values that are not equal to given value."""
+  failedCount_not: Int
+
+  """All values that are contained in given list."""
+  failedCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  failedCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  failedCount_lt: Int
+
+  """All values less than or equal the given value."""
+  failedCount_lte: Int
+
+  """All values greater than the given value."""
+  failedCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  failedCount_gte: Int
+  successCount: Int
+
+  """All values that are not equal to given value."""
+  successCount_not: Int
+
+  """All values that are contained in given list."""
+  successCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  successCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  successCount_lt: Int
+
+  """All values less than or equal the given value."""
+  successCount_lte: Int
+
+  """All values greater than the given value."""
+  successCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  successCount_gte: Int
 }
 
 enum TestSessionJobStatus {
@@ -5282,6 +5369,9 @@ input TestSessionJobUpdateInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   testSession: TestSessionUpdateOneRequiredWithoutJobsInput
   logs: TestSessionJobLogUpdateManyWithoutTestSessionJobInput
 }
@@ -5293,6 +5383,9 @@ input TestSessionJobUpdateManyDataInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
 }
 
 input TestSessionJobUpdateManyMutationInput {
@@ -5302,6 +5395,9 @@ input TestSessionJobUpdateManyMutationInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
 }
 
 input TestSessionJobUpdateManyWithoutTestSessionInput {
@@ -5335,6 +5431,9 @@ input TestSessionJobUpdateWithoutLogsDataInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   testSession: TestSessionUpdateOneRequiredWithoutJobsInput
 }
 
@@ -5345,6 +5444,9 @@ input TestSessionJobUpdateWithoutTestSessionDataInput {
   err: String
   started: DateTime
   finished: DateTime
+  totalCount: Int
+  failedCount: Int
+  successCount: Int
   logs: TestSessionJobLogUpdateManyWithoutTestSessionJobInput
 }
 
@@ -5595,6 +5697,72 @@ input TestSessionJobWhereInput {
 
   """All values greater than or equal the given value."""
   finished_gte: DateTime
+  totalCount: Int
+
+  """All values that are not equal to given value."""
+  totalCount_not: Int
+
+  """All values that are contained in given list."""
+  totalCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  totalCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  totalCount_lt: Int
+
+  """All values less than or equal the given value."""
+  totalCount_lte: Int
+
+  """All values greater than the given value."""
+  totalCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  totalCount_gte: Int
+  failedCount: Int
+
+  """All values that are not equal to given value."""
+  failedCount_not: Int
+
+  """All values that are contained in given list."""
+  failedCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  failedCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  failedCount_lt: Int
+
+  """All values less than or equal the given value."""
+  failedCount_lte: Int
+
+  """All values greater than the given value."""
+  failedCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  failedCount_gte: Int
+  successCount: Int
+
+  """All values that are not equal to given value."""
+  successCount_not: Int
+
+  """All values that are contained in given list."""
+  successCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  successCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  successCount_lt: Int
+
+  """All values less than or equal the given value."""
+  successCount_lte: Int
+
+  """All values greater than the given value."""
+  successCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  successCount_gte: Int
   testSession: TestSessionWhereInput
   logs_every: TestSessionJobLogWhereInput
   logs_some: TestSessionJobLogWhereInput
@@ -8408,6 +8576,7 @@ type TestSet implements Node {
   excels(where: TestSetExcelWhereInput, orderBy: TestSetExcelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetExcel!]
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   statsCompiledConvos(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetCompiledConvo!]
 }
@@ -9124,6 +9293,7 @@ input TestSetCreateInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -9175,6 +9345,7 @@ input TestSetCreateWithoutExcelsInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -9191,6 +9362,7 @@ input TestSetCreateWithoutFoldersInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -9207,6 +9379,7 @@ input TestSetCreateWithoutRepositoriesInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -9223,6 +9396,7 @@ input TestSetCreateWithoutScriptsInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetCreatetagsInput
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
@@ -9247,9 +9421,11 @@ type TestSetExcel implements Node {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean!
-  hasUtterances: Boolean!
+  hasConvos: Boolean
+  hasPartialConvos: Boolean
+  hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int!
   startCol: Int!
@@ -9270,9 +9446,11 @@ input TestSetExcelCreateInput {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean!
-  hasUtterances: Boolean!
+  hasConvos: Boolean
+  hasPartialConvos: Boolean
+  hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int!
   startCol: Int!
@@ -9293,9 +9471,11 @@ input TestSetExcelCreateWithoutTestSetInput {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean!
-  hasUtterances: Boolean!
+  hasConvos: Boolean
+  hasPartialConvos: Boolean
+  hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int!
   startCol: Int!
@@ -9325,10 +9505,14 @@ enum TestSetExcelOrderByInput {
   filecontent_DESC
   hasConvos_ASC
   hasConvos_DESC
+  hasPartialConvos_ASC
+  hasPartialConvos_DESC
   hasUtterances_ASC
   hasUtterances_DESC
   worksheetsConvos_ASC
   worksheetsConvos_DESC
+  worksheetsPartialConvos_ASC
+  worksheetsPartialConvos_DESC
   worksheetsUtterances_ASC
   worksheetsUtterances_DESC
   startRow_ASC
@@ -9344,9 +9528,11 @@ type TestSetExcelPreviousValues {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean!
-  hasUtterances: Boolean!
+  hasConvos: Boolean
+  hasPartialConvos: Boolean
+  hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int!
   startCol: Int!
@@ -9569,6 +9755,10 @@ input TestSetExcelScalarWhereInput {
 
   """All values that are not equal to given value."""
   hasConvos_not: Boolean
+  hasPartialConvos: Boolean
+
+  """All values that are not equal to given value."""
+  hasPartialConvos_not: Boolean
   hasUtterances: Boolean
 
   """All values that are not equal to given value."""
@@ -9613,6 +9803,46 @@ input TestSetExcelScalarWhereInput {
 
   """All values not ending with the given string."""
   worksheetsConvos_not_ends_with: String
+  worksheetsPartialConvos: String
+
+  """All values that are not equal to given value."""
+  worksheetsPartialConvos_not: String
+
+  """All values that are contained in given list."""
+  worksheetsPartialConvos_in: [String!]
+
+  """All values that are not contained in given list."""
+  worksheetsPartialConvos_not_in: [String!]
+
+  """All values less than the given value."""
+  worksheetsPartialConvos_lt: String
+
+  """All values less than or equal the given value."""
+  worksheetsPartialConvos_lte: String
+
+  """All values greater than the given value."""
+  worksheetsPartialConvos_gt: String
+
+  """All values greater than or equal the given value."""
+  worksheetsPartialConvos_gte: String
+
+  """All values containing the given string."""
+  worksheetsPartialConvos_contains: String
+
+  """All values not containing the given string."""
+  worksheetsPartialConvos_not_contains: String
+
+  """All values starting with the given string."""
+  worksheetsPartialConvos_starts_with: String
+
+  """All values not starting with the given string."""
+  worksheetsPartialConvos_not_starts_with: String
+
+  """All values ending with the given string."""
+  worksheetsPartialConvos_ends_with: String
+
+  """All values not ending with the given string."""
+  worksheetsPartialConvos_not_ends_with: String
   worksheetsUtterances: String
 
   """All values that are not equal to given value."""
@@ -9743,8 +9973,10 @@ input TestSetExcelUpdateDataInput {
   filename: String
   filecontent: String
   hasConvos: Boolean
+  hasPartialConvos: Boolean
   hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int
   startCol: Int
@@ -9756,8 +9988,10 @@ input TestSetExcelUpdateInput {
   filename: String
   filecontent: String
   hasConvos: Boolean
+  hasPartialConvos: Boolean
   hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int
   startCol: Int
@@ -9769,8 +10003,10 @@ input TestSetExcelUpdateManyDataInput {
   filename: String
   filecontent: String
   hasConvos: Boolean
+  hasPartialConvos: Boolean
   hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int
   startCol: Int
@@ -9781,8 +10017,10 @@ input TestSetExcelUpdateManyMutationInput {
   filename: String
   filecontent: String
   hasConvos: Boolean
+  hasPartialConvos: Boolean
   hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int
   startCol: Int
@@ -9819,8 +10057,10 @@ input TestSetExcelUpdateWithoutTestSetDataInput {
   filename: String
   filecontent: String
   hasConvos: Boolean
+  hasPartialConvos: Boolean
   hasUtterances: Boolean
   worksheetsConvos: String
+  worksheetsPartialConvos: String
   worksheetsUtterances: String
   startRow: Int
   startCol: Int
@@ -10059,6 +10299,10 @@ input TestSetExcelWhereInput {
 
   """All values that are not equal to given value."""
   hasConvos_not: Boolean
+  hasPartialConvos: Boolean
+
+  """All values that are not equal to given value."""
+  hasPartialConvos_not: Boolean
   hasUtterances: Boolean
 
   """All values that are not equal to given value."""
@@ -10103,6 +10347,46 @@ input TestSetExcelWhereInput {
 
   """All values not ending with the given string."""
   worksheetsConvos_not_ends_with: String
+  worksheetsPartialConvos: String
+
+  """All values that are not equal to given value."""
+  worksheetsPartialConvos_not: String
+
+  """All values that are contained in given list."""
+  worksheetsPartialConvos_in: [String!]
+
+  """All values that are not contained in given list."""
+  worksheetsPartialConvos_not_in: [String!]
+
+  """All values less than the given value."""
+  worksheetsPartialConvos_lt: String
+
+  """All values less than or equal the given value."""
+  worksheetsPartialConvos_lte: String
+
+  """All values greater than the given value."""
+  worksheetsPartialConvos_gt: String
+
+  """All values greater than or equal the given value."""
+  worksheetsPartialConvos_gte: String
+
+  """All values containing the given string."""
+  worksheetsPartialConvos_contains: String
+
+  """All values not containing the given string."""
+  worksheetsPartialConvos_not_contains: String
+
+  """All values starting with the given string."""
+  worksheetsPartialConvos_starts_with: String
+
+  """All values not starting with the given string."""
+  worksheetsPartialConvos_not_starts_with: String
+
+  """All values ending with the given string."""
+  worksheetsPartialConvos_ends_with: String
+
+  """All values not ending with the given string."""
+  worksheetsPartialConvos_not_ends_with: String
   worksheetsUtterances: String
 
   """All values that are not equal to given value."""
@@ -10839,6 +11123,8 @@ enum TestSetOrderByInput {
   statsUpdatedAt_DESC
   statsConvoCount_ASC
   statsConvoCount_DESC
+  statsPartialConvoCount_ASC
+  statsPartialConvoCount_DESC
   statsUtterancesCount_ASC
   statsUtterancesCount_DESC
 }
@@ -10855,6 +11141,7 @@ type TestSetPreviousValues {
   tags: [String!]!
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
 }
 
@@ -11929,6 +12216,28 @@ input TestSetScalarWhereInput {
 
   """All values greater than or equal the given value."""
   statsConvoCount_gte: Int
+  statsPartialConvoCount: Int
+
+  """All values that are not equal to given value."""
+  statsPartialConvoCount_not: Int
+
+  """All values that are contained in given list."""
+  statsPartialConvoCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsPartialConvoCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsPartialConvoCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsPartialConvoCount_lte: Int
+
+  """All values greater than the given value."""
+  statsPartialConvoCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsPartialConvoCount_gte: Int
   statsUtterancesCount: Int
 
   """All values that are not equal to given value."""
@@ -12301,6 +12610,7 @@ input TestSetScriptSubscriptionWhereInput {
 
 enum TestSetScriptType {
   SCRIPTING_TYPE_CONVO
+  SCRIPTING_TYPE_PCONVO
   SCRIPTING_TYPE_UTTERANCES
 }
 
@@ -12660,6 +12970,7 @@ input TestSetUpdateDataInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -12677,6 +12988,7 @@ input TestSetUpdateInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -12694,6 +13006,7 @@ input TestSetUpdateManyDataInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
 }
@@ -12718,6 +13031,7 @@ input TestSetUpdateManyMutationInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
 }
@@ -12776,6 +13090,7 @@ input TestSetUpdateWithoutExcelsDataInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -12792,6 +13107,7 @@ input TestSetUpdateWithoutFoldersDataInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -12808,6 +13124,7 @@ input TestSetUpdateWithoutRepositoriesDataInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -12824,6 +13141,7 @@ input TestSetUpdateWithoutScriptsDataInput {
   expandUtterancesIncomprehension: String
   statsUpdatedAt: DateTime
   statsConvoCount: Int
+  statsPartialConvoCount: Int
   statsUtterancesCount: Int
   tags: TestSetUpdatetagsInput
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
@@ -13133,6 +13451,28 @@ input TestSetWhereInput {
 
   """All values greater than or equal the given value."""
   statsConvoCount_gte: Int
+  statsPartialConvoCount: Int
+
+  """All values that are not equal to given value."""
+  statsPartialConvoCount_not: Int
+
+  """All values that are contained in given list."""
+  statsPartialConvoCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsPartialConvoCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsPartialConvoCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsPartialConvoCount_lte: Int
+
+  """All values greater than the given value."""
+  statsPartialConvoCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsPartialConvoCount_gte: Int
   statsUtterancesCount: Int
 
   """All values that are not equal to given value."""

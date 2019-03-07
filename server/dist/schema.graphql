@@ -133,10 +133,10 @@ type Mutation {
 
   updateSystemSettings(systemSettings: SystemSettingsUpdateInput!): SystemSettings! @hasRole(roles: ["ADMIN"])
 
-  liveChatStartBot(id: ID!): String! @hasRole(roles: ["ADMIN","USER","TESTER"])
-  liveChatSendToBot(conversationId: String!, convoStep: String!): Boolean! @hasRole(roles: ["ADMIN","USER","TESTER"])
-  liveChatStopBot(conversationId: String!): Boolean! @hasRole(roles: ["ADMIN","USER","TESTER"])
-  liveChatSaveConvoSteps(conversationId: String!, testSetId: ID, newTestSetName: String, testCaseName: String!): ID! @hasRole(roles: ["ADMIN","USER"])
+  liveChatStartBot(chatbotId: ID!): String! @hasRole(roles: ["ADMIN","USER","TESTER"])
+  liveChatSendToBot(chatbotId: ID!, conversationId: String!, convoStep: String!): Boolean! @hasRole(roles: ["ADMIN","USER","TESTER"])
+  liveChatStopBot(chatbotId: ID!, conversationId: String!): Boolean! @hasRole(roles: ["ADMIN","USER","TESTER"])
+  liveChatSaveConvoSteps(chatbotId: ID!, conversationId: String!, testSetId: ID, newTestSetName: String, testCaseName: String!): ID! @hasRole(roles: ["ADMIN","USER"])
 }
 
 type Subscription {
@@ -145,8 +145,13 @@ type Subscription {
   changeTestSessionJobs(testSessionIds: [ID!]!): TestSessionJobSubscriptionPayload!
   newTestSessionJobLogs(testSessionJobId: ID!): TestSessionJobLogSubscriptionPayload!
   newTestSessionTestCaseResults(testSessionIds: [ID!]!): TestSessionTestCaseResultSubscriptionPayload!
-  liveChatConvoStepAdded(conversationId: String!): String!
+  liveChatConvoStepAdded(conversationId: String!): LiveChatConvoStep!
   testSessionProgress(testSessionId: ID!): TestSession!
+}
+
+type LiveChatConvoStep {
+  err: String
+  convoStep: String
 }
 
 type DropDownValue {
