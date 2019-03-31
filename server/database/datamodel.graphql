@@ -1,5 +1,6 @@
 type TestProject {
   id: ID! @unique
+  client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -9,6 +10,7 @@ type TestProject {
   chatbot: Chatbot!
   testSets: [TestSet!]!
   deviceSets: [DeviceSet!]!
+  registeredComponents: [RegisteredComponent!]!
   capabilities: [Capability!]!
   agent: Agent
   batchCount: Int  
@@ -27,9 +29,10 @@ type Agent {
 
 type Chatbot {
   id: ID! @unique
+  client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
-  name: String! @unique
+  name: String!
   description: String
   tags: [String!]
   capabilities: [Capability!]! @relation(name: "ChatbotCapabilities")
@@ -59,6 +62,7 @@ type Capability {
 
 type TestSession {
   id: ID! @unique
+  client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -67,6 +71,7 @@ type TestSession {
   chatbot: Chatbot!
   testSets: [TestSet!]!
   deviceSets: [DeviceSet!]!
+  registeredComponents: [RegisteredComponent!]!
   testProject: TestProject
   agent: Agent
   batchCount: Int
@@ -129,6 +134,7 @@ type TestSessionTestCaseResultAttachment {
   name: String,
   mimeType: String!,
   base64: String!
+  testSessionTestCaseResult: TestSessionTestCaseResult!
 }
 
 type TestSessionJob {
@@ -165,9 +171,10 @@ type TestSessionJobLog {
 
 type TestSet {
   id: ID! @unique
+  client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
-  name: String! @unique
+  name: String!
   description: String
   expandConvos: Boolean @default(value: "true")
   expandUtterancesToConvos: Boolean @default(value: "false")
@@ -295,10 +302,13 @@ enum DeviceType {
   MOBILEAPP
 }
 
-enum UserRole {
-  ADMIN
-  USER
-  TESTER
+type UserRole {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
+  description: String
+  permissions: [String!]
 }
 
 type User {
@@ -306,9 +316,10 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime!
   email: String! @unique
-  password: String!
+  password: String
   name: String! @unique
-  roles: [UserRole!]!
+  roles: [UserRole!]
+  clients: [Client!]
 }
 
 type ApiKey {
@@ -319,6 +330,27 @@ type ApiKey {
   key: String! @unique
   validFrom: DateTime
   validTo: DateTime
+  clients: [Client!]
+}
+
+type RegisteredComponent {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
+  description: String
+  type: RegisteredComponentType!
+  default: Boolean!
+  src: String!
+  ref: String!
+  global: Boolean!
+  args: String
+}
+
+enum RegisteredComponentType {
+  ASSERTER
+  LOGICHOOK
+  USERINPUT
 }
 
 type SystemSettings {
@@ -330,4 +362,11 @@ type SystemSettings {
   keepTestCaseSuccessConversationDays: Int
   keepTestCaseFailedScreenshotsDays: Int
   keepTestCaseFailedConversationDays: Int
+}
+
+type Client {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
 }

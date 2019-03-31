@@ -3,6 +3,8 @@ require('dotenv-flow').config()
 const { Prisma } = require('prisma-binding')
 const randomize = require('randomatic')
 
+const isPremium = process.env.BUILDTARGET === 'premium'
+
 const db = new Prisma({
   typeDefs: process.env.PRISMA_SCHEMA || 'src/generated/prisma.graphql',
   endpoint: process.env.PRISMA_ENDPOINT,
@@ -10,34 +12,125 @@ const db = new Prisma({
   secret: process.env.PRISMA_SECRET
 })
 
-const usersData = [
+const entries = {}
+const setSeedId = (entityName, key, id) => {
+  entries[entityName] = (entries[entityName] || [])
+  entries[entityName][key] = id
+}
+
+const clientData = () => [
   {
-    email: 'admin@admin.com',
-    password: '$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm', // plaintext password: "nooneknows"
-    name: 'admin',
-    roles: {
-      set: ['ADMIN']
+    name: 'DefaultClient'
+  }
+]
+
+const rolesData = () => [
+  {
+    name: 'ADMIN',
+    permissions: {
+      set: [ '*' ]
     }
   },
   {
-    email: 'user@user.com',
-    password: '$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm', // plaintext password: "nooneknows"
-    name: 'user',
-    roles: {
-      set: ['USER']
+    name: 'TESTMANAGER',
+    permissions: {
+      set: [
+        'AGENTS_SELECT',
+        'CHATBOTS_*',
+        'DEVICESETS_*',
+        'TESTPROJECTS_*',
+        'TESTSETS_*',
+        'TESTSESSIONS_*',
+        'APIKEYS_SELECT',
+        'DEVICEPROVIDERS_*',
+        'REGISTEREDCOMPONENTS_*'
+      ]
     }
   },
   {
-    email: 'tester@tester.com',
-    password: '$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm', // plaintext password: "nooneknows"
-    name: 'tester',
-    roles: {
-      set: ['TESTER']
+    name: 'TESTER',
+    permissions: {
+      set: [
+        'AGENTS_SELECT',
+        'CHATBOTS_SELECT',
+        'CHATBOTS_LIVECHAT',
+        'DEVICESETS_SELECT',
+        'TESTPROJECTS_SELECT',
+        'TESTPROJECTS_CREATE',
+        'TESTPROJECTS_UPDATE',
+        'TESTSETS_SELECT',
+        'TESTSETS_CREATE',
+        'TESTSETS_UPDATE',
+        'TESTSESSIONS_SELECT',
+        'TESTSESSIONS_CREATE',
+        'TESTSESSIONS_REPORTS',
+        'APIKEYS_SELECT',
+        'DEVICEPROVIDERS_SELECT',
+        'REGISTEREDCOMPONENTS_SELECT'
+      ]
+    }
+  },
+  {
+    name: 'GUEST',
+    permissions: {
+      set: [
+        'CHATBOTS_SELECT',
+        'TESTPROJECTS_SELECT',
+        'TESTSETS_SELECT',
+        'TESTSESSIONS_SELECT'
+      ]
     }
   }
 ]
 
-const agentsData = [
+const usersData = () => [
+  {
+    email: 'admin@mydomain.com',
+    password: '$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm', // plaintext password: "nooneknows"
+    name: 'admin',
+    roles: {
+      connect: [ { name: 'ADMIN' } ]
+    },
+    clients: {
+      connect: [ { name: 'DefaultClient' } ]
+    }
+  },
+  {
+    email: 'testmanager@mydomain.com',
+    password: '$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm', // plaintext password: "nooneknows"
+    name: 'testmanager',
+    roles: {
+      connect: [ { name: 'TESTMANAGER' } ]
+    },
+    clients: {
+      connect: [ { name: 'DefaultClient' } ]
+    }
+  },
+  {
+    email: 'tester@mydomain.com',
+    password: '$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm', // plaintext password: "nooneknows"
+    name: 'tester',
+    roles: {
+      connect: [ { name: 'TESTER' } ]
+    },
+    clients: {
+      connect: [ { name: 'DefaultClient' } ]
+    }
+  },
+  {
+    email: 'guest@mydomain.com',
+    password: '$2a$10$hACwQ5/HQI6FhbIISOUVeusy3sKyUDhSq36fF5d/54aAdiygJPFzm', // plaintext password: "nooneknows"
+    name: 'guest',
+    roles: {
+      connect: [ { name: 'GUEST' } ]
+    },
+    clients: {
+      connect: [ { name: 'DefaultClient' } ]
+    }
+  }
+]
+
+const agentsData = () => [
   {
     name: 'Default Agent',
     description: 'Default Agent',
@@ -45,14 +138,17 @@ const agentsData = [
   }
 ]
 
-const apikeysData = [
+const apikeysData = () => [
   {
     name: 'Default Api Key',
-    key: randomize('Aa0', 20)
+    key: randomize('Aa0', 20),
+    clients: {
+      connect: [ { name: 'DefaultClient' } ]
+    }
   }
 ]
 
-const deviceProvidersData = [
+const deviceProvidersData = () => [
   {
     name: 'Local Selenium Server',
     type: 'LOCALSELENIUM'
@@ -77,7 +173,7 @@ const deviceProvidersData = [
   }
 ]
 
-const deviceSetsData = [
+const deviceSetsData = () => [
   {
     name: 'Integrated PhantomJS',
     description: 'Integrated PhantomJS (virtual browser)',
@@ -347,7 +443,7 @@ const deviceSetsData = [
   }
 ]
 
-const chatbotsData = [
+const chatbotsData = () => [
   {
     name: 'Echo Bot',
     description: "Chatbot simulator for evaluating Botium and Botium Box features. Sample commands: 'buttons', 'show me buttons', 'picture', 'show me a picture', 'card', 'show me a card'. Otherwise the input is echoed back.",
@@ -402,7 +498,7 @@ const chatbotsData = [
   }
 ]
 
-const testsetData = [
+const testsetData = () => [
   {
     name: 'Echo Sample',
     description: 'Just some basic sample scripts',
@@ -486,7 +582,7 @@ const testsetData = [
   }
 ]
 
-const testProjectData = [
+const testProjectData = () => [
   {
     name: 'Echo Bot - Test Suite',
     description: 'Test Suite for Echo chatbot',
@@ -497,13 +593,13 @@ const testProjectData = [
     batchCount: 3,
     chatbot: {
       connect: {
-        name: 'Echo Bot'
+        id: entries['chatbot']['Echo Bot']
       }
     },
     testSets: {
       connect: [
         {
-          name: 'Echo Sample'
+          id: entries['testset']['Echo Sample']
         }
       ]
     }
@@ -518,20 +614,123 @@ const testProjectData = [
     batchCount: 3,
     chatbot: {
       connect: {
-        name: 'I am Botium'
+        id: entries['chatbot']['I am Botium']
       }
     },
     testSets: {
       connect: [
         {
-          name: 'I am Botium (Smalltalk)'
+          id: entries['testset']['I am Botium (Smalltalk)']
         }
       ]
     }
   }
 ]
 
-const settingsData = [
+const registeredComponentsDataBasic = () => [
+  {
+    name: 'Chatbot Hyperlink Existance Asserter',
+    description: 'Asserts existance of hyperlinks in bot responses',
+    type: 'ASSERTER',
+    default: true,
+    src: 'botium-asserter-basiclink',
+    global: false,
+    ref: 'HASLINK'
+  }
+]
+const registeredComponentsDataPremium = () => [
+  {
+    name: 'Facebook Webhook Exploits Asserter',
+    description: 'Checks facebook webhook on known security exploits',
+    type: 'ASSERTER',
+    default: false,
+    src: 'botium-asserter-secexploits/fbwebhook',
+    global: false,
+    ref: 'FBWEBHOOKEXPLOITS'
+  },
+  {
+    name: 'Chatbot Hyperlink Response Asserter',
+    description: 'Asserts all HTTP(S) hyperlinks delivered by bot are actually working (check HTTP(S) response code)',
+    type: 'ASSERTER',
+    default: true,
+    src: 'botium-asserter-hyperlink',
+    global: true,
+    ref: 'CHECKLINK'
+  },
+  {
+    name: 'Chatbot HTTP Endpoint Asserter',
+    description: 'Calls backend HTTP(S) endpoint containing assertion logic',
+    type: 'ASSERTER',
+    default: true,
+    src: 'botium-asserter-http',
+    global: false,
+    ref: 'HTTP'
+  },
+  {
+    name: 'Chatbot MSSQL Database Asserter',
+    description: 'Calls MS SQL Server backend database for assertions',
+    type: 'ASSERTER',
+    default: false,
+    src: 'botium-asserter-mssql',
+    global: false,
+    ref: 'MSSQL',
+    args: JSON.stringify({
+      'server': 'localhost',
+      'user': 'SA',
+      'password': '',
+      'port': 1433
+    })
+  },
+  {
+    name: 'Chatbot MySQL Database Asserter',
+    description: 'Calls MySQL backend database for assertions',
+    type: 'ASSERTER',
+    default: false,
+    src: 'botium-asserter-mysql',
+    global: false,
+    ref: 'MYSQL',
+    args: JSON.stringify({
+      'host': '127.0.0.1',
+      'user': 'mysql',
+      'password': 'mysql',
+      'port': 3306,
+      'database': 'example'
+    })
+  },
+  {
+    name: 'Chatbot Oracle Database Asserter',
+    description: 'Calls Oracle backend database for assertions',
+    type: 'ASSERTER',
+    default: false,
+    src: 'botium-asserter-oracledb',
+    global: false,
+    ref: 'ORACLE_DB',
+    args: JSON.stringify({
+      'user': 'sys',
+      'password': 'Oracle18',
+      'connectString': 'localhost:32118/XE',
+      'privilege': 2
+    })
+  },
+  {
+    name: 'Chatbot Postgres Database Asserter',
+    description: 'Calls Postgres backend database for assertions',
+    type: 'ASSERTER',
+    default: false,
+    src: 'botium-asserter-postgres',
+    global: false,
+    ref: 'POSTGRES',
+    args: JSON.stringify({
+      'host': 'localhost',
+      'user': 'postgres',
+      'password': 'postgres',
+      'port': 5432,
+      'database': 'example'
+    })
+  }
+]
+
+const settingsData = () => [
   {
     cleanupJobIntervalMinutes: 30,
     keepTestCaseSuccessScreenshotsDays: 10,
@@ -541,8 +740,9 @@ const settingsData = [
   }
 ]
 
-async function createRecords (entityName, entities, queryFn, keyField, createFn) {
+async function createRecords (entityName, entities, queryFn, keyField, createFn, updateFn) {
   let createdCount = 0
+  let updatedCount = 0
   for (const entityData of entities) {
     const query = { }
     if (keyField) {
@@ -550,28 +750,45 @@ async function createRecords (entityName, entities, queryFn, keyField, createFn)
     }
     const existingEntity = await queryFn(query)
     if (existingEntity && existingEntity.length > 0) {
-      console.log(entityName + ' ' + (keyField && entityData[keyField]) + ' already existing, skipping.')
+      setSeedId(entityName, entityData[keyField], existingEntity[0].id)
+      if (!updateFn) {
+        console.log(entityName + ' ' + (keyField && entityData[keyField]) + ' already existing, skipping.')
+      } else {
+        console.log('updateing ' + entityName + ' ' + (keyField && entityData[keyField]))
+        try {
+          await updateFn({ where: { id: existingEntity[0].id }, data: entityData })
+          updatedCount++
+        } catch (err) {
+          console.log('Error updating ' + entityName + ': ', err)
+        }
+      }
     } else {
       console.log('creating ' + entityName + ' ' + (keyField && entityData[keyField]))
       try {
-        await createFn({ data: entityData })
+        const res = await createFn({ data: entityData })
+        setSeedId(entityName, entityData[keyField], res.id)
+
         createdCount++
       } catch (err) {
         console.log('Error creating ' + entityName + ': ', err)
       }
     }
   }
-  console.log('Created ' + createdCount + ' ' + entityName + '(s)')
+  console.log('Created ' + createdCount + ' and updated ' + updatedCount + ' ' + entityName + '(s)')
 }
 
 (async () => {
-  await createRecords('user', usersData, db.query.users, 'name', db.mutation.createUser)
-  await createRecords('agent', agentsData, db.query.agents, 'name', db.mutation.createAgent)
-  await createRecords('apikey', apikeysData, db.query.apiKeys, 'name', db.mutation.createApiKey)
-  await createRecords('deviceprovider', deviceProvidersData, db.query.deviceProviders, 'name', db.mutation.createDeviceProvider)
-  await createRecords('deviceset', deviceSetsData, db.query.deviceSets, 'name', db.mutation.createDeviceSet)
-  await createRecords('chatbot', chatbotsData, db.query.chatbots, 'name', db.mutation.createChatbot)
-  await createRecords('testset', testsetData, db.query.testSets, 'name', db.mutation.createTestSet)
-  await createRecords('testproject', testProjectData, db.query.testProjects, 'name', db.mutation.createTestProject)
-  await createRecords('settings', settingsData, db.query.systemSettingses, null, db.mutation.createSystemSettings)
+  await createRecords('client', clientData(), db.query.clients, 'name', db.mutation.createClient)
+  await createRecords('userrole', rolesData(), db.query.userRoles, 'name', db.mutation.createUserRole)
+  await createRecords('user', usersData(), db.query.users, 'name', db.mutation.createUser, db.mutation.updateUser)
+  await createRecords('agent', agentsData(), db.query.agents, 'name', db.mutation.createAgent)
+  await createRecords('apikey', apikeysData(), db.query.apiKeys, 'name', db.mutation.createApiKey)
+  await createRecords('deviceprovider', deviceProvidersData(), db.query.deviceProviders, 'name', db.mutation.createDeviceProvider)
+  await createRecords('deviceset', deviceSetsData(), db.query.deviceSets, 'name', db.mutation.createDeviceSet)
+  await createRecords('chatbot', chatbotsData(), db.query.chatbots, 'name', db.mutation.createChatbot)
+  await createRecords('testset', testsetData(), db.query.testSets, 'name', db.mutation.createTestSet)
+  await createRecords('testproject', testProjectData(), db.query.testProjects, 'name', db.mutation.createTestProject)
+  await createRecords('settings', settingsData(), db.query.systemSettingses, null, db.mutation.createSystemSettings)
+  await createRecords('registeredcomponent', registeredComponentsDataBasic(), db.query.registeredComponents, 'name', db.mutation.createRegisteredComponent)
+  isPremium && await createRecords('registeredcomponent', registeredComponentsDataPremium(), db.query.registeredComponents, 'name', db.mutation.createRegisteredComponent)
 })()
