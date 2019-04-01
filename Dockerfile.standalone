@@ -1,6 +1,6 @@
 FROM docker:18.09
 
-RUN apk update && apk add nodejs npm py-pip dos2unix bash && pip install docker-compose
+RUN apk update && apk add nodejs npm python python-dev py-pip dos2unix bash build-base libffi-dev openssl-dev && pip install docker-compose
 
 WORKDIR /app
 COPY . /app
