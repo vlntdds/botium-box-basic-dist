@@ -11,6 +11,7 @@ services:
     depends_on:
       - redis
       - prisma
+    restart: always
     volumes:
       - testsets:/app/server/testsets
       - botiumwork:/app/server/botiumwork
