@@ -1,5 +1,5 @@
-# source: http://192.168.99.100:4466/box/dev
-# timestamp: Sun Mar 31 2019 08:37:40 GMT+0200 (W. Europe Daylight Time)
+# source: http://192.168.99.100:4466/box/dev514
+# timestamp: Wed Apr 24 2019 15:22:06 GMT+0200 (W. Europe Daylight Time)
 
 type Agent implements Node {
   id: ID!
@@ -9,6 +9,7 @@ type Agent implements Node {
   description: String
   tags: [String!]!
   heartbeat: DateTime
+  debug: Boolean
   capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
 }
 
@@ -26,6 +27,7 @@ input AgentCreateInput {
   name: String!
   description: String
   heartbeat: DateTime
+  debug: Boolean
   tags: AgentCreatetagsInput
   capabilities: CapabilityCreateManyInput
 }
@@ -61,6 +63,8 @@ enum AgentOrderByInput {
   description_DESC
   heartbeat_ASC
   heartbeat_DESC
+  debug_ASC
+  debug_DESC
 }
 
 type AgentPreviousValues {
@@ -71,6 +75,7 @@ type AgentPreviousValues {
   description: String
   tags: [String!]!
   heartbeat: DateTime
+  debug: Boolean
 }
 
 type AgentSubscriptionPayload {
@@ -116,6 +121,7 @@ input AgentUpdateDataInput {
   name: String
   description: String
   heartbeat: DateTime
+  debug: Boolean
   tags: AgentUpdatetagsInput
   capabilities: CapabilityUpdateManyInput
 }
@@ -124,6 +130,7 @@ input AgentUpdateInput {
   name: String
   description: String
   heartbeat: DateTime
+  debug: Boolean
   tags: AgentUpdatetagsInput
   capabilities: CapabilityUpdateManyInput
 }
@@ -132,6 +139,7 @@ input AgentUpdateManyMutationInput {
   name: String
   description: String
   heartbeat: DateTime
+  debug: Boolean
   tags: AgentUpdatetagsInput
 }
 
@@ -348,6 +356,10 @@ input AgentWhereInput {
 
   """All values greater than or equal the given value."""
   heartbeat_gte: DateTime
+  debug: Boolean
+
+  """All values that are not equal to given value."""
+  debug_not: Boolean
   capabilities_every: CapabilityWhereInput
   capabilities_some: CapabilityWhereInput
   capabilities_none: CapabilityWhereInput
@@ -1513,6 +1525,7 @@ type Chatbot implements Node {
   name: String!
   description: String
   tags: [String!]!
+  allowHtmlDisplay: Boolean
   capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
   sources(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
   envs(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
@@ -1531,6 +1544,7 @@ type ChatbotConnection {
 input ChatbotCreateInput {
   name: String!
   description: String
+  allowHtmlDisplay: Boolean
   tags: ChatbotCreatetagsInput
   client: ClientCreateOneInput
   capabilities: CapabilityCreateManyInput
@@ -1567,6 +1581,8 @@ enum ChatbotOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  allowHtmlDisplay_ASC
+  allowHtmlDisplay_DESC
 }
 
 type ChatbotPreviousValues {
@@ -1576,6 +1592,7 @@ type ChatbotPreviousValues {
   name: String!
   description: String
   tags: [String!]!
+  allowHtmlDisplay: Boolean
 }
 
 type ChatbotSubscriptionPayload {
@@ -1620,6 +1637,7 @@ input ChatbotSubscriptionWhereInput {
 input ChatbotUpdateDataInput {
   name: String
   description: String
+  allowHtmlDisplay: Boolean
   tags: ChatbotUpdatetagsInput
   client: ClientUpdateOneInput
   capabilities: CapabilityUpdateManyInput
@@ -1630,6 +1648,7 @@ input ChatbotUpdateDataInput {
 input ChatbotUpdateInput {
   name: String
   description: String
+  allowHtmlDisplay: Boolean
   tags: ChatbotUpdatetagsInput
   client: ClientUpdateOneInput
   capabilities: CapabilityUpdateManyInput
@@ -1640,6 +1659,7 @@ input ChatbotUpdateInput {
 input ChatbotUpdateManyMutationInput {
   name: String
   description: String
+  allowHtmlDisplay: Boolean
   tags: ChatbotUpdatetagsInput
 }
 
@@ -1832,6 +1852,10 @@ input ChatbotWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  allowHtmlDisplay: Boolean
+
+  """All values that are not equal to given value."""
+  allowHtmlDisplay_not: Boolean
   client: ClientWhereInput
   capabilities_every: CapabilityWhereInput
   capabilities_some: CapabilityWhereInput
@@ -2923,6 +2947,7 @@ input DeviceProviderSubscriptionWhereInput {
 enum DeviceProviderType {
   SAUCELABS
   TESTOBJECTS
+  EXPERITEST
   LOCALSELENIUM
   INTEGRATED
 }
@@ -9981,6 +10006,8 @@ type TestSet implements Node {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   tags: [String!]!
   scripts(where: TestSetScriptWhereInput, orderBy: TestSetScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetScript!]
   repositories(where: TestSetRepositoryWhereInput, orderBy: TestSetRepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetRepository!]
@@ -9990,6 +10017,7 @@ type TestSet implements Node {
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   statsCompiledConvos(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetCompiledConvo!]
 }
 
@@ -10703,10 +10731,13 @@ input TestSetCreateInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetCreatetagsInput
   client: ClientCreateOneInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -10756,10 +10787,13 @@ input TestSetCreateWithoutExcelsInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetCreatetagsInput
   client: ClientCreateOneInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -10774,10 +10808,13 @@ input TestSetCreateWithoutFoldersInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetCreatetagsInput
   client: ClientCreateOneInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -10792,10 +10829,13 @@ input TestSetCreateWithoutRepositoriesInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetCreatetagsInput
   client: ClientCreateOneInput
   scripts: TestSetScriptCreateManyWithoutTestSetInput
@@ -10810,10 +10850,13 @@ input TestSetCreateWithoutScriptsInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetCreatetagsInput
   client: ClientCreateOneInput
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
@@ -12536,6 +12579,10 @@ enum TestSetOrderByInput {
   expandUtterancesToConvos_DESC
   expandUtterancesIncomprehension_ASC
   expandUtterancesIncomprehension_DESC
+  expandScriptingMemory_ASC
+  expandScriptingMemory_DESC
+  selectionType_ASC
+  selectionType_DESC
   statsUpdatedAt_ASC
   statsUpdatedAt_DESC
   statsConvoCount_ASC
@@ -12544,6 +12591,8 @@ enum TestSetOrderByInput {
   statsPartialConvoCount_DESC
   statsUtterancesCount_ASC
   statsUtterancesCount_DESC
+  statsScriptingMemoryCount_ASC
+  statsScriptingMemoryCount_DESC
 }
 
 type TestSetPreviousValues {
@@ -12555,11 +12604,14 @@ type TestSetPreviousValues {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   tags: [String!]!
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
 }
 
 type TestSetRepository implements Node {
@@ -12570,6 +12622,8 @@ type TestSetRepository implements Node {
   giturl: String!
   gitbranch: String!
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
   testSet: TestSet!
 }
@@ -12589,6 +12643,8 @@ input TestSetRepositoryCreateInput {
   giturl: String!
   gitbranch: String!
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
   testSet: TestSetCreateOneWithoutRepositoriesInput!
 }
@@ -12608,6 +12664,8 @@ input TestSetRepositoryCreateWithoutTestSetInput {
   giturl: String!
   gitbranch: String!
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
 }
 
@@ -12635,6 +12693,10 @@ enum TestSetRepositoryOrderByInput {
   gitbranch_DESC
   gitdir_ASC
   gitdir_DESC
+  gituser_ASC
+  gituser_DESC
+  gitpassword_ASC
+  gitpassword_DESC
   globFilter_ASC
   globFilter_DESC
 }
@@ -12647,6 +12709,8 @@ type TestSetRepositoryPreviousValues {
   giturl: String!
   gitbranch: String!
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
 }
 
@@ -12903,6 +12967,86 @@ input TestSetRepositoryScalarWhereInput {
 
   """All values not ending with the given string."""
   gitdir_not_ends_with: String
+  gituser: String
+
+  """All values that are not equal to given value."""
+  gituser_not: String
+
+  """All values that are contained in given list."""
+  gituser_in: [String!]
+
+  """All values that are not contained in given list."""
+  gituser_not_in: [String!]
+
+  """All values less than the given value."""
+  gituser_lt: String
+
+  """All values less than or equal the given value."""
+  gituser_lte: String
+
+  """All values greater than the given value."""
+  gituser_gt: String
+
+  """All values greater than or equal the given value."""
+  gituser_gte: String
+
+  """All values containing the given string."""
+  gituser_contains: String
+
+  """All values not containing the given string."""
+  gituser_not_contains: String
+
+  """All values starting with the given string."""
+  gituser_starts_with: String
+
+  """All values not starting with the given string."""
+  gituser_not_starts_with: String
+
+  """All values ending with the given string."""
+  gituser_ends_with: String
+
+  """All values not ending with the given string."""
+  gituser_not_ends_with: String
+  gitpassword: String
+
+  """All values that are not equal to given value."""
+  gitpassword_not: String
+
+  """All values that are contained in given list."""
+  gitpassword_in: [String!]
+
+  """All values that are not contained in given list."""
+  gitpassword_not_in: [String!]
+
+  """All values less than the given value."""
+  gitpassword_lt: String
+
+  """All values less than or equal the given value."""
+  gitpassword_lte: String
+
+  """All values greater than the given value."""
+  gitpassword_gt: String
+
+  """All values greater than or equal the given value."""
+  gitpassword_gte: String
+
+  """All values containing the given string."""
+  gitpassword_contains: String
+
+  """All values not containing the given string."""
+  gitpassword_not_contains: String
+
+  """All values starting with the given string."""
+  gitpassword_starts_with: String
+
+  """All values not starting with the given string."""
+  gitpassword_not_starts_with: String
+
+  """All values ending with the given string."""
+  gitpassword_ends_with: String
+
+  """All values not ending with the given string."""
+  gitpassword_not_ends_with: String
   globFilter: String
 
   """All values that are not equal to given value."""
@@ -12989,6 +13133,8 @@ input TestSetRepositoryUpdateDataInput {
   giturl: String
   gitbranch: String
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
   testSet: TestSetUpdateOneRequiredWithoutRepositoriesInput
 }
@@ -12998,6 +13144,8 @@ input TestSetRepositoryUpdateInput {
   giturl: String
   gitbranch: String
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
   testSet: TestSetUpdateOneRequiredWithoutRepositoriesInput
 }
@@ -13007,6 +13155,8 @@ input TestSetRepositoryUpdateManyDataInput {
   giturl: String
   gitbranch: String
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
 }
 
@@ -13015,6 +13165,8 @@ input TestSetRepositoryUpdateManyMutationInput {
   giturl: String
   gitbranch: String
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
 }
 
@@ -13049,6 +13201,8 @@ input TestSetRepositoryUpdateWithoutTestSetDataInput {
   giturl: String
   gitbranch: String
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
 }
 
@@ -13321,6 +13475,86 @@ input TestSetRepositoryWhereInput {
 
   """All values not ending with the given string."""
   gitdir_not_ends_with: String
+  gituser: String
+
+  """All values that are not equal to given value."""
+  gituser_not: String
+
+  """All values that are contained in given list."""
+  gituser_in: [String!]
+
+  """All values that are not contained in given list."""
+  gituser_not_in: [String!]
+
+  """All values less than the given value."""
+  gituser_lt: String
+
+  """All values less than or equal the given value."""
+  gituser_lte: String
+
+  """All values greater than the given value."""
+  gituser_gt: String
+
+  """All values greater than or equal the given value."""
+  gituser_gte: String
+
+  """All values containing the given string."""
+  gituser_contains: String
+
+  """All values not containing the given string."""
+  gituser_not_contains: String
+
+  """All values starting with the given string."""
+  gituser_starts_with: String
+
+  """All values not starting with the given string."""
+  gituser_not_starts_with: String
+
+  """All values ending with the given string."""
+  gituser_ends_with: String
+
+  """All values not ending with the given string."""
+  gituser_not_ends_with: String
+  gitpassword: String
+
+  """All values that are not equal to given value."""
+  gitpassword_not: String
+
+  """All values that are contained in given list."""
+  gitpassword_in: [String!]
+
+  """All values that are not contained in given list."""
+  gitpassword_not_in: [String!]
+
+  """All values less than the given value."""
+  gitpassword_lt: String
+
+  """All values less than or equal the given value."""
+  gitpassword_lte: String
+
+  """All values greater than the given value."""
+  gitpassword_gt: String
+
+  """All values greater than or equal the given value."""
+  gitpassword_gte: String
+
+  """All values containing the given string."""
+  gitpassword_contains: String
+
+  """All values not containing the given string."""
+  gitpassword_not_contains: String
+
+  """All values starting with the given string."""
+  gitpassword_starts_with: String
+
+  """All values not starting with the given string."""
+  gitpassword_not_starts_with: String
+
+  """All values ending with the given string."""
+  gitpassword_ends_with: String
+
+  """All values not ending with the given string."""
+  gitpassword_not_ends_with: String
   globFilter: String
 
   """All values that are not equal to given value."""
@@ -13589,6 +13823,20 @@ input TestSetScalarWhereInput {
 
   """All values not ending with the given string."""
   expandUtterancesIncomprehension_not_ends_with: String
+  expandScriptingMemory: Boolean
+
+  """All values that are not equal to given value."""
+  expandScriptingMemory_not: Boolean
+  selectionType: TestSetSelectionType
+
+  """All values that are not equal to given value."""
+  selectionType_not: TestSetSelectionType
+
+  """All values that are contained in given list."""
+  selectionType_in: [TestSetSelectionType!]
+
+  """All values that are not contained in given list."""
+  selectionType_not_in: [TestSetSelectionType!]
   statsUpdatedAt: DateTime
 
   """All values that are not equal to given value."""
@@ -13677,6 +13925,28 @@ input TestSetScalarWhereInput {
 
   """All values greater than or equal the given value."""
   statsUtterancesCount_gte: Int
+  statsScriptingMemoryCount: Int
+
+  """All values that are not equal to given value."""
+  statsScriptingMemoryCount_not: Int
+
+  """All values that are contained in given list."""
+  statsScriptingMemoryCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsScriptingMemoryCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsScriptingMemoryCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsScriptingMemoryCount_lte: Int
+
+  """All values greater than the given value."""
+  statsScriptingMemoryCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsScriptingMemoryCount_gte: Int
 }
 
 type TestSetScript implements Node {
@@ -14029,6 +14299,7 @@ enum TestSetScriptType {
   SCRIPTING_TYPE_CONVO
   SCRIPTING_TYPE_PCONVO
   SCRIPTING_TYPE_UTTERANCES
+  SCRIPTING_TYPE_SCRIPTING_MEMORY
 }
 
 input TestSetScriptUpdateDataInput {
@@ -14340,6 +14611,12 @@ input TestSetScriptWhereUniqueInput {
   id: ID
 }
 
+enum TestSetSelectionType {
+  SELECTION_TYPE_LOCAL_ONLY
+  SELECTION_TYPE_REMOTE_ONLY
+  SELECTION_TYPE_LOCAL_AND_REMOTE
+}
+
 type TestSetSubscriptionPayload {
   mutation: MutationType!
   node: TestSet
@@ -14385,10 +14662,13 @@ input TestSetUpdateDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
   client: ClientUpdateOneInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -14404,10 +14684,13 @@ input TestSetUpdateInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
   client: ClientUpdateOneInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -14423,10 +14706,13 @@ input TestSetUpdateManyDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
 }
 
@@ -14448,10 +14734,13 @@ input TestSetUpdateManyMutationInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
 }
 
@@ -14507,10 +14796,13 @@ input TestSetUpdateWithoutExcelsDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
   client: ClientUpdateOneInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -14525,10 +14817,13 @@ input TestSetUpdateWithoutFoldersDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
   client: ClientUpdateOneInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -14543,10 +14838,13 @@ input TestSetUpdateWithoutRepositoriesDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
   client: ClientUpdateOneInput
   scripts: TestSetScriptUpdateManyWithoutTestSetInput
@@ -14561,10 +14859,13 @@ input TestSetUpdateWithoutScriptsDataInput {
   expandConvos: Boolean
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean
+  selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
   statsPartialConvoCount: Int
   statsUtterancesCount: Int
+  statsScriptingMemoryCount: Int
   tags: TestSetUpdatetagsInput
   client: ClientUpdateOneInput
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
@@ -14830,6 +15131,20 @@ input TestSetWhereInput {
 
   """All values not ending with the given string."""
   expandUtterancesIncomprehension_not_ends_with: String
+  expandScriptingMemory: Boolean
+
+  """All values that are not equal to given value."""
+  expandScriptingMemory_not: Boolean
+  selectionType: TestSetSelectionType
+
+  """All values that are not equal to given value."""
+  selectionType_not: TestSetSelectionType
+
+  """All values that are contained in given list."""
+  selectionType_in: [TestSetSelectionType!]
+
+  """All values that are not contained in given list."""
+  selectionType_not_in: [TestSetSelectionType!]
   statsUpdatedAt: DateTime
 
   """All values that are not equal to given value."""
@@ -14918,6 +15233,28 @@ input TestSetWhereInput {
 
   """All values greater than or equal the given value."""
   statsUtterancesCount_gte: Int
+  statsScriptingMemoryCount: Int
+
+  """All values that are not equal to given value."""
+  statsScriptingMemoryCount_not: Int
+
+  """All values that are contained in given list."""
+  statsScriptingMemoryCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  statsScriptingMemoryCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  statsScriptingMemoryCount_lt: Int
+
+  """All values less than or equal the given value."""
+  statsScriptingMemoryCount_lte: Int
+
+  """All values greater than the given value."""
+  statsScriptingMemoryCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  statsScriptingMemoryCount_gte: Int
   client: ClientWhereInput
   scripts_every: TestSetScriptWhereInput
   scripts_some: TestSetScriptWhereInput

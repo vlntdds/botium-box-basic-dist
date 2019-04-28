@@ -168,8 +168,15 @@ const deviceProvidersData = () => [
     name: 'Saucelabs.com Real Device Cloud',
     type: 'TESTOBJECTS',
     url: 'https://eu1.appium.testobject.com/wd/hub',
-    username: 'YOUR_TESTOBJECTS_USERNAME',
+    username: '',
     password: 'YOUR_TESTOBJECTS_PROJECT_API_KEY'
+  },
+  {
+    name: 'experitest Desktop & Real Device Browsers',
+    type: 'EXPERITEST',
+    url: 'https://cloud.seetest.io/wd/hub',
+    username: '',
+    password: 'YOUR_EXPERITEST_ACCESS_KEY'
   }
 ]
 
@@ -507,6 +514,7 @@ const testsetData = () => [
     },
     expandConvos: true,
     expandUtterancesToConvos: false,
+    expandScriptingMemory: false,
     scripts: {
       create: [
         {
@@ -531,6 +539,7 @@ const testsetData = () => [
     expandConvos: false,
     expandUtterancesToConvos: true,
     expandUtterancesIncomprehension: 'INCOMPREHENSION',
+    expandScriptingMemory: false,
     repositories: {
       create: [
         {
@@ -559,6 +568,7 @@ const testsetData = () => [
     expandConvos: false,
     expandUtterancesToConvos: true,
     expandUtterancesIncomprehension: 'INCOMPREHENSION',
+    expandScriptingMemory: false,
     repositories: {
       create: [
         {

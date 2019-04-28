@@ -24,6 +24,7 @@ type Agent {
   description: String
   tags: [String!]
   heartbeat: DateTime
+  debug: Boolean
   capabilities: [Capability!]!
 }
 
@@ -35,6 +36,7 @@ type Chatbot {
   name: String!
   description: String
   tags: [String!]
+  allowHtmlDisplay: Boolean
   capabilities: [Capability!]! @relation(name: "ChatbotCapabilities")
   sources: [Capability!]! @relation(name: "ChatbotSources")
   envs: [Capability!]! @relation(name: "ChatbotEnvs")
@@ -179,6 +181,8 @@ type TestSet {
   expandConvos: Boolean @default(value: "true")
   expandUtterancesToConvos: Boolean @default(value: "false")
   expandUtterancesIncomprehension: String
+  expandScriptingMemory: Boolean @default(value: "false")
+  selectionType: TestSetSelectionType
   tags: [String!]
   scripts: [TestSetScript!]!
   repositories: [TestSetRepository!]!
@@ -188,7 +192,14 @@ type TestSet {
   statsConvoCount: Int,
   statsPartialConvoCount: Int,
   statsUtterancesCount: Int,
+  statsScriptingMemoryCount: Int,
   statsCompiledConvos: [TestSetCompiledConvo!]
+}
+
+enum TestSetSelectionType {
+  SELECTION_TYPE_LOCAL_ONLY
+  SELECTION_TYPE_REMOTE_ONLY
+  SELECTION_TYPE_LOCAL_AND_REMOTE
 }
 
 type TestSetCompiledConvo {
@@ -217,6 +228,7 @@ enum TestSetScriptType {
   SCRIPTING_TYPE_CONVO
   SCRIPTING_TYPE_PCONVO
   SCRIPTING_TYPE_UTTERANCES
+  SCRIPTING_TYPE_SCRIPTING_MEMORY
 }
 
 type TestSetRepository {
@@ -227,6 +239,8 @@ type TestSetRepository {
   giturl: String!
   gitbranch: String!
   gitdir: String
+  gituser: String
+  gitpassword: String
   globFilter: String
   testSet: TestSet!
 }
@@ -293,6 +307,7 @@ type DeviceProvider {
 enum DeviceProviderType {
   SAUCELABS
   TESTOBJECTS
+  EXPERITEST
   LOCALSELENIUM
   INTEGRATED
 }

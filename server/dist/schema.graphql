@@ -118,6 +118,8 @@ type Mutation {
   updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @hasPermission(permission: "TESTSETS_UPDATE") @assertClient(query: "testSet") @clientDisconnector(dataParam: "testSet")
   deleteTestSet(id: ID!): Boolean! @hasPermission(permission: "TESTSETS_DELETE") @assertClient(query: "testSet")
   cloneTestSet(id: ID!, options: CloneTestSetOptionsChoosen!): TestSet! @hasPermission(permission: "TESTSETS_CREATE") @assertClient(query: "testSet")
+  exportTestSetToGit(id: ID!, options: ExportTestSetToGitOptionsChoosen!): Boolean! @hasPermission(permission: "TESTSETS_UPDATE") @assertClient(query: "testSet")
+  exportTestSetToFolder(id: ID!, options: ExportTestSetToFolderOptionsChoosen!): Boolean! @hasPermission(permission: "TESTSETS_UPDATE") @assertClient(query: "testSet")
   updateTestSetStats(id: ID!): TestSet! @hasAnyPermission(permissions: ["TESTSETS_CREATE", "TESTSETS_UPDATE"]) @assertClient(query: "testSet")
   createTestSetScript(testSetScript: TestSetScriptCreateInput!): TestSetScript! @hasAnyPermission(permissions: ["TESTSETS_CREATE", "TESTSETS_UPDATE"]) @assertClient(query: "testSet", idParam: "testSetScript.testSet.connect.id", selector: "{ client { id } }") @clientConnector(dataParam: ["testSetScript.testSet.create"])
   updateTestSetScript(id: ID!, testSetScript: TestSetScriptUpdateInput!): TestSetScript! @hasAnyPermission(permissions: ["TESTSETS_CREATE", "TESTSETS_UPDATE"]) @assertClient(query: "testSetScript", selector: "{ testSet { client { id } } }")
@@ -236,6 +238,19 @@ type CloneTestSetOptionsPossible {
 input CloneTestSetOptionsChoosen {
   humanifiersToExecute: [String]!,
   percentToHumanify: Float!
+}
+
+input ExportTestSetToGitOptionsChoosen {
+  id: ID!,
+  gitbranch: String,
+  gituser: String,
+  gitpassword: String,
+  gitcomment: String
+}
+
+input ExportTestSetToFolderOptionsChoosen {
+  id: ID!,
+  subdirectory: String
 }
 
 type AuthPayload {
