@@ -46,25 +46,28 @@ Fill in the environment variables from what you know from above, and afterwards 
 
 #### Build and run Docker Container
 
-Botium Box requires two directories for operations. You can just let them created inside the Docker container, but this is not recommended.
+Botium Box requires three directories for operations. You can just let them created inside the Docker container, but this is not recommended.
 
 * A directory holding the test sets should be mounted to /app/server/testsets
 * A working directory for the Botium Box server mounted to /app/server/botiumwork and for the agents mounted to /app/agent/botiumwork
+* A resources directory for the Botium Box server mounted to /app/server/resources and for the agents mounted to /app/agent/resources
 
-Both of them can be handed over to docker with the _-v_ command line flag.
+All of them can be handed over to docker with the _-v_ command line flag.
 
 For hosting Botium Box as Docker, use these commands to run the Docker image:
 
 ```
-> docker run -v /tmp/botiumwork:/app/server/botiumwork \
-	-v /tmp/botiumwork:/app/agent/botiumwork \
-    -v /tmp/testsets:/app/server/testsets \
+> docker run -v `pwd`/botiumwork:/app/server/botiumwork \
+	-v `pwd`/botiumwork:/app/agent/botiumwork \
+	-v `pwd`/testsets:/app/server/testsets \
+	-v `pwd`/resources:/app/server/resources \
+	-v `pwd`/resources:/app/agent/resources \
 	-e BOTIUMBOX_QUEUE_REDISURL=redis://redisuser:redispassword@redishost:redisport \
 	-e PRISMA_ENDPOINT=https://my-prisma-endpoint:my-prisma-port/demo/dev \
 	-e PRISMA_MANAGEMENT_API_SECRET=my-prisma-management-api-secret \
 	-e PRISMA_SECRET=something123 \
 	-e JWT_SECRET=something123 \
-    -p 4000:4000 botium/botium-box-ce:box-latest
+	-p 4000:4000 botium/botium-box-ce:box-latest
 ```
 
 Botium Box will now run on http://127.0.0.1:4000
@@ -92,7 +95,7 @@ The Docker-Compose file contains all prerequisites for running Botium Box and is
 ```
 3. Point your browser to http://127.0.0.1:4000
 
-_To make your Botium testsets and working directory point to a folder of your choice, you have to edit the docker-compose-all.yml file!_
+_To make your Botium testsets, resources and working directory point to a folder of your choice (recommended), you have to edit the docker-compose-all.yml file!_
 
 
 ### Run Botium Box with standalone Docker image (not recommended)
@@ -102,9 +105,11 @@ Botium Box can use "docker-in-docker" to startup in a single docker container, s
 _Don't use this setup in production environments!_
 
 ```
-> docker run -v /tmp/botiumwork:/app/server/botiumwork \
-	-v /tmp/botiumwork:/app/agent/botiumwork \
-    -v /tmp/testsets:/app/server/testsets \
+> docker run -v `pwd`/botiumwork:/app/server/botiumwork \
+	-v `pwd`/botiumwork:/app/agent/botiumwork \
+	-v `pwd`/testsets:/app/server/testsets \
+	-v `pwd`/resources:/app/server/resources \
+	-v `pwd`/resources:/app/agent/resources \
 	-v /var/run/docker.sock:/var/run/docker.sock \
     -p 4000:4000 botium/botium-box-ce:standalone-latest
 ```
