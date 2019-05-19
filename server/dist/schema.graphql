@@ -113,6 +113,7 @@ type Mutation {
   createTestSession(testSession: TestSessionCreateInput!): TestSession! @hasPermission(permission: "TESTSESSIONS_CREATE") @assertClient(query: ["chatbot", "testSet"], argsBase: ["testSession.chatbot.connect", "testSession.testSets.connect"]) @clientConnector(dataParam: ["testSession", "testSession.chatbot.create", "testSession.testSets.create"])
   deleteTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_DELETE") @assertClient(query: "testSession") 
   cancelTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_CREATE") @assertClient(query: "testSession") 
+  stopTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_CREATE") @assertClient(query: "testSession") 
 
   createTestSet(testSet: TestSetCreateInput!): TestSet! @hasPermission(permission: "TESTSETS_CREATE") @clientConnector(dataParam: "testSet")
   updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @hasPermission(permission: "TESTSETS_UPDATE") @assertClient(query: "testSet") @clientDisconnector(dataParam: "testSet")

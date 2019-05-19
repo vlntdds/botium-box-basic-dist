@@ -645,7 +645,8 @@ const registeredComponentsDataBasic = () => [
     default: true,
     src: 'botium-asserter-basiclink',
     global: false,
-    ref: 'HASLINK'
+    ref: 'HASLINK',
+    args: JSON.stringify({})
   }
 ]
 const registeredComponentsDataPremium = () => [
@@ -656,7 +657,8 @@ const registeredComponentsDataPremium = () => [
     default: false,
     src: 'botium-asserter-secexploits/fbwebhook',
     global: false,
-    ref: 'FBWEBHOOKEXPLOITS'
+    ref: 'FBWEBHOOKEXPLOITS',
+    args: JSON.stringify({})
   },
   {
     name: 'Chatbot Hyperlink Response Asserter',
@@ -665,7 +667,8 @@ const registeredComponentsDataPremium = () => [
     default: true,
     src: 'botium-asserter-hyperlink',
     global: true,
-    ref: 'CHECKLINK'
+    ref: 'CHECKLINK',
+    args: JSON.stringify({})
   },
   {
     name: 'Chatbot HTTP Endpoint Asserter',
@@ -674,7 +677,8 @@ const registeredComponentsDataPremium = () => [
     default: true,
     src: 'botium-asserter-http',
     global: false,
-    ref: 'HTTP'
+    ref: 'HTTP',
+    args: JSON.stringify({})
   },
   {
     name: 'Chatbot MSSQL Database Asserter',
@@ -790,7 +794,7 @@ async function createRecords (entityName, entities, queryFn, keyField, createFn,
 (async () => {
   await createRecords('client', clientData(), db.query.clients, 'name', db.mutation.createClient)
   await createRecords('userrole', rolesData(), db.query.userRoles, 'name', db.mutation.createUserRole)
-  await createRecords('user', usersData(), db.query.users, 'name', db.mutation.createUser, db.mutation.updateUser)
+  await createRecords('user', usersData(), db.query.users, 'name', db.mutation.createUser)
   await createRecords('agent', agentsData(), db.query.agents, 'name', db.mutation.createAgent)
   await createRecords('apikey', apikeysData(), db.query.apiKeys, 'name', db.mutation.createApiKey)
   await createRecords('deviceprovider', deviceProvidersData(), db.query.deviceProviders, 'name', db.mutation.createDeviceProvider)

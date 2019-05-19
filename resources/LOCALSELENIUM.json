@@ -1,30 +1,19 @@
 [
     {
-        "name": "PhantomJS Virtual Browser",
+        "name": "Google Chrome",
         "value": {
             "type": "DESKTOP",
             "capabilities": {
-                "browserName": "phantomjs"
+                "browserName": "chrome"
             }
         }
-    }, 
+    },
     {
-        "name": "Generic Browser (manually set capabilities)",
+        "name": "Mozilla Firefox",
         "value": {
             "type": "DESKTOP",
             "capabilities": {
-            }
-        }
-    }, 
-    {
-        "name": "Google Chrome (Headless)",
-        "value": {
-            "type": "DESKTOP",
-            "capabilities": {
-                "browserName": "chrome",
-                "chromeOptions": {
-                    "args": [ "--headless", "--disable-gpu" ]
-                }     
+                "browserName": "firefox"
             }
         }
     }

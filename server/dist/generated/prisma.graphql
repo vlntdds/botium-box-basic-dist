@@ -1,5 +1,5 @@
-# source: http://192.168.99.100:4466/box/dev514
-# timestamp: Wed Apr 24 2019 15:22:06 GMT+0200 (W. Europe Daylight Time)
+# source: http://192.168.99.100:4466/box/dev366
+# timestamp: Thu May 02 2019 11:22:33 GMT+0200 (W. Europe Daylight Time)
 
 type Agent implements Node {
   id: ID!
@@ -1196,6 +1196,7 @@ enum CapabilityType {
   INT
   BOOLEAN
   JSON
+  JS
 }
 
 input CapabilityUpdateDataInput {
@@ -5291,6 +5292,7 @@ type TestProject implements Node {
   capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
   agent: Agent
   batchCount: Int
+  bail: Boolean
 }
 
 """A connection to a list of items."""
@@ -5308,6 +5310,7 @@ input TestProjectCreateInput {
   code: String!
   description: String
   batchCount: Int
+  bail: Boolean
   tags: TestProjectCreatetagsInput
   client: ClientCreateOneInput
   chatbot: ChatbotCreateOneInput!
@@ -5351,6 +5354,8 @@ enum TestProjectOrderByInput {
   description_DESC
   batchCount_ASC
   batchCount_DESC
+  bail_ASC
+  bail_DESC
 }
 
 type TestProjectPreviousValues {
@@ -5362,6 +5367,7 @@ type TestProjectPreviousValues {
   description: String
   tags: [String!]!
   batchCount: Int
+  bail: Boolean
 }
 
 type TestProjectSubscriptionPayload {
@@ -5408,6 +5414,7 @@ input TestProjectUpdateDataInput {
   code: String
   description: String
   batchCount: Int
+  bail: Boolean
   tags: TestProjectUpdatetagsInput
   client: ClientUpdateOneInput
   chatbot: ChatbotUpdateOneRequiredInput
@@ -5423,6 +5430,7 @@ input TestProjectUpdateInput {
   code: String
   description: String
   batchCount: Int
+  bail: Boolean
   tags: TestProjectUpdatetagsInput
   client: ClientUpdateOneInput
   chatbot: ChatbotUpdateOneRequiredInput
@@ -5438,6 +5446,7 @@ input TestProjectUpdateManyMutationInput {
   code: String
   description: String
   batchCount: Int
+  bail: Boolean
   tags: TestProjectUpdatetagsInput
 }
 
@@ -5694,6 +5703,10 @@ input TestProjectWhereInput {
 
   """All values greater than or equal the given value."""
   batchCount_gte: Int
+  bail: Boolean
+
+  """All values that are not equal to given value."""
+  bail_not: Boolean
   client: ClientWhereInput
   chatbot: ChatbotWhereInput
   testSets_every: TestSetWhereInput
@@ -5731,6 +5744,7 @@ type TestSession implements Node {
   testProject: TestProject
   agent: Agent
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus!
   results(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResult!]
   jobs(where: TestSessionJobWhereInput, orderBy: TestSessionJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionJob!]
@@ -5754,6 +5768,7 @@ input TestSessionCreateInput {
   name: String!
   description: String
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus!
   chartData: String
   tags: TestSessionCreatetagsInput
@@ -5789,6 +5804,7 @@ input TestSessionCreateWithoutJobsInput {
   name: String!
   description: String
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus!
   chartData: String
   tags: TestSessionCreatetagsInput
@@ -5809,6 +5825,7 @@ input TestSessionCreateWithoutResultsInput {
   name: String!
   description: String
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus!
   chartData: String
   tags: TestSessionCreatetagsInput
@@ -7149,6 +7166,8 @@ enum TestSessionOrderByInput {
   description_DESC
   batchCount_ASC
   batchCount_DESC
+  bail_ASC
+  bail_DESC
   status_ASC
   status_DESC
   chartData_ASC
@@ -7163,6 +7182,7 @@ type TestSessionPreviousValues {
   description: String
   tags: [String!]!
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus!
   chartData: String
 }
@@ -9623,6 +9643,7 @@ input TestSessionUpdateInput {
   name: String
   description: String
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus
   chartData: String
   tags: TestSessionUpdatetagsInput
@@ -9644,6 +9665,7 @@ input TestSessionUpdateManyMutationInput {
   name: String
   description: String
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus
   chartData: String
   tags: TestSessionUpdatetagsInput
@@ -9671,6 +9693,7 @@ input TestSessionUpdateWithoutJobsDataInput {
   name: String
   description: String
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus
   chartData: String
   tags: TestSessionUpdatetagsInput
@@ -9691,6 +9714,7 @@ input TestSessionUpdateWithoutResultsDataInput {
   name: String
   description: String
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus
   chartData: String
   tags: TestSessionUpdatetagsInput
@@ -9912,6 +9936,10 @@ input TestSessionWhereInput {
 
   """All values greater than or equal the given value."""
   batchCount_gte: Int
+  bail: Boolean
+
+  """All values that are not equal to given value."""
+  bail_not: Boolean
   status: TestSessionStatus
 
   """All values that are not equal to given value."""
@@ -10003,10 +10031,16 @@ type TestSet implements Node {
   updatedAt: DateTime!
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   tags: [String!]!
   scripts(where: TestSetScriptWhereInput, orderBy: TestSetScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetScript!]
@@ -10728,10 +10762,16 @@ type TestSetConnection {
 input TestSetCreateInput {
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -10784,10 +10824,16 @@ input TestSetCreatetagsInput {
 input TestSetCreateWithoutExcelsInput {
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -10805,10 +10851,16 @@ input TestSetCreateWithoutExcelsInput {
 input TestSetCreateWithoutFoldersInput {
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -10826,10 +10878,16 @@ input TestSetCreateWithoutFoldersInput {
 input TestSetCreateWithoutRepositoriesInput {
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -10847,10 +10905,16 @@ input TestSetCreateWithoutRepositoriesInput {
 input TestSetCreateWithoutScriptsInput {
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -11938,6 +12002,12 @@ input TestSetExcelWhereUniqueInput {
   id: ID
 }
 
+enum TestSetExpandConvosModeType {
+  UTTEXPANSION_MODE_ALL
+  UTTEXPANSION_MODE_FIRST
+  UTTEXPANSION_MODE_RANDOM
+}
+
 type TestSetFolder implements Node {
   id: ID!
   createdAt: DateTime!
@@ -12562,6 +12632,17 @@ input TestSetFolderWhereUniqueInput {
   id: ID
 }
 
+enum TestSetMatchingModeType {
+  MATCHING_MODE_REGEXP
+  MATCHING_MODE_INCLUDE
+  MATCHING_MODE_INCLUDELOWERCASE
+}
+
+enum TestSetMemoryMatchingModeType {
+  MATCHING_MODE_NON_WHITESPACE
+  MATCHING_MODE_WORD
+}
+
 enum TestSetOrderByInput {
   id_ASC
   id_DESC
@@ -12573,14 +12654,26 @@ enum TestSetOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  useMatchingMode_ASC
+  useMatchingMode_DESC
   expandConvos_ASC
   expandConvos_DESC
+  expandConvosMode_ASC
+  expandConvosMode_DESC
+  expandConvosModeRandomCount_ASC
+  expandConvosModeRandomCount_DESC
   expandUtterancesToConvos_ASC
   expandUtterancesToConvos_DESC
   expandUtterancesIncomprehension_ASC
   expandUtterancesIncomprehension_DESC
+  useScriptingMemory_ASC
+  useScriptingMemory_DESC
+  useScriptingMemoryMatchingMode_ASC
+  useScriptingMemoryMatchingMode_DESC
   expandScriptingMemory_ASC
   expandScriptingMemory_DESC
+  normalizeText_ASC
+  normalizeText_DESC
   selectionType_ASC
   selectionType_DESC
   statsUpdatedAt_ASC
@@ -12601,10 +12694,16 @@ type TestSetPreviousValues {
   updatedAt: DateTime!
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   tags: [String!]!
   statsUpdatedAt: DateTime
@@ -13775,10 +13874,52 @@ input TestSetScalarWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  useMatchingMode: TestSetMatchingModeType
+
+  """All values that are not equal to given value."""
+  useMatchingMode_not: TestSetMatchingModeType
+
+  """All values that are contained in given list."""
+  useMatchingMode_in: [TestSetMatchingModeType!]
+
+  """All values that are not contained in given list."""
+  useMatchingMode_not_in: [TestSetMatchingModeType!]
   expandConvos: Boolean
 
   """All values that are not equal to given value."""
   expandConvos_not: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+
+  """All values that are not equal to given value."""
+  expandConvosMode_not: TestSetExpandConvosModeType
+
+  """All values that are contained in given list."""
+  expandConvosMode_in: [TestSetExpandConvosModeType!]
+
+  """All values that are not contained in given list."""
+  expandConvosMode_not_in: [TestSetExpandConvosModeType!]
+  expandConvosModeRandomCount: Int
+
+  """All values that are not equal to given value."""
+  expandConvosModeRandomCount_not: Int
+
+  """All values that are contained in given list."""
+  expandConvosModeRandomCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  expandConvosModeRandomCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  expandConvosModeRandomCount_lt: Int
+
+  """All values less than or equal the given value."""
+  expandConvosModeRandomCount_lte: Int
+
+  """All values greater than the given value."""
+  expandConvosModeRandomCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  expandConvosModeRandomCount_gte: Int
   expandUtterancesToConvos: Boolean
 
   """All values that are not equal to given value."""
@@ -13823,10 +13964,28 @@ input TestSetScalarWhereInput {
 
   """All values not ending with the given string."""
   expandUtterancesIncomprehension_not_ends_with: String
+  useScriptingMemory: Boolean
+
+  """All values that are not equal to given value."""
+  useScriptingMemory_not: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
+
+  """All values that are not equal to given value."""
+  useScriptingMemoryMatchingMode_not: TestSetMemoryMatchingModeType
+
+  """All values that are contained in given list."""
+  useScriptingMemoryMatchingMode_in: [TestSetMemoryMatchingModeType!]
+
+  """All values that are not contained in given list."""
+  useScriptingMemoryMatchingMode_not_in: [TestSetMemoryMatchingModeType!]
   expandScriptingMemory: Boolean
 
   """All values that are not equal to given value."""
   expandScriptingMemory_not: Boolean
+  normalizeText: Boolean
+
+  """All values that are not equal to given value."""
+  normalizeText_not: Boolean
   selectionType: TestSetSelectionType
 
   """All values that are not equal to given value."""
@@ -14659,10 +14818,16 @@ input TestSetSubscriptionWhereInput {
 input TestSetUpdateDataInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -14681,10 +14846,16 @@ input TestSetUpdateDataInput {
 input TestSetUpdateInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -14703,10 +14874,16 @@ input TestSetUpdateInput {
 input TestSetUpdateManyDataInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -14731,10 +14908,16 @@ input TestSetUpdateManyInput {
 input TestSetUpdateManyMutationInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -14793,10 +14976,16 @@ input TestSetUpdatetagsInput {
 input TestSetUpdateWithoutExcelsDataInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -14814,10 +15003,16 @@ input TestSetUpdateWithoutExcelsDataInput {
 input TestSetUpdateWithoutFoldersDataInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -14835,10 +15030,16 @@ input TestSetUpdateWithoutFoldersDataInput {
 input TestSetUpdateWithoutRepositoriesDataInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -14856,10 +15057,16 @@ input TestSetUpdateWithoutRepositoriesDataInput {
 input TestSetUpdateWithoutScriptsDataInput {
   name: String
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
+  normalizeText: Boolean
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -15083,10 +15290,52 @@ input TestSetWhereInput {
 
   """All values not ending with the given string."""
   description_not_ends_with: String
+  useMatchingMode: TestSetMatchingModeType
+
+  """All values that are not equal to given value."""
+  useMatchingMode_not: TestSetMatchingModeType
+
+  """All values that are contained in given list."""
+  useMatchingMode_in: [TestSetMatchingModeType!]
+
+  """All values that are not contained in given list."""
+  useMatchingMode_not_in: [TestSetMatchingModeType!]
   expandConvos: Boolean
 
   """All values that are not equal to given value."""
   expandConvos_not: Boolean
+  expandConvosMode: TestSetExpandConvosModeType
+
+  """All values that are not equal to given value."""
+  expandConvosMode_not: TestSetExpandConvosModeType
+
+  """All values that are contained in given list."""
+  expandConvosMode_in: [TestSetExpandConvosModeType!]
+
+  """All values that are not contained in given list."""
+  expandConvosMode_not_in: [TestSetExpandConvosModeType!]
+  expandConvosModeRandomCount: Int
+
+  """All values that are not equal to given value."""
+  expandConvosModeRandomCount_not: Int
+
+  """All values that are contained in given list."""
+  expandConvosModeRandomCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  expandConvosModeRandomCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  expandConvosModeRandomCount_lt: Int
+
+  """All values less than or equal the given value."""
+  expandConvosModeRandomCount_lte: Int
+
+  """All values greater than the given value."""
+  expandConvosModeRandomCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  expandConvosModeRandomCount_gte: Int
   expandUtterancesToConvos: Boolean
 
   """All values that are not equal to given value."""
@@ -15131,10 +15380,28 @@ input TestSetWhereInput {
 
   """All values not ending with the given string."""
   expandUtterancesIncomprehension_not_ends_with: String
+  useScriptingMemory: Boolean
+
+  """All values that are not equal to given value."""
+  useScriptingMemory_not: Boolean
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
+
+  """All values that are not equal to given value."""
+  useScriptingMemoryMatchingMode_not: TestSetMemoryMatchingModeType
+
+  """All values that are contained in given list."""
+  useScriptingMemoryMatchingMode_in: [TestSetMemoryMatchingModeType!]
+
+  """All values that are not contained in given list."""
+  useScriptingMemoryMatchingMode_not_in: [TestSetMemoryMatchingModeType!]
   expandScriptingMemory: Boolean
 
   """All values that are not equal to given value."""
   expandScriptingMemory_not: Boolean
+  normalizeText: Boolean
+
+  """All values that are not equal to given value."""
+  normalizeText_not: Boolean
   selectionType: TestSetSelectionType
 
   """All values that are not equal to given value."""

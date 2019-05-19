@@ -13,7 +13,8 @@ type TestProject {
   registeredComponents: [RegisteredComponent!]!
   capabilities: [Capability!]!
   agent: Agent
-  batchCount: Int  
+  batchCount: Int
+  bail: Boolean
 }
 
 type Agent {
@@ -48,6 +49,7 @@ enum CapabilityType {
   INT
   BOOLEAN
   JSON
+  JS
 }
 
 type Capability {
@@ -77,6 +79,7 @@ type TestSession {
   testProject: TestProject
   agent: Agent
   batchCount: Int
+  bail: Boolean
   status: TestSessionStatus!
   results: [TestSessionTestCaseResult!]!
   jobs: [TestSessionJob!]!
@@ -178,10 +181,16 @@ type TestSet {
   updatedAt: DateTime!
   name: String!
   description: String
+  useMatchingMode: TestSetMatchingModeType
   expandConvos: Boolean @default(value: "true")
+  expandConvosMode: TestSetExpandConvosModeType
+  expandConvosModeRandomCount: Int
   expandUtterancesToConvos: Boolean @default(value: "false")
   expandUtterancesIncomprehension: String
+  useScriptingMemory: Boolean @default(value: "true")
+  useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean @default(value: "false")
+  normalizeText: Boolean @default(value: "true")
   selectionType: TestSetSelectionType
   tags: [String!]
   scripts: [TestSetScript!]!
@@ -194,6 +203,23 @@ type TestSet {
   statsUtterancesCount: Int,
   statsScriptingMemoryCount: Int,
   statsCompiledConvos: [TestSetCompiledConvo!]
+}
+
+enum TestSetExpandConvosModeType {
+  UTTEXPANSION_MODE_ALL
+  UTTEXPANSION_MODE_FIRST
+  UTTEXPANSION_MODE_RANDOM
+}
+
+enum TestSetMatchingModeType {
+  MATCHING_MODE_REGEXP
+  MATCHING_MODE_INCLUDE
+  MATCHING_MODE_INCLUDELOWERCASE
+}
+
+enum TestSetMemoryMatchingModeType {
+  MATCHING_MODE_NON_WHITESPACE
+  MATCHING_MODE_WORD
 }
 
 enum TestSetSelectionType {
