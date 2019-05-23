@@ -41,6 +41,7 @@ const rolesData = () => [
         'TESTPROJECTS_*',
         'TESTSETS_*',
         'TESTSESSIONS_*',
+        'PERFORMANCETESTSESSIONS*',
         'APIKEYS_SELECT',
         'DEVICEPROVIDERS_*',
         'REGISTEREDCOMPONENTS_*'
@@ -64,6 +65,9 @@ const rolesData = () => [
         'TESTSESSIONS_SELECT',
         'TESTSESSIONS_CREATE',
         'TESTSESSIONS_REPORTS',
+        'PERFORMANCETESTSESSIONS_SELECT',
+        'PERFORMANCETESTSESSIONS_CREATE',
+        'PERFORMANCETESTSESSIONS_REPORTS',
         'APIKEYS_SELECT',
         'DEVICEPROVIDERS_SELECT',
         'REGISTEREDCOMPONENTS_SELECT'
@@ -77,7 +81,8 @@ const rolesData = () => [
         'CHATBOTS_SELECT',
         'TESTPROJECTS_SELECT',
         'TESTSETS_SELECT',
-        'TESTSESSIONS_SELECT'
+        'TESTSESSIONS_SELECT',
+        'PERFORMANCETESTSESSIONS_SELECT'
       ]
     }
   }

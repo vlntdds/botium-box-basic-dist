@@ -15,6 +15,10 @@
 # import TestSessionSubscriptionPayload from "./generated/prisma.graphql"
 # import TestSessionJob, TestSessionJobLog, TestSessionJobLogOrderByInput from "./generated/prisma.graphql"
 
+# import PerformanceTestSession PerformanceTestSessionCreateInput, PerformanceTestSessionCreatetagsInput, PerformanceTestSessionWhereInput, PerformanceTestSessionOrderByInput from "./generated/prisma.graphql"
+# import PerformanceTestSessionAggregatedResult, PerformanceTestSessionAggregatedResultWhereInput, PerformanceTestSessionAggregatedResultOrderByInput from "./generated/prisma.graphql"
+# import PerformanceTestSessionJob, PerformanceTestSessionJobWhereInput, PerformanceTestSessionJobOrderByInput from "./generated/prisma.graphql"
+
 # import TestSet, TestSetCreateInput, TestSetUpdateInput from "./generated/prisma.graphql"
 # import TestSetScript, TestSetScriptCreateInput, TestSetScriptUpdateInput from "./generated/prisma.graphql"
 # import TestSetRepository, TestSetRepositoryCreateInput, TestSetRepositoryUpdateInput from "./generated/prisma.graphql"
@@ -54,13 +58,20 @@ type Query {
   testsessiontestcaseresult(id: ID!): TestSessionTestCaseResult @hasPermission(permission: "TESTSESSIONS_SELECT") @assertClient(query: "testSessionTestCaseResult", selector: "{ testSession { client { id } } }")
   testsessionjoblogs(jobId: ID!, orderBy: TestSessionJobLogOrderByInput, skip: Int, first: Int): [TestSessionJobLog!]! @hasPermission(permission: "TESTSESSIONS_REPORTS") @assertClient(query: "testSessionJob", idParam: "jobId", selector: "{ testSession { client { id } } }")
 
+  performancetestsessions(where: PerformanceTestSessionWhereInput, orderBy: PerformanceTestSessionOrderByInput, skip: Int, first: Int): [PerformanceTestSession!]! @hasPermission(permission: "PERFORMANCETESTSESSIONS_SELECT") @clientFilter
+  performancetestsessionssimplifiedwithstatus(where: PerformanceTestSessionWhereInput, orderBy: PerformanceTestSessionOrderByInput, skip: Int, first: Int): [PerformanceTestSessionSimplifiedWithStatus!]! @hasPermission(permission: "PERFORMANCETESTSESSIONS_SELECT") @clientFilter
+  performancetestsession(id: ID!): PerformanceTestSession @hasPermission(permission: "PERFORMANCETESTSESSIONS_SELECT") @assertClient(query: "performanceTestSession")
+  performancetestsessionstatus(id: ID!): PerformanceTestSessionStatus @hasPermission(permission: "PERFORMANCETESTSESSIONS_SELECT") @assertClient(query: "performanceTestSession")
+  performancetestsessionjobs(where: PerformanceTestSessionJobWhereInput, orderBy: PerformanceTestSessionJobOrderByInput, skip: Int, first: Int): [PerformanceTestSessionJob!]! @hasPermission(permission: "PERFORMANCETESTSESSIONS_SELECT") @assertClient(query: "performanceTestSessionJobs", selector: "{ testSession { client { id } } }")
+  performancetestsessionaggregatedresults(where: PerformanceTestSessionAggregatedResultWhereInput, orderBy: PerformanceTestSessionAggregatedResultOrderByInput, skip: Int, first: Int): [PerformanceTestSessionAggregatedResult!]! @hasPermission(permission: "PERFORMANCETESTSESSIONS_SELECT") @assertClient(query: "performanceTestSessionJobs", selector: "{ testSession { client { id } } }")
+
   testsets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, first: Int): [TestSet!]! @hasPermission(permission: "TESTSETS_SELECT") @clientFilter
   testset(id: ID!): TestSet @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSet")
   testsetscript(id: ID!): TestSetScript @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSetScript", selector: "{ testSet { client { id } } }")
   testsetscripts(testSetId: ID!, skip: Int, first: Int): [TestSetScript!]! @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSet", idParam: "testSetId")
   validatetestsetscript(script: String!, scriptType: TestSetScriptType!): ValidateTestSetScriptOutput! @hasAnyPermission(permissions: ["TESTSETS_CREATE", "TESTSETS_UPDATE"])
   clonetestsetoptions: CloneTestSetOptionsPossible! @hasAnyPermission(permissions: ["TESTSETS_CREATE", "TESTSETS_UPDATE"])
-  testsetrepository(id: ID!): TestSetRepository @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSetRepository", selector: "{ testSet { client { id } } }")   
+  testsetrepository(id: ID!): TestSetRepository @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSetRepository", selector: "{ testSet { client { id } } }")
   testsetrepositories(testSetId: ID!, skip: Int, first: Int): [TestSetRepository!]! @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSet", idParam: "testSetId")
   testsetfolder(id: ID!): TestSetFolder  @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSetFolder", selector: "{ testSet { client { id } } }")
   testsetfolders(testSetId: ID!, skip: Int, first: Int): [TestSetFolder!]! @hasPermission(permission: "TESTSETS_SELECT") @assertClient(query: "testSet", idParam: "testSetId")
@@ -108,12 +119,15 @@ type Mutation {
 
   createChatbot(chatbot: ChatbotCreateInput!): Chatbot! @hasPermission(permission: "CHATBOTS_CREATE") @clientConnector(dataParam: "chatbot")
   updateChatbot(id: ID!, chatbot: ChatbotUpdateInput!): Chatbot! @hasPermission(permission: "CHATBOTS_UPDATE") @assertClient(query: "chatbot") @clientDisconnector(dataParam: "chatbot")
-  deleteChatbot(id: ID!): Boolean! @hasPermission(permission: "CHATBOTS_DELETE") @assertClient(query: "chatbot") 
+  deleteChatbot(id: ID!): Boolean! @hasPermission(permission: "CHATBOTS_DELETE") @assertClient(query: "chatbot")
 
   createTestSession(testSession: TestSessionCreateInput!): TestSession! @hasPermission(permission: "TESTSESSIONS_CREATE") @assertClient(query: ["chatbot", "testSet"], argsBase: ["testSession.chatbot.connect", "testSession.testSets.connect"]) @clientConnector(dataParam: ["testSession", "testSession.chatbot.create", "testSession.testSets.create"])
-  deleteTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_DELETE") @assertClient(query: "testSession") 
-  cancelTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_CREATE") @assertClient(query: "testSession") 
+  deleteTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_DELETE") @assertClient(query: "testSession")
+  cancelTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_CREATE") @assertClient(query: "testSession")
   stopTestSession(id: ID!): Boolean! @hasPermission(permission: "TESTSESSIONS_CREATE") @assertClient(query: "testSession") 
+
+  createPerformanceTestSession(testProjectId: ID!, options: PerformanceTestSessionCreate!): ID! @hasPermission(permission: "PERFORMANCETESTSESSIONS_CREATE") @assertClient(query: ["chatbot", "testSet"], argsBase: ["performanceTestSession.chatbot.connect", "performanceTestSession.testSets.connect"]) @clientConnector(dataParam: ["performanceTestSession", "performanceTestSession.chatbot.create", "performanceTestSession.testSets.create"])
+  deletePerformanceTestSession(id: ID!): Boolean! @hasPermission(permission: "PERFORMANCETESTSESSIONS_DELETE") @assertClient(query: "performanceTestSession")
 
   createTestSet(testSet: TestSetCreateInput!): TestSet! @hasPermission(permission: "TESTSETS_CREATE") @clientConnector(dataParam: "testSet")
   updateTestSet(id: ID!, testSet: TestSetUpdateInput!): TestSet! @hasPermission(permission: "TESTSETS_UPDATE") @assertClient(query: "testSet") @clientDisconnector(dataParam: "testSet")
@@ -237,8 +251,15 @@ type CloneTestSetOptionsPossible {
 }
 
 input CloneTestSetOptionsChoosen {
+  name: String,
+  output: CloneTestSetOptionsOutputType!,
   humanifiersToExecute: [String]!,
   percentToHumanify: Float!
+}
+
+enum CloneTestSetOptionsOutputType {
+  LOCAL
+  FOLDER
 }
 
 input ExportTestSetToGitOptionsChoosen {
@@ -267,4 +288,39 @@ type User {
   name: String!
   roles: [UserRole!]
   clients: [Client!]
+}
+
+input PerformanceTestSessionCreate {
+    name: String!
+    description: String
+    parallelConvoCount: Int!
+    parallelJobCount: Int!
+    tickRepeatInitial: Int!
+    tickRepeatPerTick: Int!
+    tickMaxTime: Int!
+    tickTime: Int!
+    dataDensity: Int
+    tags: PerformanceTestSessionCreatetagsInput
+}
+
+type PerformanceTestSessionSimplifiedWithStatus implements Node {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    name: String!
+    description: String
+    tags: [String!]!
+    parallelConvoCount: Int!
+    parallelJobCount: Int!
+    tickRepeatInitial: Int
+    tickRepeatPerTick: Int
+    tickMaxTime: Int!
+    tickTime: Int!
+    dataDensity: Int
+    status: String!
+}
+
+type PerformanceTestSessionStatus implements Node {
+    id: ID!
+    status: String!
 }

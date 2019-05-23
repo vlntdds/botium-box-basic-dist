@@ -1,5 +1,5 @@
-# source: http://192.168.99.100:4466/box/dev366
-# timestamp: Thu May 02 2019 11:22:33 GMT+0200 (W. Europe Daylight Time)
+# source: http://192.168.99.100:4466/box/dev587
+# timestamp: Tue May 21 2019 13:40:53 GMT+0200 (W. Europe Daylight Time)
 
 type Agent implements Node {
   id: ID!
@@ -399,6 +399,18 @@ type AggregateDeviceProvider {
 }
 
 type AggregateDeviceSet {
+  count: Int!
+}
+
+type AggregatePerformanceTestSession {
+  count: Int!
+}
+
+type AggregatePerformanceTestSessionAggregatedResult {
+  count: Int!
+}
+
+type AggregatePerformanceTestSessionJob {
   count: Int!
 }
 
@@ -3822,15 +3834,18 @@ type Mutation {
   createTestSessionTestCaseResultAttachment(data: TestSessionTestCaseResultAttachmentCreateInput!): TestSessionTestCaseResultAttachment!
   createTestSessionJob(data: TestSessionJobCreateInput!): TestSessionJob!
   createTestSessionJobLog(data: TestSessionJobLogCreateInput!): TestSessionJobLog!
+  createPerformanceTestSession(data: PerformanceTestSessionCreateInput!): PerformanceTestSession!
+  createPerformanceTestSessionAggregatedResult(data: PerformanceTestSessionAggregatedResultCreateInput!): PerformanceTestSessionAggregatedResult!
   createUser(data: UserCreateInput!): User!
   createApiKey(data: ApiKeyCreateInput!): ApiKey!
   createSystemSettings(data: SystemSettingsCreateInput!): SystemSettings!
   createTestSetRepository(data: TestSetRepositoryCreateInput!): TestSetRepository!
   createDeviceDescriptor(data: DeviceDescriptorCreateInput!): DeviceDescriptor!
-  createTestProject(data: TestProjectCreateInput!): TestProject!
   createAgent(data: AgentCreateInput!): Agent!
   createTestSetFolder(data: TestSetFolderCreateInput!): TestSetFolder!
+  createTestProject(data: TestProjectCreateInput!): TestProject!
   createTestSetScript(data: TestSetScriptCreateInput!): TestSetScript!
+  createPerformanceTestSessionJob(data: PerformanceTestSessionJobCreateInput!): PerformanceTestSessionJob!
   createTestSessionTestCaseResultTranscript(data: TestSessionTestCaseResultTranscriptCreateInput!): TestSessionTestCaseResultTranscript!
   createChatbot(data: ChatbotCreateInput!): Chatbot!
   createTestSet(data: TestSetCreateInput!): TestSet!
@@ -3847,15 +3862,18 @@ type Mutation {
   updateTestSessionTestCaseResultAttachment(data: TestSessionTestCaseResultAttachmentUpdateInput!, where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
   updateTestSessionJob(data: TestSessionJobUpdateInput!, where: TestSessionJobWhereUniqueInput!): TestSessionJob
   updateTestSessionJobLog(data: TestSessionJobLogUpdateInput!, where: TestSessionJobLogWhereUniqueInput!): TestSessionJobLog
+  updatePerformanceTestSession(data: PerformanceTestSessionUpdateInput!, where: PerformanceTestSessionWhereUniqueInput!): PerformanceTestSession
+  updatePerformanceTestSessionAggregatedResult(data: PerformanceTestSessionAggregatedResultUpdateInput!, where: PerformanceTestSessionAggregatedResultWhereUniqueInput!): PerformanceTestSessionAggregatedResult
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateApiKey(data: ApiKeyUpdateInput!, where: ApiKeyWhereUniqueInput!): ApiKey
   updateSystemSettings(data: SystemSettingsUpdateInput!, where: SystemSettingsWhereUniqueInput!): SystemSettings
   updateTestSetRepository(data: TestSetRepositoryUpdateInput!, where: TestSetRepositoryWhereUniqueInput!): TestSetRepository
   updateDeviceDescriptor(data: DeviceDescriptorUpdateInput!, where: DeviceDescriptorWhereUniqueInput!): DeviceDescriptor
-  updateTestProject(data: TestProjectUpdateInput!, where: TestProjectWhereUniqueInput!): TestProject
   updateAgent(data: AgentUpdateInput!, where: AgentWhereUniqueInput!): Agent
   updateTestSetFolder(data: TestSetFolderUpdateInput!, where: TestSetFolderWhereUniqueInput!): TestSetFolder
+  updateTestProject(data: TestProjectUpdateInput!, where: TestProjectWhereUniqueInput!): TestProject
   updateTestSetScript(data: TestSetScriptUpdateInput!, where: TestSetScriptWhereUniqueInput!): TestSetScript
+  updatePerformanceTestSessionJob(data: PerformanceTestSessionJobUpdateInput!, where: PerformanceTestSessionJobWhereUniqueInput!): PerformanceTestSessionJob
   updateTestSessionTestCaseResultTranscript(data: TestSessionTestCaseResultTranscriptUpdateInput!, where: TestSessionTestCaseResultTranscriptWhereUniqueInput!): TestSessionTestCaseResultTranscript
   updateChatbot(data: ChatbotUpdateInput!, where: ChatbotWhereUniqueInput!): Chatbot
   updateTestSet(data: TestSetUpdateInput!, where: TestSetWhereUniqueInput!): TestSet
@@ -3872,15 +3890,18 @@ type Mutation {
   deleteTestSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
   deleteTestSessionJob(where: TestSessionJobWhereUniqueInput!): TestSessionJob
   deleteTestSessionJobLog(where: TestSessionJobLogWhereUniqueInput!): TestSessionJobLog
+  deletePerformanceTestSession(where: PerformanceTestSessionWhereUniqueInput!): PerformanceTestSession
+  deletePerformanceTestSessionAggregatedResult(where: PerformanceTestSessionAggregatedResultWhereUniqueInput!): PerformanceTestSessionAggregatedResult
   deleteUser(where: UserWhereUniqueInput!): User
   deleteApiKey(where: ApiKeyWhereUniqueInput!): ApiKey
   deleteSystemSettings(where: SystemSettingsWhereUniqueInput!): SystemSettings
   deleteTestSetRepository(where: TestSetRepositoryWhereUniqueInput!): TestSetRepository
   deleteDeviceDescriptor(where: DeviceDescriptorWhereUniqueInput!): DeviceDescriptor
-  deleteTestProject(where: TestProjectWhereUniqueInput!): TestProject
   deleteAgent(where: AgentWhereUniqueInput!): Agent
   deleteTestSetFolder(where: TestSetFolderWhereUniqueInput!): TestSetFolder
+  deleteTestProject(where: TestProjectWhereUniqueInput!): TestProject
   deleteTestSetScript(where: TestSetScriptWhereUniqueInput!): TestSetScript
+  deletePerformanceTestSessionJob(where: PerformanceTestSessionJobWhereUniqueInput!): PerformanceTestSessionJob
   deleteTestSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptWhereUniqueInput!): TestSessionTestCaseResultTranscript
   deleteChatbot(where: ChatbotWhereUniqueInput!): Chatbot
   deleteTestSet(where: TestSetWhereUniqueInput!): TestSet
@@ -3897,15 +3918,18 @@ type Mutation {
   upsertTestSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!, create: TestSessionTestCaseResultAttachmentCreateInput!, update: TestSessionTestCaseResultAttachmentUpdateInput!): TestSessionTestCaseResultAttachment!
   upsertTestSessionJob(where: TestSessionJobWhereUniqueInput!, create: TestSessionJobCreateInput!, update: TestSessionJobUpdateInput!): TestSessionJob!
   upsertTestSessionJobLog(where: TestSessionJobLogWhereUniqueInput!, create: TestSessionJobLogCreateInput!, update: TestSessionJobLogUpdateInput!): TestSessionJobLog!
+  upsertPerformanceTestSession(where: PerformanceTestSessionWhereUniqueInput!, create: PerformanceTestSessionCreateInput!, update: PerformanceTestSessionUpdateInput!): PerformanceTestSession!
+  upsertPerformanceTestSessionAggregatedResult(where: PerformanceTestSessionAggregatedResultWhereUniqueInput!, create: PerformanceTestSessionAggregatedResultCreateInput!, update: PerformanceTestSessionAggregatedResultUpdateInput!): PerformanceTestSessionAggregatedResult!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertApiKey(where: ApiKeyWhereUniqueInput!, create: ApiKeyCreateInput!, update: ApiKeyUpdateInput!): ApiKey!
   upsertSystemSettings(where: SystemSettingsWhereUniqueInput!, create: SystemSettingsCreateInput!, update: SystemSettingsUpdateInput!): SystemSettings!
   upsertTestSetRepository(where: TestSetRepositoryWhereUniqueInput!, create: TestSetRepositoryCreateInput!, update: TestSetRepositoryUpdateInput!): TestSetRepository!
   upsertDeviceDescriptor(where: DeviceDescriptorWhereUniqueInput!, create: DeviceDescriptorCreateInput!, update: DeviceDescriptorUpdateInput!): DeviceDescriptor!
-  upsertTestProject(where: TestProjectWhereUniqueInput!, create: TestProjectCreateInput!, update: TestProjectUpdateInput!): TestProject!
   upsertAgent(where: AgentWhereUniqueInput!, create: AgentCreateInput!, update: AgentUpdateInput!): Agent!
   upsertTestSetFolder(where: TestSetFolderWhereUniqueInput!, create: TestSetFolderCreateInput!, update: TestSetFolderUpdateInput!): TestSetFolder!
+  upsertTestProject(where: TestProjectWhereUniqueInput!, create: TestProjectCreateInput!, update: TestProjectUpdateInput!): TestProject!
   upsertTestSetScript(where: TestSetScriptWhereUniqueInput!, create: TestSetScriptCreateInput!, update: TestSetScriptUpdateInput!): TestSetScript!
+  upsertPerformanceTestSessionJob(where: PerformanceTestSessionJobWhereUniqueInput!, create: PerformanceTestSessionJobCreateInput!, update: PerformanceTestSessionJobUpdateInput!): PerformanceTestSessionJob!
   upsertTestSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptWhereUniqueInput!, create: TestSessionTestCaseResultTranscriptCreateInput!, update: TestSessionTestCaseResultTranscriptUpdateInput!): TestSessionTestCaseResultTranscript!
   upsertChatbot(where: ChatbotWhereUniqueInput!, create: ChatbotCreateInput!, update: ChatbotUpdateInput!): Chatbot!
   upsertTestSet(where: TestSetWhereUniqueInput!, create: TestSetCreateInput!, update: TestSetUpdateInput!): TestSet!
@@ -3922,15 +3946,18 @@ type Mutation {
   updateManyTestSessionTestCaseResultAttachments(data: TestSessionTestCaseResultAttachmentUpdateManyMutationInput!, where: TestSessionTestCaseResultAttachmentWhereInput): BatchPayload!
   updateManyTestSessionJobs(data: TestSessionJobUpdateManyMutationInput!, where: TestSessionJobWhereInput): BatchPayload!
   updateManyTestSessionJobLogs(data: TestSessionJobLogUpdateManyMutationInput!, where: TestSessionJobLogWhereInput): BatchPayload!
+  updateManyPerformanceTestSessions(data: PerformanceTestSessionUpdateManyMutationInput!, where: PerformanceTestSessionWhereInput): BatchPayload!
+  updateManyPerformanceTestSessionAggregatedResults(data: PerformanceTestSessionAggregatedResultUpdateManyMutationInput!, where: PerformanceTestSessionAggregatedResultWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyApiKeys(data: ApiKeyUpdateManyMutationInput!, where: ApiKeyWhereInput): BatchPayload!
   updateManySystemSettingses(data: SystemSettingsUpdateManyMutationInput!, where: SystemSettingsWhereInput): BatchPayload!
   updateManyTestSetRepositories(data: TestSetRepositoryUpdateManyMutationInput!, where: TestSetRepositoryWhereInput): BatchPayload!
   updateManyDeviceDescriptors(data: DeviceDescriptorUpdateManyMutationInput!, where: DeviceDescriptorWhereInput): BatchPayload!
-  updateManyTestProjects(data: TestProjectUpdateManyMutationInput!, where: TestProjectWhereInput): BatchPayload!
   updateManyAgents(data: AgentUpdateManyMutationInput!, where: AgentWhereInput): BatchPayload!
   updateManyTestSetFolders(data: TestSetFolderUpdateManyMutationInput!, where: TestSetFolderWhereInput): BatchPayload!
+  updateManyTestProjects(data: TestProjectUpdateManyMutationInput!, where: TestProjectWhereInput): BatchPayload!
   updateManyTestSetScripts(data: TestSetScriptUpdateManyMutationInput!, where: TestSetScriptWhereInput): BatchPayload!
+  updateManyPerformanceTestSessionJobs(data: PerformanceTestSessionJobUpdateManyMutationInput!, where: PerformanceTestSessionJobWhereInput): BatchPayload!
   updateManyTestSessionTestCaseResultTranscripts(data: TestSessionTestCaseResultTranscriptUpdateManyMutationInput!, where: TestSessionTestCaseResultTranscriptWhereInput): BatchPayload!
   updateManyChatbots(data: ChatbotUpdateManyMutationInput!, where: ChatbotWhereInput): BatchPayload!
   updateManyTestSets(data: TestSetUpdateManyMutationInput!, where: TestSetWhereInput): BatchPayload!
@@ -3947,15 +3974,18 @@ type Mutation {
   deleteManyTestSessionTestCaseResultAttachments(where: TestSessionTestCaseResultAttachmentWhereInput): BatchPayload!
   deleteManyTestSessionJobs(where: TestSessionJobWhereInput): BatchPayload!
   deleteManyTestSessionJobLogs(where: TestSessionJobLogWhereInput): BatchPayload!
+  deleteManyPerformanceTestSessions(where: PerformanceTestSessionWhereInput): BatchPayload!
+  deleteManyPerformanceTestSessionAggregatedResults(where: PerformanceTestSessionAggregatedResultWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyApiKeys(where: ApiKeyWhereInput): BatchPayload!
   deleteManySystemSettingses(where: SystemSettingsWhereInput): BatchPayload!
   deleteManyTestSetRepositories(where: TestSetRepositoryWhereInput): BatchPayload!
   deleteManyDeviceDescriptors(where: DeviceDescriptorWhereInput): BatchPayload!
-  deleteManyTestProjects(where: TestProjectWhereInput): BatchPayload!
   deleteManyAgents(where: AgentWhereInput): BatchPayload!
   deleteManyTestSetFolders(where: TestSetFolderWhereInput): BatchPayload!
+  deleteManyTestProjects(where: TestProjectWhereInput): BatchPayload!
   deleteManyTestSetScripts(where: TestSetScriptWhereInput): BatchPayload!
+  deleteManyPerformanceTestSessionJobs(where: PerformanceTestSessionJobWhereInput): BatchPayload!
   deleteManyTestSessionTestCaseResultTranscripts(where: TestSessionTestCaseResultTranscriptWhereInput): BatchPayload!
   deleteManyChatbots(where: ChatbotWhereInput): BatchPayload!
   deleteManyTestSets(where: TestSetWhereInput): BatchPayload!
@@ -3996,21 +4026,2388 @@ type PageInfo {
   endCursor: String
 }
 
+type PerformanceTestSession implements Node {
+  id: ID!
+  client: Client
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  tags: [String!]!
+  chatbot: Chatbot!
+  testSets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSet!]
+  registeredComponents(where: RegisteredComponentWhereInput, orderBy: RegisteredComponentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RegisteredComponent!]
+  testProject: TestProject
+  results(where: PerformanceTestSessionAggregatedResultWhereInput, orderBy: PerformanceTestSessionAggregatedResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTestSessionAggregatedResult!]
+  jobs(where: PerformanceTestSessionJobWhereInput, orderBy: PerformanceTestSessionJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTestSessionJob!]
+  capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
+  sources(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
+  envs(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
+  parallelConvoCount: Int!
+  parallelJobCount: Int!
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int!
+  tickTime: Int!
+}
+
+type PerformanceTestSessionAggregatedResult implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  testSession: PerformanceTestSession!
+  job: PerformanceTestSessionJob!
+  stepIndex: Int!
+  convo: String!
+  execCount: Int!
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int!
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type PerformanceTestSessionAggregatedResultConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PerformanceTestSessionAggregatedResultEdge]!
+  aggregate: AggregatePerformanceTestSessionAggregatedResult!
+}
+
+input PerformanceTestSessionAggregatedResultCreateInput {
+  stepIndex: Int!
+  convo: String!
+  execCount: Int!
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int!
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime!
+  testSession: PerformanceTestSessionCreateOneWithoutResultsInput!
+  job: PerformanceTestSessionJobCreateOneInput!
+}
+
+input PerformanceTestSessionAggregatedResultCreateManyWithoutTestSessionInput {
+  create: [PerformanceTestSessionAggregatedResultCreateWithoutTestSessionInput!]
+  connect: [PerformanceTestSessionAggregatedResultWhereUniqueInput!]
+}
+
+input PerformanceTestSessionAggregatedResultCreateWithoutTestSessionInput {
+  stepIndex: Int!
+  convo: String!
+  execCount: Int!
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int!
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime!
+  job: PerformanceTestSessionJobCreateOneInput!
+}
+
+"""An edge in a connection."""
+type PerformanceTestSessionAggregatedResultEdge {
+  """The item at the end of the edge."""
+  node: PerformanceTestSessionAggregatedResult!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PerformanceTestSessionAggregatedResultOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  stepIndex_ASC
+  stepIndex_DESC
+  convo_ASC
+  convo_DESC
+  execCount_ASC
+  execCount_DESC
+  execDurationMin_ASC
+  execDurationMin_DESC
+  execDurationMax_ASC
+  execDurationMax_DESC
+  execDurationSum_ASC
+  execDurationSum_DESC
+  waitCount_ASC
+  waitCount_DESC
+  waitDurationMin_ASC
+  waitDurationMin_DESC
+  waitDurationMax_ASC
+  waitDurationMax_DESC
+  waitDurationSum_ASC
+  waitDurationSum_DESC
+  stepStartAt_ASC
+  stepStartAt_DESC
+}
+
+type PerformanceTestSessionAggregatedResultPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  stepIndex: Int!
+  convo: String!
+  execCount: Int!
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int!
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime!
+}
+
+input PerformanceTestSessionAggregatedResultScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionAggregatedResultScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionAggregatedResultScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionAggregatedResultScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  stepIndex: Int
+
+  """All values that are not equal to given value."""
+  stepIndex_not: Int
+
+  """All values that are contained in given list."""
+  stepIndex_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stepIndex_not_in: [Int!]
+
+  """All values less than the given value."""
+  stepIndex_lt: Int
+
+  """All values less than or equal the given value."""
+  stepIndex_lte: Int
+
+  """All values greater than the given value."""
+  stepIndex_gt: Int
+
+  """All values greater than or equal the given value."""
+  stepIndex_gte: Int
+  convo: String
+
+  """All values that are not equal to given value."""
+  convo_not: String
+
+  """All values that are contained in given list."""
+  convo_in: [String!]
+
+  """All values that are not contained in given list."""
+  convo_not_in: [String!]
+
+  """All values less than the given value."""
+  convo_lt: String
+
+  """All values less than or equal the given value."""
+  convo_lte: String
+
+  """All values greater than the given value."""
+  convo_gt: String
+
+  """All values greater than or equal the given value."""
+  convo_gte: String
+
+  """All values containing the given string."""
+  convo_contains: String
+
+  """All values not containing the given string."""
+  convo_not_contains: String
+
+  """All values starting with the given string."""
+  convo_starts_with: String
+
+  """All values not starting with the given string."""
+  convo_not_starts_with: String
+
+  """All values ending with the given string."""
+  convo_ends_with: String
+
+  """All values not ending with the given string."""
+  convo_not_ends_with: String
+  execCount: Int
+
+  """All values that are not equal to given value."""
+  execCount_not: Int
+
+  """All values that are contained in given list."""
+  execCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  execCount_lt: Int
+
+  """All values less than or equal the given value."""
+  execCount_lte: Int
+
+  """All values greater than the given value."""
+  execCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  execCount_gte: Int
+  execDurationMin: Int
+
+  """All values that are not equal to given value."""
+  execDurationMin_not: Int
+
+  """All values that are contained in given list."""
+  execDurationMin_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execDurationMin_not_in: [Int!]
+
+  """All values less than the given value."""
+  execDurationMin_lt: Int
+
+  """All values less than or equal the given value."""
+  execDurationMin_lte: Int
+
+  """All values greater than the given value."""
+  execDurationMin_gt: Int
+
+  """All values greater than or equal the given value."""
+  execDurationMin_gte: Int
+  execDurationMax: Int
+
+  """All values that are not equal to given value."""
+  execDurationMax_not: Int
+
+  """All values that are contained in given list."""
+  execDurationMax_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execDurationMax_not_in: [Int!]
+
+  """All values less than the given value."""
+  execDurationMax_lt: Int
+
+  """All values less than or equal the given value."""
+  execDurationMax_lte: Int
+
+  """All values greater than the given value."""
+  execDurationMax_gt: Int
+
+  """All values greater than or equal the given value."""
+  execDurationMax_gte: Int
+  execDurationSum: Int
+
+  """All values that are not equal to given value."""
+  execDurationSum_not: Int
+
+  """All values that are contained in given list."""
+  execDurationSum_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execDurationSum_not_in: [Int!]
+
+  """All values less than the given value."""
+  execDurationSum_lt: Int
+
+  """All values less than or equal the given value."""
+  execDurationSum_lte: Int
+
+  """All values greater than the given value."""
+  execDurationSum_gt: Int
+
+  """All values greater than or equal the given value."""
+  execDurationSum_gte: Int
+  waitCount: Int
+
+  """All values that are not equal to given value."""
+  waitCount_not: Int
+
+  """All values that are contained in given list."""
+  waitCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitCount_lt: Int
+
+  """All values less than or equal the given value."""
+  waitCount_lte: Int
+
+  """All values greater than the given value."""
+  waitCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitCount_gte: Int
+  waitDurationMin: Int
+
+  """All values that are not equal to given value."""
+  waitDurationMin_not: Int
+
+  """All values that are contained in given list."""
+  waitDurationMin_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitDurationMin_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitDurationMin_lt: Int
+
+  """All values less than or equal the given value."""
+  waitDurationMin_lte: Int
+
+  """All values greater than the given value."""
+  waitDurationMin_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitDurationMin_gte: Int
+  waitDurationMax: Int
+
+  """All values that are not equal to given value."""
+  waitDurationMax_not: Int
+
+  """All values that are contained in given list."""
+  waitDurationMax_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitDurationMax_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitDurationMax_lt: Int
+
+  """All values less than or equal the given value."""
+  waitDurationMax_lte: Int
+
+  """All values greater than the given value."""
+  waitDurationMax_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitDurationMax_gte: Int
+  waitDurationSum: Int
+
+  """All values that are not equal to given value."""
+  waitDurationSum_not: Int
+
+  """All values that are contained in given list."""
+  waitDurationSum_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitDurationSum_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitDurationSum_lt: Int
+
+  """All values less than or equal the given value."""
+  waitDurationSum_lte: Int
+
+  """All values greater than the given value."""
+  waitDurationSum_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitDurationSum_gte: Int
+  stepStartAt: DateTime
+
+  """All values that are not equal to given value."""
+  stepStartAt_not: DateTime
+
+  """All values that are contained in given list."""
+  stepStartAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  stepStartAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  stepStartAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  stepStartAt_lte: DateTime
+
+  """All values greater than the given value."""
+  stepStartAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  stepStartAt_gte: DateTime
+}
+
+type PerformanceTestSessionAggregatedResultSubscriptionPayload {
+  mutation: MutationType!
+  node: PerformanceTestSessionAggregatedResult
+  updatedFields: [String!]
+  previousValues: PerformanceTestSessionAggregatedResultPreviousValues
+}
+
+input PerformanceTestSessionAggregatedResultSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionAggregatedResultSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionAggregatedResultSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionAggregatedResultSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PerformanceTestSessionAggregatedResultWhereInput
+}
+
+input PerformanceTestSessionAggregatedResultUpdateInput {
+  stepIndex: Int
+  convo: String
+  execCount: Int
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime
+  testSession: PerformanceTestSessionUpdateOneRequiredWithoutResultsInput
+  job: PerformanceTestSessionJobUpdateOneRequiredInput
+}
+
+input PerformanceTestSessionAggregatedResultUpdateManyDataInput {
+  stepIndex: Int
+  convo: String
+  execCount: Int
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime
+}
+
+input PerformanceTestSessionAggregatedResultUpdateManyMutationInput {
+  stepIndex: Int
+  convo: String
+  execCount: Int
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime
+}
+
+input PerformanceTestSessionAggregatedResultUpdateManyWithoutTestSessionInput {
+  create: [PerformanceTestSessionAggregatedResultCreateWithoutTestSessionInput!]
+  connect: [PerformanceTestSessionAggregatedResultWhereUniqueInput!]
+  set: [PerformanceTestSessionAggregatedResultWhereUniqueInput!]
+  disconnect: [PerformanceTestSessionAggregatedResultWhereUniqueInput!]
+  delete: [PerformanceTestSessionAggregatedResultWhereUniqueInput!]
+  update: [PerformanceTestSessionAggregatedResultUpdateWithWhereUniqueWithoutTestSessionInput!]
+  updateMany: [PerformanceTestSessionAggregatedResultUpdateManyWithWhereNestedInput!]
+  deleteMany: [PerformanceTestSessionAggregatedResultScalarWhereInput!]
+  upsert: [PerformanceTestSessionAggregatedResultUpsertWithWhereUniqueWithoutTestSessionInput!]
+}
+
+input PerformanceTestSessionAggregatedResultUpdateManyWithWhereNestedInput {
+  where: PerformanceTestSessionAggregatedResultScalarWhereInput!
+  data: PerformanceTestSessionAggregatedResultUpdateManyDataInput!
+}
+
+input PerformanceTestSessionAggregatedResultUpdateWithoutTestSessionDataInput {
+  stepIndex: Int
+  convo: String
+  execCount: Int
+  execDurationMin: Int
+  execDurationMax: Int
+  execDurationSum: Int
+  waitCount: Int
+  waitDurationMin: Int
+  waitDurationMax: Int
+  waitDurationSum: Int
+  stepStartAt: DateTime
+  job: PerformanceTestSessionJobUpdateOneRequiredInput
+}
+
+input PerformanceTestSessionAggregatedResultUpdateWithWhereUniqueWithoutTestSessionInput {
+  where: PerformanceTestSessionAggregatedResultWhereUniqueInput!
+  data: PerformanceTestSessionAggregatedResultUpdateWithoutTestSessionDataInput!
+}
+
+input PerformanceTestSessionAggregatedResultUpsertWithWhereUniqueWithoutTestSessionInput {
+  where: PerformanceTestSessionAggregatedResultWhereUniqueInput!
+  update: PerformanceTestSessionAggregatedResultUpdateWithoutTestSessionDataInput!
+  create: PerformanceTestSessionAggregatedResultCreateWithoutTestSessionInput!
+}
+
+input PerformanceTestSessionAggregatedResultWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionAggregatedResultWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionAggregatedResultWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionAggregatedResultWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  stepIndex: Int
+
+  """All values that are not equal to given value."""
+  stepIndex_not: Int
+
+  """All values that are contained in given list."""
+  stepIndex_in: [Int!]
+
+  """All values that are not contained in given list."""
+  stepIndex_not_in: [Int!]
+
+  """All values less than the given value."""
+  stepIndex_lt: Int
+
+  """All values less than or equal the given value."""
+  stepIndex_lte: Int
+
+  """All values greater than the given value."""
+  stepIndex_gt: Int
+
+  """All values greater than or equal the given value."""
+  stepIndex_gte: Int
+  convo: String
+
+  """All values that are not equal to given value."""
+  convo_not: String
+
+  """All values that are contained in given list."""
+  convo_in: [String!]
+
+  """All values that are not contained in given list."""
+  convo_not_in: [String!]
+
+  """All values less than the given value."""
+  convo_lt: String
+
+  """All values less than or equal the given value."""
+  convo_lte: String
+
+  """All values greater than the given value."""
+  convo_gt: String
+
+  """All values greater than or equal the given value."""
+  convo_gte: String
+
+  """All values containing the given string."""
+  convo_contains: String
+
+  """All values not containing the given string."""
+  convo_not_contains: String
+
+  """All values starting with the given string."""
+  convo_starts_with: String
+
+  """All values not starting with the given string."""
+  convo_not_starts_with: String
+
+  """All values ending with the given string."""
+  convo_ends_with: String
+
+  """All values not ending with the given string."""
+  convo_not_ends_with: String
+  execCount: Int
+
+  """All values that are not equal to given value."""
+  execCount_not: Int
+
+  """All values that are contained in given list."""
+  execCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  execCount_lt: Int
+
+  """All values less than or equal the given value."""
+  execCount_lte: Int
+
+  """All values greater than the given value."""
+  execCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  execCount_gte: Int
+  execDurationMin: Int
+
+  """All values that are not equal to given value."""
+  execDurationMin_not: Int
+
+  """All values that are contained in given list."""
+  execDurationMin_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execDurationMin_not_in: [Int!]
+
+  """All values less than the given value."""
+  execDurationMin_lt: Int
+
+  """All values less than or equal the given value."""
+  execDurationMin_lte: Int
+
+  """All values greater than the given value."""
+  execDurationMin_gt: Int
+
+  """All values greater than or equal the given value."""
+  execDurationMin_gte: Int
+  execDurationMax: Int
+
+  """All values that are not equal to given value."""
+  execDurationMax_not: Int
+
+  """All values that are contained in given list."""
+  execDurationMax_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execDurationMax_not_in: [Int!]
+
+  """All values less than the given value."""
+  execDurationMax_lt: Int
+
+  """All values less than or equal the given value."""
+  execDurationMax_lte: Int
+
+  """All values greater than the given value."""
+  execDurationMax_gt: Int
+
+  """All values greater than or equal the given value."""
+  execDurationMax_gte: Int
+  execDurationSum: Int
+
+  """All values that are not equal to given value."""
+  execDurationSum_not: Int
+
+  """All values that are contained in given list."""
+  execDurationSum_in: [Int!]
+
+  """All values that are not contained in given list."""
+  execDurationSum_not_in: [Int!]
+
+  """All values less than the given value."""
+  execDurationSum_lt: Int
+
+  """All values less than or equal the given value."""
+  execDurationSum_lte: Int
+
+  """All values greater than the given value."""
+  execDurationSum_gt: Int
+
+  """All values greater than or equal the given value."""
+  execDurationSum_gte: Int
+  waitCount: Int
+
+  """All values that are not equal to given value."""
+  waitCount_not: Int
+
+  """All values that are contained in given list."""
+  waitCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitCount_lt: Int
+
+  """All values less than or equal the given value."""
+  waitCount_lte: Int
+
+  """All values greater than the given value."""
+  waitCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitCount_gte: Int
+  waitDurationMin: Int
+
+  """All values that are not equal to given value."""
+  waitDurationMin_not: Int
+
+  """All values that are contained in given list."""
+  waitDurationMin_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitDurationMin_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitDurationMin_lt: Int
+
+  """All values less than or equal the given value."""
+  waitDurationMin_lte: Int
+
+  """All values greater than the given value."""
+  waitDurationMin_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitDurationMin_gte: Int
+  waitDurationMax: Int
+
+  """All values that are not equal to given value."""
+  waitDurationMax_not: Int
+
+  """All values that are contained in given list."""
+  waitDurationMax_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitDurationMax_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitDurationMax_lt: Int
+
+  """All values less than or equal the given value."""
+  waitDurationMax_lte: Int
+
+  """All values greater than the given value."""
+  waitDurationMax_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitDurationMax_gte: Int
+  waitDurationSum: Int
+
+  """All values that are not equal to given value."""
+  waitDurationSum_not: Int
+
+  """All values that are contained in given list."""
+  waitDurationSum_in: [Int!]
+
+  """All values that are not contained in given list."""
+  waitDurationSum_not_in: [Int!]
+
+  """All values less than the given value."""
+  waitDurationSum_lt: Int
+
+  """All values less than or equal the given value."""
+  waitDurationSum_lte: Int
+
+  """All values greater than the given value."""
+  waitDurationSum_gt: Int
+
+  """All values greater than or equal the given value."""
+  waitDurationSum_gte: Int
+  stepStartAt: DateTime
+
+  """All values that are not equal to given value."""
+  stepStartAt_not: DateTime
+
+  """All values that are contained in given list."""
+  stepStartAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  stepStartAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  stepStartAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  stepStartAt_lte: DateTime
+
+  """All values greater than the given value."""
+  stepStartAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  stepStartAt_gte: DateTime
+  testSession: PerformanceTestSessionWhereInput
+  job: PerformanceTestSessionJobWhereInput
+}
+
+input PerformanceTestSessionAggregatedResultWhereUniqueInput {
+  id: ID
+}
+
+"""A connection to a list of items."""
+type PerformanceTestSessionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PerformanceTestSessionEdge]!
+  aggregate: AggregatePerformanceTestSession!
+}
+
+input PerformanceTestSessionCreateInput {
+  name: String!
+  description: String
+  parallelConvoCount: Int!
+  parallelJobCount: Int!
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int!
+  tickTime: Int!
+  tags: PerformanceTestSessionCreatetagsInput
+  client: ClientCreateOneInput
+  chatbot: ChatbotCreateOneInput!
+  testSets: TestSetCreateManyInput
+  registeredComponents: RegisteredComponentCreateManyInput
+  testProject: TestProjectCreateOneInput
+  results: PerformanceTestSessionAggregatedResultCreateManyWithoutTestSessionInput
+  jobs: PerformanceTestSessionJobCreateManyWithoutTestSessionInput
+  capabilities: CapabilityCreateManyInput
+  sources: CapabilityCreateManyInput
+  envs: CapabilityCreateManyInput
+}
+
+input PerformanceTestSessionCreateOneWithoutJobsInput {
+  create: PerformanceTestSessionCreateWithoutJobsInput
+  connect: PerformanceTestSessionWhereUniqueInput
+}
+
+input PerformanceTestSessionCreateOneWithoutResultsInput {
+  create: PerformanceTestSessionCreateWithoutResultsInput
+  connect: PerformanceTestSessionWhereUniqueInput
+}
+
+input PerformanceTestSessionCreatetagsInput {
+  set: [String!]
+}
+
+input PerformanceTestSessionCreateWithoutJobsInput {
+  name: String!
+  description: String
+  parallelConvoCount: Int!
+  parallelJobCount: Int!
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int!
+  tickTime: Int!
+  tags: PerformanceTestSessionCreatetagsInput
+  client: ClientCreateOneInput
+  chatbot: ChatbotCreateOneInput!
+  testSets: TestSetCreateManyInput
+  registeredComponents: RegisteredComponentCreateManyInput
+  testProject: TestProjectCreateOneInput
+  results: PerformanceTestSessionAggregatedResultCreateManyWithoutTestSessionInput
+  capabilities: CapabilityCreateManyInput
+  sources: CapabilityCreateManyInput
+  envs: CapabilityCreateManyInput
+}
+
+input PerformanceTestSessionCreateWithoutResultsInput {
+  name: String!
+  description: String
+  parallelConvoCount: Int!
+  parallelJobCount: Int!
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int!
+  tickTime: Int!
+  tags: PerformanceTestSessionCreatetagsInput
+  client: ClientCreateOneInput
+  chatbot: ChatbotCreateOneInput!
+  testSets: TestSetCreateManyInput
+  registeredComponents: RegisteredComponentCreateManyInput
+  testProject: TestProjectCreateOneInput
+  jobs: PerformanceTestSessionJobCreateManyWithoutTestSessionInput
+  capabilities: CapabilityCreateManyInput
+  sources: CapabilityCreateManyInput
+  envs: CapabilityCreateManyInput
+}
+
+"""An edge in a connection."""
+type PerformanceTestSessionEdge {
+  """The item at the end of the edge."""
+  node: PerformanceTestSession!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+type PerformanceTestSessionJob implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  testSession: PerformanceTestSession!
+  jobId: Int
+  status: TestSessionJobStatus!
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+}
+
+"""A connection to a list of items."""
+type PerformanceTestSessionJobConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PerformanceTestSessionJobEdge]!
+  aggregate: AggregatePerformanceTestSessionJob!
+}
+
+input PerformanceTestSessionJobCreateInput {
+  jobId: Int
+  status: TestSessionJobStatus!
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+  testSession: PerformanceTestSessionCreateOneWithoutJobsInput!
+}
+
+input PerformanceTestSessionJobCreateManyWithoutTestSessionInput {
+  create: [PerformanceTestSessionJobCreateWithoutTestSessionInput!]
+  connect: [PerformanceTestSessionJobWhereUniqueInput!]
+}
+
+input PerformanceTestSessionJobCreateOneInput {
+  create: PerformanceTestSessionJobCreateInput
+  connect: PerformanceTestSessionJobWhereUniqueInput
+}
+
+input PerformanceTestSessionJobCreateWithoutTestSessionInput {
+  jobId: Int
+  status: TestSessionJobStatus!
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+}
+
+"""An edge in a connection."""
+type PerformanceTestSessionJobEdge {
+  """The item at the end of the edge."""
+  node: PerformanceTestSessionJob!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PerformanceTestSessionJobOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  jobId_ASC
+  jobId_DESC
+  status_ASC
+  status_DESC
+  err_ASC
+  err_DESC
+  started_ASC
+  started_DESC
+  finished_ASC
+  finished_DESC
+  agentName_ASC
+  agentName_DESC
+}
+
+type PerformanceTestSessionJobPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  jobId: Int
+  status: TestSessionJobStatus!
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+}
+
+input PerformanceTestSessionJobScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionJobScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionJobScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionJobScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  jobId: Int
+
+  """All values that are not equal to given value."""
+  jobId_not: Int
+
+  """All values that are contained in given list."""
+  jobId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  jobId_not_in: [Int!]
+
+  """All values less than the given value."""
+  jobId_lt: Int
+
+  """All values less than or equal the given value."""
+  jobId_lte: Int
+
+  """All values greater than the given value."""
+  jobId_gt: Int
+
+  """All values greater than or equal the given value."""
+  jobId_gte: Int
+  status: TestSessionJobStatus
+
+  """All values that are not equal to given value."""
+  status_not: TestSessionJobStatus
+
+  """All values that are contained in given list."""
+  status_in: [TestSessionJobStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [TestSessionJobStatus!]
+  err: String
+
+  """All values that are not equal to given value."""
+  err_not: String
+
+  """All values that are contained in given list."""
+  err_in: [String!]
+
+  """All values that are not contained in given list."""
+  err_not_in: [String!]
+
+  """All values less than the given value."""
+  err_lt: String
+
+  """All values less than or equal the given value."""
+  err_lte: String
+
+  """All values greater than the given value."""
+  err_gt: String
+
+  """All values greater than or equal the given value."""
+  err_gte: String
+
+  """All values containing the given string."""
+  err_contains: String
+
+  """All values not containing the given string."""
+  err_not_contains: String
+
+  """All values starting with the given string."""
+  err_starts_with: String
+
+  """All values not starting with the given string."""
+  err_not_starts_with: String
+
+  """All values ending with the given string."""
+  err_ends_with: String
+
+  """All values not ending with the given string."""
+  err_not_ends_with: String
+  started: DateTime
+
+  """All values that are not equal to given value."""
+  started_not: DateTime
+
+  """All values that are contained in given list."""
+  started_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  started_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  started_lt: DateTime
+
+  """All values less than or equal the given value."""
+  started_lte: DateTime
+
+  """All values greater than the given value."""
+  started_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  started_gte: DateTime
+  finished: DateTime
+
+  """All values that are not equal to given value."""
+  finished_not: DateTime
+
+  """All values that are contained in given list."""
+  finished_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  finished_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  finished_lt: DateTime
+
+  """All values less than or equal the given value."""
+  finished_lte: DateTime
+
+  """All values greater than the given value."""
+  finished_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  finished_gte: DateTime
+  agentName: String
+
+  """All values that are not equal to given value."""
+  agentName_not: String
+
+  """All values that are contained in given list."""
+  agentName_in: [String!]
+
+  """All values that are not contained in given list."""
+  agentName_not_in: [String!]
+
+  """All values less than the given value."""
+  agentName_lt: String
+
+  """All values less than or equal the given value."""
+  agentName_lte: String
+
+  """All values greater than the given value."""
+  agentName_gt: String
+
+  """All values greater than or equal the given value."""
+  agentName_gte: String
+
+  """All values containing the given string."""
+  agentName_contains: String
+
+  """All values not containing the given string."""
+  agentName_not_contains: String
+
+  """All values starting with the given string."""
+  agentName_starts_with: String
+
+  """All values not starting with the given string."""
+  agentName_not_starts_with: String
+
+  """All values ending with the given string."""
+  agentName_ends_with: String
+
+  """All values not ending with the given string."""
+  agentName_not_ends_with: String
+}
+
+type PerformanceTestSessionJobSubscriptionPayload {
+  mutation: MutationType!
+  node: PerformanceTestSessionJob
+  updatedFields: [String!]
+  previousValues: PerformanceTestSessionJobPreviousValues
+}
+
+input PerformanceTestSessionJobSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionJobSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionJobSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionJobSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PerformanceTestSessionJobWhereInput
+}
+
+input PerformanceTestSessionJobUpdateDataInput {
+  jobId: Int
+  status: TestSessionJobStatus
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+  testSession: PerformanceTestSessionUpdateOneRequiredWithoutJobsInput
+}
+
+input PerformanceTestSessionJobUpdateInput {
+  jobId: Int
+  status: TestSessionJobStatus
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+  testSession: PerformanceTestSessionUpdateOneRequiredWithoutJobsInput
+}
+
+input PerformanceTestSessionJobUpdateManyDataInput {
+  jobId: Int
+  status: TestSessionJobStatus
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+}
+
+input PerformanceTestSessionJobUpdateManyMutationInput {
+  jobId: Int
+  status: TestSessionJobStatus
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+}
+
+input PerformanceTestSessionJobUpdateManyWithoutTestSessionInput {
+  create: [PerformanceTestSessionJobCreateWithoutTestSessionInput!]
+  connect: [PerformanceTestSessionJobWhereUniqueInput!]
+  set: [PerformanceTestSessionJobWhereUniqueInput!]
+  disconnect: [PerformanceTestSessionJobWhereUniqueInput!]
+  delete: [PerformanceTestSessionJobWhereUniqueInput!]
+  update: [PerformanceTestSessionJobUpdateWithWhereUniqueWithoutTestSessionInput!]
+  updateMany: [PerformanceTestSessionJobUpdateManyWithWhereNestedInput!]
+  deleteMany: [PerformanceTestSessionJobScalarWhereInput!]
+  upsert: [PerformanceTestSessionJobUpsertWithWhereUniqueWithoutTestSessionInput!]
+}
+
+input PerformanceTestSessionJobUpdateManyWithWhereNestedInput {
+  where: PerformanceTestSessionJobScalarWhereInput!
+  data: PerformanceTestSessionJobUpdateManyDataInput!
+}
+
+input PerformanceTestSessionJobUpdateOneRequiredInput {
+  create: PerformanceTestSessionJobCreateInput
+  connect: PerformanceTestSessionJobWhereUniqueInput
+  update: PerformanceTestSessionJobUpdateDataInput
+  upsert: PerformanceTestSessionJobUpsertNestedInput
+}
+
+input PerformanceTestSessionJobUpdateWithoutTestSessionDataInput {
+  jobId: Int
+  status: TestSessionJobStatus
+  err: String
+  started: DateTime
+  finished: DateTime
+  agentName: String
+}
+
+input PerformanceTestSessionJobUpdateWithWhereUniqueWithoutTestSessionInput {
+  where: PerformanceTestSessionJobWhereUniqueInput!
+  data: PerformanceTestSessionJobUpdateWithoutTestSessionDataInput!
+}
+
+input PerformanceTestSessionJobUpsertNestedInput {
+  update: PerformanceTestSessionJobUpdateDataInput!
+  create: PerformanceTestSessionJobCreateInput!
+}
+
+input PerformanceTestSessionJobUpsertWithWhereUniqueWithoutTestSessionInput {
+  where: PerformanceTestSessionJobWhereUniqueInput!
+  update: PerformanceTestSessionJobUpdateWithoutTestSessionDataInput!
+  create: PerformanceTestSessionJobCreateWithoutTestSessionInput!
+}
+
+input PerformanceTestSessionJobWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionJobWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionJobWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionJobWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  jobId: Int
+
+  """All values that are not equal to given value."""
+  jobId_not: Int
+
+  """All values that are contained in given list."""
+  jobId_in: [Int!]
+
+  """All values that are not contained in given list."""
+  jobId_not_in: [Int!]
+
+  """All values less than the given value."""
+  jobId_lt: Int
+
+  """All values less than or equal the given value."""
+  jobId_lte: Int
+
+  """All values greater than the given value."""
+  jobId_gt: Int
+
+  """All values greater than or equal the given value."""
+  jobId_gte: Int
+  status: TestSessionJobStatus
+
+  """All values that are not equal to given value."""
+  status_not: TestSessionJobStatus
+
+  """All values that are contained in given list."""
+  status_in: [TestSessionJobStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [TestSessionJobStatus!]
+  err: String
+
+  """All values that are not equal to given value."""
+  err_not: String
+
+  """All values that are contained in given list."""
+  err_in: [String!]
+
+  """All values that are not contained in given list."""
+  err_not_in: [String!]
+
+  """All values less than the given value."""
+  err_lt: String
+
+  """All values less than or equal the given value."""
+  err_lte: String
+
+  """All values greater than the given value."""
+  err_gt: String
+
+  """All values greater than or equal the given value."""
+  err_gte: String
+
+  """All values containing the given string."""
+  err_contains: String
+
+  """All values not containing the given string."""
+  err_not_contains: String
+
+  """All values starting with the given string."""
+  err_starts_with: String
+
+  """All values not starting with the given string."""
+  err_not_starts_with: String
+
+  """All values ending with the given string."""
+  err_ends_with: String
+
+  """All values not ending with the given string."""
+  err_not_ends_with: String
+  started: DateTime
+
+  """All values that are not equal to given value."""
+  started_not: DateTime
+
+  """All values that are contained in given list."""
+  started_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  started_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  started_lt: DateTime
+
+  """All values less than or equal the given value."""
+  started_lte: DateTime
+
+  """All values greater than the given value."""
+  started_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  started_gte: DateTime
+  finished: DateTime
+
+  """All values that are not equal to given value."""
+  finished_not: DateTime
+
+  """All values that are contained in given list."""
+  finished_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  finished_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  finished_lt: DateTime
+
+  """All values less than or equal the given value."""
+  finished_lte: DateTime
+
+  """All values greater than the given value."""
+  finished_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  finished_gte: DateTime
+  agentName: String
+
+  """All values that are not equal to given value."""
+  agentName_not: String
+
+  """All values that are contained in given list."""
+  agentName_in: [String!]
+
+  """All values that are not contained in given list."""
+  agentName_not_in: [String!]
+
+  """All values less than the given value."""
+  agentName_lt: String
+
+  """All values less than or equal the given value."""
+  agentName_lte: String
+
+  """All values greater than the given value."""
+  agentName_gt: String
+
+  """All values greater than or equal the given value."""
+  agentName_gte: String
+
+  """All values containing the given string."""
+  agentName_contains: String
+
+  """All values not containing the given string."""
+  agentName_not_contains: String
+
+  """All values starting with the given string."""
+  agentName_starts_with: String
+
+  """All values not starting with the given string."""
+  agentName_not_starts_with: String
+
+  """All values ending with the given string."""
+  agentName_ends_with: String
+
+  """All values not ending with the given string."""
+  agentName_not_ends_with: String
+  testSession: PerformanceTestSessionWhereInput
+}
+
+input PerformanceTestSessionJobWhereUniqueInput {
+  id: ID
+}
+
+enum PerformanceTestSessionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  parallelConvoCount_ASC
+  parallelConvoCount_DESC
+  parallelJobCount_ASC
+  parallelJobCount_DESC
+  dataDensity_ASC
+  dataDensity_DESC
+  tickRepeatInitial_ASC
+  tickRepeatInitial_DESC
+  tickRepeatPerTick_ASC
+  tickRepeatPerTick_DESC
+  tickMaxTime_ASC
+  tickMaxTime_DESC
+  tickTime_ASC
+  tickTime_DESC
+}
+
+type PerformanceTestSessionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  tags: [String!]!
+  parallelConvoCount: Int!
+  parallelJobCount: Int!
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int!
+  tickTime: Int!
+}
+
+type PerformanceTestSessionSubscriptionPayload {
+  mutation: MutationType!
+  node: PerformanceTestSession
+  updatedFields: [String!]
+  previousValues: PerformanceTestSessionPreviousValues
+}
+
+input PerformanceTestSessionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PerformanceTestSessionWhereInput
+}
+
+input PerformanceTestSessionUpdateInput {
+  name: String
+  description: String
+  parallelConvoCount: Int
+  parallelJobCount: Int
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int
+  tickTime: Int
+  tags: PerformanceTestSessionUpdatetagsInput
+  client: ClientUpdateOneInput
+  chatbot: ChatbotUpdateOneRequiredInput
+  testSets: TestSetUpdateManyInput
+  registeredComponents: RegisteredComponentUpdateManyInput
+  testProject: TestProjectUpdateOneInput
+  results: PerformanceTestSessionAggregatedResultUpdateManyWithoutTestSessionInput
+  jobs: PerformanceTestSessionJobUpdateManyWithoutTestSessionInput
+  capabilities: CapabilityUpdateManyInput
+  sources: CapabilityUpdateManyInput
+  envs: CapabilityUpdateManyInput
+}
+
+input PerformanceTestSessionUpdateManyMutationInput {
+  name: String
+  description: String
+  parallelConvoCount: Int
+  parallelJobCount: Int
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int
+  tickTime: Int
+  tags: PerformanceTestSessionUpdatetagsInput
+}
+
+input PerformanceTestSessionUpdateOneRequiredWithoutJobsInput {
+  create: PerformanceTestSessionCreateWithoutJobsInput
+  connect: PerformanceTestSessionWhereUniqueInput
+  update: PerformanceTestSessionUpdateWithoutJobsDataInput
+  upsert: PerformanceTestSessionUpsertWithoutJobsInput
+}
+
+input PerformanceTestSessionUpdateOneRequiredWithoutResultsInput {
+  create: PerformanceTestSessionCreateWithoutResultsInput
+  connect: PerformanceTestSessionWhereUniqueInput
+  update: PerformanceTestSessionUpdateWithoutResultsDataInput
+  upsert: PerformanceTestSessionUpsertWithoutResultsInput
+}
+
+input PerformanceTestSessionUpdatetagsInput {
+  set: [String!]
+}
+
+input PerformanceTestSessionUpdateWithoutJobsDataInput {
+  name: String
+  description: String
+  parallelConvoCount: Int
+  parallelJobCount: Int
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int
+  tickTime: Int
+  tags: PerformanceTestSessionUpdatetagsInput
+  client: ClientUpdateOneInput
+  chatbot: ChatbotUpdateOneRequiredInput
+  testSets: TestSetUpdateManyInput
+  registeredComponents: RegisteredComponentUpdateManyInput
+  testProject: TestProjectUpdateOneInput
+  results: PerformanceTestSessionAggregatedResultUpdateManyWithoutTestSessionInput
+  capabilities: CapabilityUpdateManyInput
+  sources: CapabilityUpdateManyInput
+  envs: CapabilityUpdateManyInput
+}
+
+input PerformanceTestSessionUpdateWithoutResultsDataInput {
+  name: String
+  description: String
+  parallelConvoCount: Int
+  parallelJobCount: Int
+  dataDensity: Int
+  tickRepeatInitial: Int
+  tickRepeatPerTick: Int
+  tickMaxTime: Int
+  tickTime: Int
+  tags: PerformanceTestSessionUpdatetagsInput
+  client: ClientUpdateOneInput
+  chatbot: ChatbotUpdateOneRequiredInput
+  testSets: TestSetUpdateManyInput
+  registeredComponents: RegisteredComponentUpdateManyInput
+  testProject: TestProjectUpdateOneInput
+  jobs: PerformanceTestSessionJobUpdateManyWithoutTestSessionInput
+  capabilities: CapabilityUpdateManyInput
+  sources: CapabilityUpdateManyInput
+  envs: CapabilityUpdateManyInput
+}
+
+input PerformanceTestSessionUpsertWithoutJobsInput {
+  update: PerformanceTestSessionUpdateWithoutJobsDataInput!
+  create: PerformanceTestSessionCreateWithoutJobsInput!
+}
+
+input PerformanceTestSessionUpsertWithoutResultsInput {
+  update: PerformanceTestSessionUpdateWithoutResultsDataInput!
+  create: PerformanceTestSessionCreateWithoutResultsInput!
+}
+
+input PerformanceTestSessionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PerformanceTestSessionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PerformanceTestSessionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PerformanceTestSessionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  parallelConvoCount: Int
+
+  """All values that are not equal to given value."""
+  parallelConvoCount_not: Int
+
+  """All values that are contained in given list."""
+  parallelConvoCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  parallelConvoCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  parallelConvoCount_lt: Int
+
+  """All values less than or equal the given value."""
+  parallelConvoCount_lte: Int
+
+  """All values greater than the given value."""
+  parallelConvoCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  parallelConvoCount_gte: Int
+  parallelJobCount: Int
+
+  """All values that are not equal to given value."""
+  parallelJobCount_not: Int
+
+  """All values that are contained in given list."""
+  parallelJobCount_in: [Int!]
+
+  """All values that are not contained in given list."""
+  parallelJobCount_not_in: [Int!]
+
+  """All values less than the given value."""
+  parallelJobCount_lt: Int
+
+  """All values less than or equal the given value."""
+  parallelJobCount_lte: Int
+
+  """All values greater than the given value."""
+  parallelJobCount_gt: Int
+
+  """All values greater than or equal the given value."""
+  parallelJobCount_gte: Int
+  dataDensity: Int
+
+  """All values that are not equal to given value."""
+  dataDensity_not: Int
+
+  """All values that are contained in given list."""
+  dataDensity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  dataDensity_not_in: [Int!]
+
+  """All values less than the given value."""
+  dataDensity_lt: Int
+
+  """All values less than or equal the given value."""
+  dataDensity_lte: Int
+
+  """All values greater than the given value."""
+  dataDensity_gt: Int
+
+  """All values greater than or equal the given value."""
+  dataDensity_gte: Int
+  tickRepeatInitial: Int
+
+  """All values that are not equal to given value."""
+  tickRepeatInitial_not: Int
+
+  """All values that are contained in given list."""
+  tickRepeatInitial_in: [Int!]
+
+  """All values that are not contained in given list."""
+  tickRepeatInitial_not_in: [Int!]
+
+  """All values less than the given value."""
+  tickRepeatInitial_lt: Int
+
+  """All values less than or equal the given value."""
+  tickRepeatInitial_lte: Int
+
+  """All values greater than the given value."""
+  tickRepeatInitial_gt: Int
+
+  """All values greater than or equal the given value."""
+  tickRepeatInitial_gte: Int
+  tickRepeatPerTick: Int
+
+  """All values that are not equal to given value."""
+  tickRepeatPerTick_not: Int
+
+  """All values that are contained in given list."""
+  tickRepeatPerTick_in: [Int!]
+
+  """All values that are not contained in given list."""
+  tickRepeatPerTick_not_in: [Int!]
+
+  """All values less than the given value."""
+  tickRepeatPerTick_lt: Int
+
+  """All values less than or equal the given value."""
+  tickRepeatPerTick_lte: Int
+
+  """All values greater than the given value."""
+  tickRepeatPerTick_gt: Int
+
+  """All values greater than or equal the given value."""
+  tickRepeatPerTick_gte: Int
+  tickMaxTime: Int
+
+  """All values that are not equal to given value."""
+  tickMaxTime_not: Int
+
+  """All values that are contained in given list."""
+  tickMaxTime_in: [Int!]
+
+  """All values that are not contained in given list."""
+  tickMaxTime_not_in: [Int!]
+
+  """All values less than the given value."""
+  tickMaxTime_lt: Int
+
+  """All values less than or equal the given value."""
+  tickMaxTime_lte: Int
+
+  """All values greater than the given value."""
+  tickMaxTime_gt: Int
+
+  """All values greater than or equal the given value."""
+  tickMaxTime_gte: Int
+  tickTime: Int
+
+  """All values that are not equal to given value."""
+  tickTime_not: Int
+
+  """All values that are contained in given list."""
+  tickTime_in: [Int!]
+
+  """All values that are not contained in given list."""
+  tickTime_not_in: [Int!]
+
+  """All values less than the given value."""
+  tickTime_lt: Int
+
+  """All values less than or equal the given value."""
+  tickTime_lte: Int
+
+  """All values greater than the given value."""
+  tickTime_gt: Int
+
+  """All values greater than or equal the given value."""
+  tickTime_gte: Int
+  client: ClientWhereInput
+  chatbot: ChatbotWhereInput
+  testSets_every: TestSetWhereInput
+  testSets_some: TestSetWhereInput
+  testSets_none: TestSetWhereInput
+  registeredComponents_every: RegisteredComponentWhereInput
+  registeredComponents_some: RegisteredComponentWhereInput
+  registeredComponents_none: RegisteredComponentWhereInput
+  testProject: TestProjectWhereInput
+  results_every: PerformanceTestSessionAggregatedResultWhereInput
+  results_some: PerformanceTestSessionAggregatedResultWhereInput
+  results_none: PerformanceTestSessionAggregatedResultWhereInput
+  jobs_every: PerformanceTestSessionJobWhereInput
+  jobs_some: PerformanceTestSessionJobWhereInput
+  jobs_none: PerformanceTestSessionJobWhereInput
+  capabilities_every: CapabilityWhereInput
+  capabilities_some: CapabilityWhereInput
+  capabilities_none: CapabilityWhereInput
+  sources_every: CapabilityWhereInput
+  sources_some: CapabilityWhereInput
+  sources_none: CapabilityWhereInput
+  envs_every: CapabilityWhereInput
+  envs_some: CapabilityWhereInput
+  envs_none: CapabilityWhereInput
+}
+
+input PerformanceTestSessionWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   testSessions(where: TestSessionWhereInput, orderBy: TestSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSession]!
   testSessionTestCaseResults(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResult]!
   testSessionTestCaseResultAttachments(where: TestSessionTestCaseResultAttachmentWhereInput, orderBy: TestSessionTestCaseResultAttachmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResultAttachment]!
   testSessionJobs(where: TestSessionJobWhereInput, orderBy: TestSessionJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionJob]!
   testSessionJobLogs(where: TestSessionJobLogWhereInput, orderBy: TestSessionJobLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionJobLog]!
+  performanceTestSessions(where: PerformanceTestSessionWhereInput, orderBy: PerformanceTestSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTestSession]!
+  performanceTestSessionAggregatedResults(where: PerformanceTestSessionAggregatedResultWhereInput, orderBy: PerformanceTestSessionAggregatedResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTestSessionAggregatedResult]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   apiKeys(where: ApiKeyWhereInput, orderBy: ApiKeyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ApiKey]!
   systemSettingses(where: SystemSettingsWhereInput, orderBy: SystemSettingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SystemSettings]!
   testSetRepositories(where: TestSetRepositoryWhereInput, orderBy: TestSetRepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetRepository]!
   deviceDescriptors(where: DeviceDescriptorWhereInput, orderBy: DeviceDescriptorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DeviceDescriptor]!
-  testProjects(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestProject]!
   agents(where: AgentWhereInput, orderBy: AgentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Agent]!
   testSetFolders(where: TestSetFolderWhereInput, orderBy: TestSetFolderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetFolder]!
+  testProjects(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestProject]!
   testSetScripts(where: TestSetScriptWhereInput, orderBy: TestSetScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetScript]!
+  performanceTestSessionJobs(where: PerformanceTestSessionJobWhereInput, orderBy: PerformanceTestSessionJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [PerformanceTestSessionJob]!
   testSessionTestCaseResultTranscripts(where: TestSessionTestCaseResultTranscriptWhereInput, orderBy: TestSessionTestCaseResultTranscriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResultTranscript]!
   chatbots(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chatbot]!
   testSets(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSet]!
@@ -4027,15 +6424,18 @@ type Query {
   testSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
   testSessionJob(where: TestSessionJobWhereUniqueInput!): TestSessionJob
   testSessionJobLog(where: TestSessionJobLogWhereUniqueInput!): TestSessionJobLog
+  performanceTestSession(where: PerformanceTestSessionWhereUniqueInput!): PerformanceTestSession
+  performanceTestSessionAggregatedResult(where: PerformanceTestSessionAggregatedResultWhereUniqueInput!): PerformanceTestSessionAggregatedResult
   user(where: UserWhereUniqueInput!): User
   apiKey(where: ApiKeyWhereUniqueInput!): ApiKey
   systemSettings(where: SystemSettingsWhereUniqueInput!): SystemSettings
   testSetRepository(where: TestSetRepositoryWhereUniqueInput!): TestSetRepository
   deviceDescriptor(where: DeviceDescriptorWhereUniqueInput!): DeviceDescriptor
-  testProject(where: TestProjectWhereUniqueInput!): TestProject
   agent(where: AgentWhereUniqueInput!): Agent
   testSetFolder(where: TestSetFolderWhereUniqueInput!): TestSetFolder
+  testProject(where: TestProjectWhereUniqueInput!): TestProject
   testSetScript(where: TestSetScriptWhereUniqueInput!): TestSetScript
+  performanceTestSessionJob(where: PerformanceTestSessionJobWhereUniqueInput!): PerformanceTestSessionJob
   testSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptWhereUniqueInput!): TestSessionTestCaseResultTranscript
   chatbot(where: ChatbotWhereUniqueInput!): Chatbot
   testSet(where: TestSetWhereUniqueInput!): TestSet
@@ -4052,15 +6452,18 @@ type Query {
   testSessionTestCaseResultAttachmentsConnection(where: TestSessionTestCaseResultAttachmentWhereInput, orderBy: TestSessionTestCaseResultAttachmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionTestCaseResultAttachmentConnection!
   testSessionJobsConnection(where: TestSessionJobWhereInput, orderBy: TestSessionJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionJobConnection!
   testSessionJobLogsConnection(where: TestSessionJobLogWhereInput, orderBy: TestSessionJobLogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionJobLogConnection!
+  performanceTestSessionsConnection(where: PerformanceTestSessionWhereInput, orderBy: PerformanceTestSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestSessionConnection!
+  performanceTestSessionAggregatedResultsConnection(where: PerformanceTestSessionAggregatedResultWhereInput, orderBy: PerformanceTestSessionAggregatedResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestSessionAggregatedResultConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   apiKeysConnection(where: ApiKeyWhereInput, orderBy: ApiKeyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ApiKeyConnection!
   systemSettingsesConnection(where: SystemSettingsWhereInput, orderBy: SystemSettingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SystemSettingsConnection!
   testSetRepositoriesConnection(where: TestSetRepositoryWhereInput, orderBy: TestSetRepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetRepositoryConnection!
   deviceDescriptorsConnection(where: DeviceDescriptorWhereInput, orderBy: DeviceDescriptorOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeviceDescriptorConnection!
-  testProjectsConnection(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestProjectConnection!
   agentsConnection(where: AgentWhereInput, orderBy: AgentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AgentConnection!
   testSetFoldersConnection(where: TestSetFolderWhereInput, orderBy: TestSetFolderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetFolderConnection!
+  testProjectsConnection(where: TestProjectWhereInput, orderBy: TestProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestProjectConnection!
   testSetScriptsConnection(where: TestSetScriptWhereInput, orderBy: TestSetScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetScriptConnection!
+  performanceTestSessionJobsConnection(where: PerformanceTestSessionJobWhereInput, orderBy: PerformanceTestSessionJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PerformanceTestSessionJobConnection!
   testSessionTestCaseResultTranscriptsConnection(where: TestSessionTestCaseResultTranscriptWhereInput, orderBy: TestSessionTestCaseResultTranscriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionTestCaseResultTranscriptConnection!
   chatbotsConnection(where: ChatbotWhereInput, orderBy: ChatbotOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatbotConnection!
   testSetsConnection(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetConnection!
@@ -4922,15 +7325,18 @@ type Subscription {
   testSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentSubscriptionWhereInput): TestSessionTestCaseResultAttachmentSubscriptionPayload
   testSessionJob(where: TestSessionJobSubscriptionWhereInput): TestSessionJobSubscriptionPayload
   testSessionJobLog(where: TestSessionJobLogSubscriptionWhereInput): TestSessionJobLogSubscriptionPayload
+  performanceTestSession(where: PerformanceTestSessionSubscriptionWhereInput): PerformanceTestSessionSubscriptionPayload
+  performanceTestSessionAggregatedResult(where: PerformanceTestSessionAggregatedResultSubscriptionWhereInput): PerformanceTestSessionAggregatedResultSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   apiKey(where: ApiKeySubscriptionWhereInput): ApiKeySubscriptionPayload
   systemSettings(where: SystemSettingsSubscriptionWhereInput): SystemSettingsSubscriptionPayload
   testSetRepository(where: TestSetRepositorySubscriptionWhereInput): TestSetRepositorySubscriptionPayload
   deviceDescriptor(where: DeviceDescriptorSubscriptionWhereInput): DeviceDescriptorSubscriptionPayload
-  testProject(where: TestProjectSubscriptionWhereInput): TestProjectSubscriptionPayload
   agent(where: AgentSubscriptionWhereInput): AgentSubscriptionPayload
   testSetFolder(where: TestSetFolderSubscriptionWhereInput): TestSetFolderSubscriptionPayload
+  testProject(where: TestProjectSubscriptionWhereInput): TestProjectSubscriptionPayload
   testSetScript(where: TestSetScriptSubscriptionWhereInput): TestSetScriptSubscriptionPayload
+  performanceTestSessionJob(where: PerformanceTestSessionJobSubscriptionWhereInput): PerformanceTestSessionJobSubscriptionPayload
   testSessionTestCaseResultTranscript(where: TestSessionTestCaseResultTranscriptSubscriptionWhereInput): TestSessionTestCaseResultTranscriptSubscriptionPayload
   chatbot(where: ChatbotSubscriptionWhereInput): ChatbotSubscriptionPayload
   testSet(where: TestSetSubscriptionWhereInput): TestSetSubscriptionPayload
@@ -10053,6 +12459,7 @@ type TestSet implements Node {
   statsUtterancesCount: Int
   statsScriptingMemoryCount: Int
   statsCompiledConvos(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetCompiledConvo!]
+  dependencies(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSet!]
 }
 
 type TestSetCompiledConvo implements Node {
@@ -10785,6 +13192,7 @@ input TestSetCreateInput {
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
+  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateManyInput {
@@ -10846,6 +13254,7 @@ input TestSetCreateWithoutExcelsInput {
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   folders: TestSetFolderCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
+  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateWithoutFoldersInput {
@@ -10873,6 +13282,7 @@ input TestSetCreateWithoutFoldersInput {
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
+  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateWithoutRepositoriesInput {
@@ -10900,6 +13310,7 @@ input TestSetCreateWithoutRepositoriesInput {
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
+  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateWithoutScriptsInput {
@@ -10927,6 +13338,7 @@ input TestSetCreateWithoutScriptsInput {
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
+  dependencies: TestSetCreateManyInput
 }
 
 """An edge in a connection."""
@@ -14841,6 +17253,7 @@ input TestSetUpdateDataInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
+  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateInput {
@@ -14869,6 +17282,7 @@ input TestSetUpdateInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
+  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateManyDataInput {
@@ -14998,6 +17412,7 @@ input TestSetUpdateWithoutExcelsDataInput {
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
+  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithoutFoldersDataInput {
@@ -15025,6 +17440,7 @@ input TestSetUpdateWithoutFoldersDataInput {
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
+  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithoutRepositoriesDataInput {
@@ -15052,6 +17468,7 @@ input TestSetUpdateWithoutRepositoriesDataInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
+  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithoutScriptsDataInput {
@@ -15079,6 +17496,7 @@ input TestSetUpdateWithoutScriptsDataInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
+  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithWhereUniqueNestedInput {
@@ -15538,6 +17956,9 @@ input TestSetWhereInput {
   statsCompiledConvos_every: TestSetCompiledConvoWhereInput
   statsCompiledConvos_some: TestSetCompiledConvoWhereInput
   statsCompiledConvos_none: TestSetCompiledConvoWhereInput
+  dependencies_every: TestSetWhereInput
+  dependencies_some: TestSetWhereInput
+  dependencies_none: TestSetWhereInput
 }
 
 input TestSetWhereUniqueInput {

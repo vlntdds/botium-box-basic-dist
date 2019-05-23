@@ -174,6 +174,64 @@ type TestSessionJobLog {
   log: String!
 }
 
+type PerformanceTestSession {
+    id: ID! @unique
+    client: Client
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    name: String!
+    description: String
+    tags: [String!]
+    chatbot: Chatbot!
+    testSets: [TestSet!]!
+    registeredComponents: [RegisteredComponent!]!
+    testProject: TestProject
+    results: [PerformanceTestSessionAggregatedResult!]! @relation(name: "PerformanceTestSessionResults" onDelete: CASCADE)
+    jobs: [PerformanceTestSessionJob!]! @relation(name: "PerformanceTestSessionJobs" onDelete: CASCADE)
+    capabilities: [Capability!]! @relation(name: "PerformanceTestSessionCapabilities")
+    sources: [Capability!]! @relation(name: "PerformanceTestSessionSources")
+    envs: [Capability!]! @relation(name: "PerformanceTestSessionEnvs")
+    parallelConvoCount: Int!
+    parallelJobCount: Int!
+    dataDensity: Int
+    tickRepeatInitial: Int
+    tickRepeatPerTick: Int
+    tickMaxTime: Int!
+    tickTime: Int!
+}
+
+type PerformanceTestSessionAggregatedResult {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    testSession: PerformanceTestSession! @relation(name: "PerformanceTestSessionResults")
+    job: PerformanceTestSessionJob!
+    stepIndex: Int!
+    convo: String!
+    execCount: Int!
+    execDurationMin: Int
+    execDurationMax: Int
+    execDurationSum: Int
+    waitCount: Int!
+    waitDurationMin: Int
+    waitDurationMax: Int
+    waitDurationSum: Int
+    stepStartAt: DateTime!
+}
+
+type PerformanceTestSessionJob {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    testSession: PerformanceTestSession! @relation(name: "PerformanceTestSessionJobs")
+    jobId: Int
+    status: TestSessionJobStatus!
+    err: String
+    started: DateTime
+    finished: DateTime
+    agentName: String
+}
+
 type TestSet {
   id: ID! @unique
   client: Client
@@ -203,6 +261,7 @@ type TestSet {
   statsUtterancesCount: Int,
   statsScriptingMemoryCount: Int,
   statsCompiledConvos: [TestSetCompiledConvo!]
+  dependencies: [TestSet!]
 }
 
 enum TestSetExpandConvosModeType {
