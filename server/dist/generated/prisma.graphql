@@ -1,5 +1,5 @@
-# source: http://192.168.99.100:4466/box/dev587
-# timestamp: Tue May 21 2019 13:40:53 GMT+0200 (W. Europe Daylight Time)
+# source: http://192.168.99.100:4466/box/dev6
+# timestamp: Mon May 20 2019 19:09:39 GMT+0200 (GMT+02:00)
 
 type Agent implements Node {
   id: ID!
@@ -12459,7 +12459,6 @@ type TestSet implements Node {
   statsUtterancesCount: Int
   statsScriptingMemoryCount: Int
   statsCompiledConvos(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetCompiledConvo!]
-  dependencies(where: TestSetWhereInput, orderBy: TestSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSet!]
 }
 
 type TestSetCompiledConvo implements Node {
@@ -13192,7 +13191,6 @@ input TestSetCreateInput {
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
-  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateManyInput {
@@ -13254,7 +13252,6 @@ input TestSetCreateWithoutExcelsInput {
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   folders: TestSetFolderCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
-  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateWithoutFoldersInput {
@@ -13282,7 +13279,6 @@ input TestSetCreateWithoutFoldersInput {
   repositories: TestSetRepositoryCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
-  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateWithoutRepositoriesInput {
@@ -13310,7 +13306,6 @@ input TestSetCreateWithoutRepositoriesInput {
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
-  dependencies: TestSetCreateManyInput
 }
 
 input TestSetCreateWithoutScriptsInput {
@@ -13338,7 +13333,6 @@ input TestSetCreateWithoutScriptsInput {
   folders: TestSetFolderCreateManyWithoutTestSetInput
   excels: TestSetExcelCreateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoCreateManyInput
-  dependencies: TestSetCreateManyInput
 }
 
 """An edge in a connection."""
@@ -17253,7 +17247,6 @@ input TestSetUpdateDataInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
-  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateInput {
@@ -17282,7 +17275,6 @@ input TestSetUpdateInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
-  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateManyDataInput {
@@ -17412,7 +17404,6 @@ input TestSetUpdateWithoutExcelsDataInput {
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
-  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithoutFoldersDataInput {
@@ -17440,7 +17431,6 @@ input TestSetUpdateWithoutFoldersDataInput {
   repositories: TestSetRepositoryUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
-  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithoutRepositoriesDataInput {
@@ -17468,7 +17458,6 @@ input TestSetUpdateWithoutRepositoriesDataInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
-  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithoutScriptsDataInput {
@@ -17496,7 +17485,6 @@ input TestSetUpdateWithoutScriptsDataInput {
   folders: TestSetFolderUpdateManyWithoutTestSetInput
   excels: TestSetExcelUpdateManyWithoutTestSetInput
   statsCompiledConvos: TestSetCompiledConvoUpdateManyInput
-  dependencies: TestSetUpdateManyInput
 }
 
 input TestSetUpdateWithWhereUniqueNestedInput {
@@ -17956,9 +17944,6 @@ input TestSetWhereInput {
   statsCompiledConvos_every: TestSetCompiledConvoWhereInput
   statsCompiledConvos_some: TestSetCompiledConvoWhereInput
   statsCompiledConvos_none: TestSetCompiledConvoWhereInput
-  dependencies_every: TestSetWhereInput
-  dependencies_some: TestSetWhereInput
-  dependencies_none: TestSetWhereInput
 }
 
 input TestSetWhereUniqueInput {

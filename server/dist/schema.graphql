@@ -251,15 +251,8 @@ type CloneTestSetOptionsPossible {
 }
 
 input CloneTestSetOptionsChoosen {
-  name: String,
-  output: CloneTestSetOptionsOutputType!,
   humanifiersToExecute: [String]!,
   percentToHumanify: Float!
-}
-
-enum CloneTestSetOptionsOutputType {
-  LOCAL
-  FOLDER
 }
 
 input ExportTestSetToGitOptionsChoosen {

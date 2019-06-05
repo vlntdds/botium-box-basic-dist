@@ -261,7 +261,6 @@ type TestSet {
   statsUtterancesCount: Int,
   statsScriptingMemoryCount: Int,
   statsCompiledConvos: [TestSetCompiledConvo!]
-  dependencies: [TestSet!]
 }
 
 enum TestSetExpandConvosModeType {
