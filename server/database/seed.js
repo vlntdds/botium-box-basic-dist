@@ -41,7 +41,7 @@ const rolesData = () => [
         'TESTPROJECTS_*',
         'TESTSETS_*',
         'TESTSESSIONS_*',
-        'PERFORMANCETESTSESSIONS*',
+        'PERFORMANCETESTSESSIONS_*',
         'APIKEYS_SELECT',
         'DEVICEPROVIDERS_*',
         'REGISTEREDCOMPONENTS_*'
@@ -68,7 +68,6 @@ const rolesData = () => [
         'PERFORMANCETESTSESSIONS_SELECT',
         'PERFORMANCETESTSESSIONS_CREATE',
         'PERFORMANCETESTSESSIONS_REPORTS',
-        'APIKEYS_SELECT',
         'DEVICEPROVIDERS_SELECT',
         'REGISTEREDCOMPONENTS_SELECT'
       ]
@@ -149,6 +148,13 @@ const apikeysData = () => [
     key: randomize('Aa0', 20),
     clients: {
       connect: [ { name: 'DefaultClient' } ]
+    },
+    permissions: {
+      set: [
+        'TESTSESSIONS_SELECT',
+        'TESTSESSIONS_CREATE',
+        'TESTSESSIONS_REPORTS'
+      ]
     }
   }
 ]
@@ -759,6 +765,27 @@ const settingsData = () => [
   }
 ]
 
+async function updateTags (entityName, queryFn) {
+  let createdCount = 0
+  const entities = await queryFn({ where: {} }, '{ id tags }')
+  for (const entityData of entities) {
+    if (entityData.tags && entityData.tags.length > 0) {
+      for (const tag of entityData.tags) {
+        const existingTag = await db.query.tag({ where: { name: tag } })
+        if (!existingTag) {
+          try {
+            await db.mutation.createTag({ data: { name: tag } })
+            createdCount++
+          } catch (err) {
+            console.log('Error creating tag for ' + entityName + ': ', err)
+          }
+        }
+      }
+    }
+  }
+  console.log('Created ' + createdCount + ' tags for entity ' + entityName)
+}
+
 async function createRecords (entityName, entities, queryFn, keyField, createFn, updateFn) {
   let createdCount = 0
   let updatedCount = 0
@@ -796,12 +823,35 @@ async function createRecords (entityName, entities, queryFn, keyField, createFn,
   console.log('Created ' + createdCount + ' and updated ' + updatedCount + ' ' + entityName + '(s)')
 }
 
+async function fillEmptyApiKeysPermissions () {
+  let updatedCount = 0
+
+  const apiKeys = await db.query.apiKeys({}, '{ id permissions }')
+  for (const apiKey of apiKeys) {
+    if (!apiKey.permissions || apiKey.permissions.length === 0) {
+      await db.mutation.updateApiKey({
+        data: {
+          permissions: {
+            set: ['*']
+          }
+        },
+        where: {
+          id: apiKey.id
+        }
+      })
+      updatedCount++
+    }
+  }
+  console.log('Updated ' + updatedCount + ' ApiKeys with default permissions (*)')
+}
+
 (async () => {
   await createRecords('client', clientData(), db.query.clients, 'name', db.mutation.createClient)
-  await createRecords('userrole', rolesData(), db.query.userRoles, 'name', db.mutation.createUserRole)
+  await createRecords('userrole', rolesData(), db.query.userRoles, 'name', db.mutation.createUserRole, db.mutation.updateUserRole)
   await createRecords('user', usersData(), db.query.users, 'name', db.mutation.createUser)
   await createRecords('agent', agentsData(), db.query.agents, 'name', db.mutation.createAgent)
   await createRecords('apikey', apikeysData(), db.query.apiKeys, 'name', db.mutation.createApiKey)
+  await fillEmptyApiKeysPermissions()
   await createRecords('deviceprovider', deviceProvidersData(), db.query.deviceProviders, 'name', db.mutation.createDeviceProvider)
   await createRecords('deviceset', deviceSetsData(), db.query.deviceSets, 'name', db.mutation.createDeviceSet)
   await createRecords('chatbot', chatbotsData(), db.query.chatbots, 'name', db.mutation.createChatbot)
@@ -810,4 +860,12 @@ async function createRecords (entityName, entities, queryFn, keyField, createFn,
   await createRecords('settings', settingsData(), db.query.systemSettingses, null, db.mutation.createSystemSettings)
   await createRecords('registeredcomponent', registeredComponentsDataBasic(), db.query.registeredComponents, 'name', db.mutation.createRegisteredComponent)
   isPremium && await createRecords('registeredcomponent', registeredComponentsDataPremium(), db.query.registeredComponents, 'name', db.mutation.createRegisteredComponent)
+
+  await updateTags('testproject', db.query.testProjects)
+  await updateTags('agent', db.query.agents)
+  await updateTags('testsession', db.query.testSessions)
+  await updateTags('performancetestproject', db.query.performanceTestSessions)
+  await updateTags('testset', db.query.testSets)
+  await updateTags('chatbot', db.query.chatbots)
+  await updateTags('deviceset', db.query.deviceSets)
 })()

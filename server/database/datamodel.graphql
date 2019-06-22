@@ -1,3 +1,10 @@
+type Tag {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String! @unique
+}
+
 type TestProject {
   id: ID! @unique
   client: Client
@@ -5,6 +12,7 @@ type TestProject {
   updatedAt: DateTime!
   name: String!
   code: String! @unique
+  securityCheck: Boolean
   description: String
   tags: [String!]
   chatbot: Chatbot!
@@ -82,11 +90,31 @@ type TestSession {
   bail: Boolean
   status: TestSessionStatus!
   results: [TestSessionTestCaseResult!]!
+  securityCheck: Boolean
+  securityAlerts: [SecurityAlert!]
   jobs: [TestSessionJob!]!
   capabilities: [Capability!]! @relation(name: "TestSessionCapabilities")
   sources: [Capability!]! @relation(name: "TestSessionSources")
   envs: [Capability!]! @relation(name: "TestSessionEnvs")
   chartData: String
+}
+
+type SecurityAlert {
+  id: ID! @unique
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: [String!]
+}
+
+enum Verb {
+  POST,
+  PUT,
+  DELETE,
+  GET
 }
 
 enum TestSessionStatus {
@@ -249,6 +277,14 @@ type TestSet {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean @default(value: "false")
   normalizeText: Boolean @default(value: "true")
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   tags: [String!]
   scripts: [TestSetScript!]!
@@ -347,14 +383,6 @@ type TestSetExcel {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int!
-  startCol: Int!
   testSet: TestSet!
 }
 
@@ -431,6 +459,7 @@ type ApiKey {
   validFrom: DateTime
   validTo: DateTime
   clients: [Client!]
+  permissions: [String!]
 }
 
 type RegisteredComponent {

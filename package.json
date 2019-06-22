@@ -1,9 +1,9 @@
 {
   "name": "botium-box",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Botium Box Community Edition",
   "engines": {
-    "node": ">=8.12"
+    "node": ">=8.3"
   },
   "bin": {
     "botium-box-cli": "./bin/botium-box-cli.js"

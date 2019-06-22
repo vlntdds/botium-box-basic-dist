@@ -1,5 +1,5 @@
-# source: http://192.168.99.100:4466/box/dev587
-# timestamp: Tue May 21 2019 13:40:53 GMT+0200 (W. Europe Daylight Time)
+# source: http://127.0.0.1:4466/box/dev
+# timestamp: Fri May 31 2019 14:48:21 GMT+0200 (Central European Summer Time)
 
 type Agent implements Node {
   id: ID!
@@ -418,7 +418,15 @@ type AggregateRegisteredComponent {
   count: Int!
 }
 
+type AggregateSecurityAlert {
+  count: Int!
+}
+
 type AggregateSystemSettings {
+  count: Int!
+}
+
+type AggregateTag {
   count: Int!
 }
 
@@ -491,6 +499,7 @@ type ApiKey implements Node {
   validFrom: DateTime
   validTo: DateTime
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client!]
+  permissions: [String!]!
 }
 
 """A connection to a list of items."""
@@ -508,7 +517,12 @@ input ApiKeyCreateInput {
   key: String!
   validFrom: DateTime
   validTo: DateTime
+  permissions: ApiKeyCreatepermissionsInput
   clients: ClientCreateManyInput
+}
+
+input ApiKeyCreatepermissionsInput {
+  set: [String!]
 }
 
 """An edge in a connection."""
@@ -545,6 +559,7 @@ type ApiKeyPreviousValues {
   key: String!
   validFrom: DateTime
   validTo: DateTime
+  permissions: [String!]!
 }
 
 type ApiKeySubscriptionPayload {
@@ -591,6 +606,7 @@ input ApiKeyUpdateInput {
   key: String
   validFrom: DateTime
   validTo: DateTime
+  permissions: ApiKeyUpdatepermissionsInput
   clients: ClientUpdateManyInput
 }
 
@@ -599,6 +615,11 @@ input ApiKeyUpdateManyMutationInput {
   key: String
   validFrom: DateTime
   validTo: DateTime
+  permissions: ApiKeyUpdatepermissionsInput
+}
+
+input ApiKeyUpdatepermissionsInput {
+  set: [String!]
 }
 
 input ApiKeyWhereInput {
@@ -3829,6 +3850,7 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createTag(data: TagCreateInput!): Tag!
   createTestSession(data: TestSessionCreateInput!): TestSession!
   createTestSessionTestCaseResult(data: TestSessionTestCaseResultCreateInput!): TestSessionTestCaseResult!
   createTestSessionTestCaseResultAttachment(data: TestSessionTestCaseResultAttachmentCreateInput!): TestSessionTestCaseResultAttachment!
@@ -3852,11 +3874,13 @@ type Mutation {
   createDeviceSet(data: DeviceSetCreateInput!): DeviceSet!
   createTestSetCompiledConvo(data: TestSetCompiledConvoCreateInput!): TestSetCompiledConvo!
   createRegisteredComponent(data: RegisteredComponentCreateInput!): RegisteredComponent!
+  createSecurityAlert(data: SecurityAlertCreateInput!): SecurityAlert!
   createCapability(data: CapabilityCreateInput!): Capability!
   createTestSetExcel(data: TestSetExcelCreateInput!): TestSetExcel!
   createDeviceProvider(data: DeviceProviderCreateInput!): DeviceProvider!
   createUserRole(data: UserRoleCreateInput!): UserRole!
   createClient(data: ClientCreateInput!): Client!
+  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateTestSession(data: TestSessionUpdateInput!, where: TestSessionWhereUniqueInput!): TestSession
   updateTestSessionTestCaseResult(data: TestSessionTestCaseResultUpdateInput!, where: TestSessionTestCaseResultWhereUniqueInput!): TestSessionTestCaseResult
   updateTestSessionTestCaseResultAttachment(data: TestSessionTestCaseResultAttachmentUpdateInput!, where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
@@ -3880,11 +3904,13 @@ type Mutation {
   updateDeviceSet(data: DeviceSetUpdateInput!, where: DeviceSetWhereUniqueInput!): DeviceSet
   updateTestSetCompiledConvo(data: TestSetCompiledConvoUpdateInput!, where: TestSetCompiledConvoWhereUniqueInput!): TestSetCompiledConvo
   updateRegisteredComponent(data: RegisteredComponentUpdateInput!, where: RegisteredComponentWhereUniqueInput!): RegisteredComponent
+  updateSecurityAlert(data: SecurityAlertUpdateInput!, where: SecurityAlertWhereUniqueInput!): SecurityAlert
   updateCapability(data: CapabilityUpdateInput!, where: CapabilityWhereUniqueInput!): Capability
   updateTestSetExcel(data: TestSetExcelUpdateInput!, where: TestSetExcelWhereUniqueInput!): TestSetExcel
   updateDeviceProvider(data: DeviceProviderUpdateInput!, where: DeviceProviderWhereUniqueInput!): DeviceProvider
   updateUserRole(data: UserRoleUpdateInput!, where: UserRoleWhereUniqueInput!): UserRole
   updateClient(data: ClientUpdateInput!, where: ClientWhereUniqueInput!): Client
+  deleteTag(where: TagWhereUniqueInput!): Tag
   deleteTestSession(where: TestSessionWhereUniqueInput!): TestSession
   deleteTestSessionTestCaseResult(where: TestSessionTestCaseResultWhereUniqueInput!): TestSessionTestCaseResult
   deleteTestSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
@@ -3908,11 +3934,13 @@ type Mutation {
   deleteDeviceSet(where: DeviceSetWhereUniqueInput!): DeviceSet
   deleteTestSetCompiledConvo(where: TestSetCompiledConvoWhereUniqueInput!): TestSetCompiledConvo
   deleteRegisteredComponent(where: RegisteredComponentWhereUniqueInput!): RegisteredComponent
+  deleteSecurityAlert(where: SecurityAlertWhereUniqueInput!): SecurityAlert
   deleteCapability(where: CapabilityWhereUniqueInput!): Capability
   deleteTestSetExcel(where: TestSetExcelWhereUniqueInput!): TestSetExcel
   deleteDeviceProvider(where: DeviceProviderWhereUniqueInput!): DeviceProvider
   deleteUserRole(where: UserRoleWhereUniqueInput!): UserRole
   deleteClient(where: ClientWhereUniqueInput!): Client
+  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   upsertTestSession(where: TestSessionWhereUniqueInput!, create: TestSessionCreateInput!, update: TestSessionUpdateInput!): TestSession!
   upsertTestSessionTestCaseResult(where: TestSessionTestCaseResultWhereUniqueInput!, create: TestSessionTestCaseResultCreateInput!, update: TestSessionTestCaseResultUpdateInput!): TestSessionTestCaseResult!
   upsertTestSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!, create: TestSessionTestCaseResultAttachmentCreateInput!, update: TestSessionTestCaseResultAttachmentUpdateInput!): TestSessionTestCaseResultAttachment!
@@ -3936,11 +3964,13 @@ type Mutation {
   upsertDeviceSet(where: DeviceSetWhereUniqueInput!, create: DeviceSetCreateInput!, update: DeviceSetUpdateInput!): DeviceSet!
   upsertTestSetCompiledConvo(where: TestSetCompiledConvoWhereUniqueInput!, create: TestSetCompiledConvoCreateInput!, update: TestSetCompiledConvoUpdateInput!): TestSetCompiledConvo!
   upsertRegisteredComponent(where: RegisteredComponentWhereUniqueInput!, create: RegisteredComponentCreateInput!, update: RegisteredComponentUpdateInput!): RegisteredComponent!
+  upsertSecurityAlert(where: SecurityAlertWhereUniqueInput!, create: SecurityAlertCreateInput!, update: SecurityAlertUpdateInput!): SecurityAlert!
   upsertCapability(where: CapabilityWhereUniqueInput!, create: CapabilityCreateInput!, update: CapabilityUpdateInput!): Capability!
   upsertTestSetExcel(where: TestSetExcelWhereUniqueInput!, create: TestSetExcelCreateInput!, update: TestSetExcelUpdateInput!): TestSetExcel!
   upsertDeviceProvider(where: DeviceProviderWhereUniqueInput!, create: DeviceProviderCreateInput!, update: DeviceProviderUpdateInput!): DeviceProvider!
   upsertUserRole(where: UserRoleWhereUniqueInput!, create: UserRoleCreateInput!, update: UserRoleUpdateInput!): UserRole!
   upsertClient(where: ClientWhereUniqueInput!, create: ClientCreateInput!, update: ClientUpdateInput!): Client!
+  updateManyTags(data: TagUpdateManyMutationInput!, where: TagWhereInput): BatchPayload!
   updateManyTestSessions(data: TestSessionUpdateManyMutationInput!, where: TestSessionWhereInput): BatchPayload!
   updateManyTestSessionTestCaseResults(data: TestSessionTestCaseResultUpdateManyMutationInput!, where: TestSessionTestCaseResultWhereInput): BatchPayload!
   updateManyTestSessionTestCaseResultAttachments(data: TestSessionTestCaseResultAttachmentUpdateManyMutationInput!, where: TestSessionTestCaseResultAttachmentWhereInput): BatchPayload!
@@ -3964,11 +3994,13 @@ type Mutation {
   updateManyDeviceSets(data: DeviceSetUpdateManyMutationInput!, where: DeviceSetWhereInput): BatchPayload!
   updateManyTestSetCompiledConvoes(data: TestSetCompiledConvoUpdateManyMutationInput!, where: TestSetCompiledConvoWhereInput): BatchPayload!
   updateManyRegisteredComponents(data: RegisteredComponentUpdateManyMutationInput!, where: RegisteredComponentWhereInput): BatchPayload!
+  updateManySecurityAlerts(data: SecurityAlertUpdateManyMutationInput!, where: SecurityAlertWhereInput): BatchPayload!
   updateManyCapabilities(data: CapabilityUpdateManyMutationInput!, where: CapabilityWhereInput): BatchPayload!
   updateManyTestSetExcels(data: TestSetExcelUpdateManyMutationInput!, where: TestSetExcelWhereInput): BatchPayload!
   updateManyDeviceProviders(data: DeviceProviderUpdateManyMutationInput!, where: DeviceProviderWhereInput): BatchPayload!
   updateManyUserRoles(data: UserRoleUpdateManyMutationInput!, where: UserRoleWhereInput): BatchPayload!
   updateManyClients(data: ClientUpdateManyMutationInput!, where: ClientWhereInput): BatchPayload!
+  deleteManyTags(where: TagWhereInput): BatchPayload!
   deleteManyTestSessions(where: TestSessionWhereInput): BatchPayload!
   deleteManyTestSessionTestCaseResults(where: TestSessionTestCaseResultWhereInput): BatchPayload!
   deleteManyTestSessionTestCaseResultAttachments(where: TestSessionTestCaseResultAttachmentWhereInput): BatchPayload!
@@ -3992,6 +4024,7 @@ type Mutation {
   deleteManyDeviceSets(where: DeviceSetWhereInput): BatchPayload!
   deleteManyTestSetCompiledConvoes(where: TestSetCompiledConvoWhereInput): BatchPayload!
   deleteManyRegisteredComponents(where: RegisteredComponentWhereInput): BatchPayload!
+  deleteManySecurityAlerts(where: SecurityAlertWhereInput): BatchPayload!
   deleteManyCapabilities(where: CapabilityWhereInput): BatchPayload!
   deleteManyTestSetExcels(where: TestSetExcelWhereInput): BatchPayload!
   deleteManyDeviceProviders(where: DeviceProviderWhereInput): BatchPayload!
@@ -6391,6 +6424,7 @@ input PerformanceTestSessionWhereUniqueInput {
 }
 
 type Query {
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   testSessions(where: TestSessionWhereInput, orderBy: TestSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSession]!
   testSessionTestCaseResults(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResult]!
   testSessionTestCaseResultAttachments(where: TestSessionTestCaseResultAttachmentWhereInput, orderBy: TestSessionTestCaseResultAttachmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResultAttachment]!
@@ -6414,11 +6448,13 @@ type Query {
   deviceSets(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DeviceSet]!
   testSetCompiledConvoes(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetCompiledConvo]!
   registeredComponents(where: RegisteredComponentWhereInput, orderBy: RegisteredComponentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RegisteredComponent]!
+  securityAlerts(where: SecurityAlertWhereInput, orderBy: SecurityAlertOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SecurityAlert]!
   capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability]!
   testSetExcels(where: TestSetExcelWhereInput, orderBy: TestSetExcelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetExcel]!
   deviceProviders(where: DeviceProviderWhereInput, orderBy: DeviceProviderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DeviceProvider]!
   userRoles(where: UserRoleWhereInput, orderBy: UserRoleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRole]!
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client]!
+  tag(where: TagWhereUniqueInput!): Tag
   testSession(where: TestSessionWhereUniqueInput!): TestSession
   testSessionTestCaseResult(where: TestSessionTestCaseResultWhereUniqueInput!): TestSessionTestCaseResult
   testSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentWhereUniqueInput!): TestSessionTestCaseResultAttachment
@@ -6442,11 +6478,13 @@ type Query {
   deviceSet(where: DeviceSetWhereUniqueInput!): DeviceSet
   testSetCompiledConvo(where: TestSetCompiledConvoWhereUniqueInput!): TestSetCompiledConvo
   registeredComponent(where: RegisteredComponentWhereUniqueInput!): RegisteredComponent
+  securityAlert(where: SecurityAlertWhereUniqueInput!): SecurityAlert
   capability(where: CapabilityWhereUniqueInput!): Capability
   testSetExcel(where: TestSetExcelWhereUniqueInput!): TestSetExcel
   deviceProvider(where: DeviceProviderWhereUniqueInput!): DeviceProvider
   userRole(where: UserRoleWhereUniqueInput!): UserRole
   client(where: ClientWhereUniqueInput!): Client
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   testSessionsConnection(where: TestSessionWhereInput, orderBy: TestSessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionConnection!
   testSessionTestCaseResultsConnection(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionTestCaseResultConnection!
   testSessionTestCaseResultAttachmentsConnection(where: TestSessionTestCaseResultAttachmentWhereInput, orderBy: TestSessionTestCaseResultAttachmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSessionTestCaseResultAttachmentConnection!
@@ -6470,6 +6508,7 @@ type Query {
   deviceSetsConnection(where: DeviceSetWhereInput, orderBy: DeviceSetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeviceSetConnection!
   testSetCompiledConvoesConnection(where: TestSetCompiledConvoWhereInput, orderBy: TestSetCompiledConvoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetCompiledConvoConnection!
   registeredComponentsConnection(where: RegisteredComponentWhereInput, orderBy: RegisteredComponentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RegisteredComponentConnection!
+  securityAlertsConnection(where: SecurityAlertWhereInput, orderBy: SecurityAlertOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SecurityAlertConnection!
   capabilitiesConnection(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CapabilityConnection!
   testSetExcelsConnection(where: TestSetExcelWhereInput, orderBy: TestSetExcelOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestSetExcelConnection!
   deviceProvidersConnection(where: DeviceProviderWhereInput, orderBy: DeviceProviderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeviceProviderConnection!
@@ -7319,7 +7358,726 @@ input RegisteredComponentWhereUniqueInput {
   name: String
 }
 
+type SecurityAlert implements Node {
+  id: ID!
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: [String!]!
+}
+
+"""A connection to a list of items."""
+type SecurityAlertConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SecurityAlertEdge]!
+  aggregate: AggregateSecurityAlert!
+}
+
+input SecurityAlertCreateInput {
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: SecurityAlertCreatereferencesInput
+}
+
+input SecurityAlertCreateManyInput {
+  create: [SecurityAlertCreateInput!]
+  connect: [SecurityAlertWhereUniqueInput!]
+}
+
+input SecurityAlertCreatereferencesInput {
+  set: [String!]
+}
+
+"""An edge in a connection."""
+type SecurityAlertEdge {
+  """The item at the end of the edge."""
+  node: SecurityAlert!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SecurityAlertOrderByInput {
+  id_ASC
+  id_DESC
+  method_ASC
+  method_DESC
+  confidence_ASC
+  confidence_DESC
+  risk_ASC
+  risk_DESC
+  alert_ASC
+  alert_DESC
+  solution_ASC
+  solution_DESC
+  evidence_ASC
+  evidence_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type SecurityAlertPreviousValues {
+  id: ID!
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: [String!]!
+}
+
+input SecurityAlertScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SecurityAlertScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SecurityAlertScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SecurityAlertScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  method: Verb
+
+  """All values that are not equal to given value."""
+  method_not: Verb
+
+  """All values that are contained in given list."""
+  method_in: [Verb!]
+
+  """All values that are not contained in given list."""
+  method_not_in: [Verb!]
+  confidence: String
+
+  """All values that are not equal to given value."""
+  confidence_not: String
+
+  """All values that are contained in given list."""
+  confidence_in: [String!]
+
+  """All values that are not contained in given list."""
+  confidence_not_in: [String!]
+
+  """All values less than the given value."""
+  confidence_lt: String
+
+  """All values less than or equal the given value."""
+  confidence_lte: String
+
+  """All values greater than the given value."""
+  confidence_gt: String
+
+  """All values greater than or equal the given value."""
+  confidence_gte: String
+
+  """All values containing the given string."""
+  confidence_contains: String
+
+  """All values not containing the given string."""
+  confidence_not_contains: String
+
+  """All values starting with the given string."""
+  confidence_starts_with: String
+
+  """All values not starting with the given string."""
+  confidence_not_starts_with: String
+
+  """All values ending with the given string."""
+  confidence_ends_with: String
+
+  """All values not ending with the given string."""
+  confidence_not_ends_with: String
+  risk: String
+
+  """All values that are not equal to given value."""
+  risk_not: String
+
+  """All values that are contained in given list."""
+  risk_in: [String!]
+
+  """All values that are not contained in given list."""
+  risk_not_in: [String!]
+
+  """All values less than the given value."""
+  risk_lt: String
+
+  """All values less than or equal the given value."""
+  risk_lte: String
+
+  """All values greater than the given value."""
+  risk_gt: String
+
+  """All values greater than or equal the given value."""
+  risk_gte: String
+
+  """All values containing the given string."""
+  risk_contains: String
+
+  """All values not containing the given string."""
+  risk_not_contains: String
+
+  """All values starting with the given string."""
+  risk_starts_with: String
+
+  """All values not starting with the given string."""
+  risk_not_starts_with: String
+
+  """All values ending with the given string."""
+  risk_ends_with: String
+
+  """All values not ending with the given string."""
+  risk_not_ends_with: String
+  alert: String
+
+  """All values that are not equal to given value."""
+  alert_not: String
+
+  """All values that are contained in given list."""
+  alert_in: [String!]
+
+  """All values that are not contained in given list."""
+  alert_not_in: [String!]
+
+  """All values less than the given value."""
+  alert_lt: String
+
+  """All values less than or equal the given value."""
+  alert_lte: String
+
+  """All values greater than the given value."""
+  alert_gt: String
+
+  """All values greater than or equal the given value."""
+  alert_gte: String
+
+  """All values containing the given string."""
+  alert_contains: String
+
+  """All values not containing the given string."""
+  alert_not_contains: String
+
+  """All values starting with the given string."""
+  alert_starts_with: String
+
+  """All values not starting with the given string."""
+  alert_not_starts_with: String
+
+  """All values ending with the given string."""
+  alert_ends_with: String
+
+  """All values not ending with the given string."""
+  alert_not_ends_with: String
+  solution: String
+
+  """All values that are not equal to given value."""
+  solution_not: String
+
+  """All values that are contained in given list."""
+  solution_in: [String!]
+
+  """All values that are not contained in given list."""
+  solution_not_in: [String!]
+
+  """All values less than the given value."""
+  solution_lt: String
+
+  """All values less than or equal the given value."""
+  solution_lte: String
+
+  """All values greater than the given value."""
+  solution_gt: String
+
+  """All values greater than or equal the given value."""
+  solution_gte: String
+
+  """All values containing the given string."""
+  solution_contains: String
+
+  """All values not containing the given string."""
+  solution_not_contains: String
+
+  """All values starting with the given string."""
+  solution_starts_with: String
+
+  """All values not starting with the given string."""
+  solution_not_starts_with: String
+
+  """All values ending with the given string."""
+  solution_ends_with: String
+
+  """All values not ending with the given string."""
+  solution_not_ends_with: String
+  evidence: String
+
+  """All values that are not equal to given value."""
+  evidence_not: String
+
+  """All values that are contained in given list."""
+  evidence_in: [String!]
+
+  """All values that are not contained in given list."""
+  evidence_not_in: [String!]
+
+  """All values less than the given value."""
+  evidence_lt: String
+
+  """All values less than or equal the given value."""
+  evidence_lte: String
+
+  """All values greater than the given value."""
+  evidence_gt: String
+
+  """All values greater than or equal the given value."""
+  evidence_gte: String
+
+  """All values containing the given string."""
+  evidence_contains: String
+
+  """All values not containing the given string."""
+  evidence_not_contains: String
+
+  """All values starting with the given string."""
+  evidence_starts_with: String
+
+  """All values not starting with the given string."""
+  evidence_not_starts_with: String
+
+  """All values ending with the given string."""
+  evidence_ends_with: String
+
+  """All values not ending with the given string."""
+  evidence_not_ends_with: String
+}
+
+type SecurityAlertSubscriptionPayload {
+  mutation: MutationType!
+  node: SecurityAlert
+  updatedFields: [String!]
+  previousValues: SecurityAlertPreviousValues
+}
+
+input SecurityAlertSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SecurityAlertSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SecurityAlertSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SecurityAlertSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SecurityAlertWhereInput
+}
+
+input SecurityAlertUpdateDataInput {
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: SecurityAlertUpdatereferencesInput
+}
+
+input SecurityAlertUpdateInput {
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: SecurityAlertUpdatereferencesInput
+}
+
+input SecurityAlertUpdateManyDataInput {
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: SecurityAlertUpdatereferencesInput
+}
+
+input SecurityAlertUpdateManyInput {
+  create: [SecurityAlertCreateInput!]
+  connect: [SecurityAlertWhereUniqueInput!]
+  set: [SecurityAlertWhereUniqueInput!]
+  disconnect: [SecurityAlertWhereUniqueInput!]
+  delete: [SecurityAlertWhereUniqueInput!]
+  update: [SecurityAlertUpdateWithWhereUniqueNestedInput!]
+  updateMany: [SecurityAlertUpdateManyWithWhereNestedInput!]
+  deleteMany: [SecurityAlertScalarWhereInput!]
+  upsert: [SecurityAlertUpsertWithWhereUniqueNestedInput!]
+}
+
+input SecurityAlertUpdateManyMutationInput {
+  method: Verb
+  confidence: String
+  risk: String
+  alert: String
+  solution: String
+  evidence: String
+  references: SecurityAlertUpdatereferencesInput
+}
+
+input SecurityAlertUpdateManyWithWhereNestedInput {
+  where: SecurityAlertScalarWhereInput!
+  data: SecurityAlertUpdateManyDataInput!
+}
+
+input SecurityAlertUpdatereferencesInput {
+  set: [String!]
+}
+
+input SecurityAlertUpdateWithWhereUniqueNestedInput {
+  where: SecurityAlertWhereUniqueInput!
+  data: SecurityAlertUpdateDataInput!
+}
+
+input SecurityAlertUpsertWithWhereUniqueNestedInput {
+  where: SecurityAlertWhereUniqueInput!
+  update: SecurityAlertUpdateDataInput!
+  create: SecurityAlertCreateInput!
+}
+
+input SecurityAlertWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SecurityAlertWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SecurityAlertWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SecurityAlertWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  method: Verb
+
+  """All values that are not equal to given value."""
+  method_not: Verb
+
+  """All values that are contained in given list."""
+  method_in: [Verb!]
+
+  """All values that are not contained in given list."""
+  method_not_in: [Verb!]
+  confidence: String
+
+  """All values that are not equal to given value."""
+  confidence_not: String
+
+  """All values that are contained in given list."""
+  confidence_in: [String!]
+
+  """All values that are not contained in given list."""
+  confidence_not_in: [String!]
+
+  """All values less than the given value."""
+  confidence_lt: String
+
+  """All values less than or equal the given value."""
+  confidence_lte: String
+
+  """All values greater than the given value."""
+  confidence_gt: String
+
+  """All values greater than or equal the given value."""
+  confidence_gte: String
+
+  """All values containing the given string."""
+  confidence_contains: String
+
+  """All values not containing the given string."""
+  confidence_not_contains: String
+
+  """All values starting with the given string."""
+  confidence_starts_with: String
+
+  """All values not starting with the given string."""
+  confidence_not_starts_with: String
+
+  """All values ending with the given string."""
+  confidence_ends_with: String
+
+  """All values not ending with the given string."""
+  confidence_not_ends_with: String
+  risk: String
+
+  """All values that are not equal to given value."""
+  risk_not: String
+
+  """All values that are contained in given list."""
+  risk_in: [String!]
+
+  """All values that are not contained in given list."""
+  risk_not_in: [String!]
+
+  """All values less than the given value."""
+  risk_lt: String
+
+  """All values less than or equal the given value."""
+  risk_lte: String
+
+  """All values greater than the given value."""
+  risk_gt: String
+
+  """All values greater than or equal the given value."""
+  risk_gte: String
+
+  """All values containing the given string."""
+  risk_contains: String
+
+  """All values not containing the given string."""
+  risk_not_contains: String
+
+  """All values starting with the given string."""
+  risk_starts_with: String
+
+  """All values not starting with the given string."""
+  risk_not_starts_with: String
+
+  """All values ending with the given string."""
+  risk_ends_with: String
+
+  """All values not ending with the given string."""
+  risk_not_ends_with: String
+  alert: String
+
+  """All values that are not equal to given value."""
+  alert_not: String
+
+  """All values that are contained in given list."""
+  alert_in: [String!]
+
+  """All values that are not contained in given list."""
+  alert_not_in: [String!]
+
+  """All values less than the given value."""
+  alert_lt: String
+
+  """All values less than or equal the given value."""
+  alert_lte: String
+
+  """All values greater than the given value."""
+  alert_gt: String
+
+  """All values greater than or equal the given value."""
+  alert_gte: String
+
+  """All values containing the given string."""
+  alert_contains: String
+
+  """All values not containing the given string."""
+  alert_not_contains: String
+
+  """All values starting with the given string."""
+  alert_starts_with: String
+
+  """All values not starting with the given string."""
+  alert_not_starts_with: String
+
+  """All values ending with the given string."""
+  alert_ends_with: String
+
+  """All values not ending with the given string."""
+  alert_not_ends_with: String
+  solution: String
+
+  """All values that are not equal to given value."""
+  solution_not: String
+
+  """All values that are contained in given list."""
+  solution_in: [String!]
+
+  """All values that are not contained in given list."""
+  solution_not_in: [String!]
+
+  """All values less than the given value."""
+  solution_lt: String
+
+  """All values less than or equal the given value."""
+  solution_lte: String
+
+  """All values greater than the given value."""
+  solution_gt: String
+
+  """All values greater than or equal the given value."""
+  solution_gte: String
+
+  """All values containing the given string."""
+  solution_contains: String
+
+  """All values not containing the given string."""
+  solution_not_contains: String
+
+  """All values starting with the given string."""
+  solution_starts_with: String
+
+  """All values not starting with the given string."""
+  solution_not_starts_with: String
+
+  """All values ending with the given string."""
+  solution_ends_with: String
+
+  """All values not ending with the given string."""
+  solution_not_ends_with: String
+  evidence: String
+
+  """All values that are not equal to given value."""
+  evidence_not: String
+
+  """All values that are contained in given list."""
+  evidence_in: [String!]
+
+  """All values that are not contained in given list."""
+  evidence_not_in: [String!]
+
+  """All values less than the given value."""
+  evidence_lt: String
+
+  """All values less than or equal the given value."""
+  evidence_lte: String
+
+  """All values greater than the given value."""
+  evidence_gt: String
+
+  """All values greater than or equal the given value."""
+  evidence_gte: String
+
+  """All values containing the given string."""
+  evidence_contains: String
+
+  """All values not containing the given string."""
+  evidence_not_contains: String
+
+  """All values starting with the given string."""
+  evidence_starts_with: String
+
+  """All values not starting with the given string."""
+  evidence_not_starts_with: String
+
+  """All values ending with the given string."""
+  evidence_ends_with: String
+
+  """All values not ending with the given string."""
+  evidence_not_ends_with: String
+}
+
+input SecurityAlertWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
   testSession(where: TestSessionSubscriptionWhereInput): TestSessionSubscriptionPayload
   testSessionTestCaseResult(where: TestSessionTestCaseResultSubscriptionWhereInput): TestSessionTestCaseResultSubscriptionPayload
   testSessionTestCaseResultAttachment(where: TestSessionTestCaseResultAttachmentSubscriptionWhereInput): TestSessionTestCaseResultAttachmentSubscriptionPayload
@@ -7343,6 +8101,7 @@ type Subscription {
   deviceSet(where: DeviceSetSubscriptionWhereInput): DeviceSetSubscriptionPayload
   testSetCompiledConvo(where: TestSetCompiledConvoSubscriptionWhereInput): TestSetCompiledConvoSubscriptionPayload
   registeredComponent(where: RegisteredComponentSubscriptionWhereInput): RegisteredComponentSubscriptionPayload
+  securityAlert(where: SecurityAlertSubscriptionWhereInput): SecurityAlertSubscriptionPayload
   capability(where: CapabilitySubscriptionWhereInput): CapabilitySubscriptionPayload
   testSetExcel(where: TestSetExcelSubscriptionWhereInput): TestSetExcelSubscriptionPayload
   deviceProvider(where: DeviceProviderSubscriptionWhereInput): DeviceProviderSubscriptionPayload
@@ -7682,6 +8441,241 @@ input SystemSettingsWhereUniqueInput {
   id: ID
 }
 
+type Tag implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type TagConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TagEdge]!
+  aggregate: AggregateTag!
+}
+
+input TagCreateInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type TagEdge {
+  """The item at the end of the edge."""
+  node: Tag!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TagOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  name_ASC
+  name_DESC
+}
+
+type TagPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+type TagSubscriptionPayload {
+  mutation: MutationType!
+  node: Tag
+  updatedFields: [String!]
+  previousValues: TagPreviousValues
+}
+
+input TagSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TagSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TagSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TagSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TagWhereInput
+}
+
+input TagUpdateInput {
+  name: String
+}
+
+input TagUpdateManyMutationInput {
+  name: String
+}
+
+input TagWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TagWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TagWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TagWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+input TagWhereUniqueInput {
+  id: ID
+  name: String
+}
+
 type TestProject implements Node {
   id: ID!
   client: Client
@@ -7689,6 +8683,7 @@ type TestProject implements Node {
   updatedAt: DateTime!
   name: String!
   code: String!
+  securityCheck: Boolean
   description: String
   tags: [String!]!
   chatbot: Chatbot!
@@ -7714,6 +8709,7 @@ type TestProjectConnection {
 input TestProjectCreateInput {
   name: String!
   code: String!
+  securityCheck: Boolean
   description: String
   batchCount: Int
   bail: Boolean
@@ -7756,6 +8752,8 @@ enum TestProjectOrderByInput {
   name_DESC
   code_ASC
   code_DESC
+  securityCheck_ASC
+  securityCheck_DESC
   description_ASC
   description_DESC
   batchCount_ASC
@@ -7770,6 +8768,7 @@ type TestProjectPreviousValues {
   updatedAt: DateTime!
   name: String!
   code: String!
+  securityCheck: Boolean
   description: String
   tags: [String!]!
   batchCount: Int
@@ -7818,6 +8817,7 @@ input TestProjectSubscriptionWhereInput {
 input TestProjectUpdateDataInput {
   name: String
   code: String
+  securityCheck: Boolean
   description: String
   batchCount: Int
   bail: Boolean
@@ -7834,6 +8834,7 @@ input TestProjectUpdateDataInput {
 input TestProjectUpdateInput {
   name: String
   code: String
+  securityCheck: Boolean
   description: String
   batchCount: Int
   bail: Boolean
@@ -7850,6 +8851,7 @@ input TestProjectUpdateInput {
 input TestProjectUpdateManyMutationInput {
   name: String
   code: String
+  securityCheck: Boolean
   description: String
   batchCount: Int
   bail: Boolean
@@ -8047,6 +9049,10 @@ input TestProjectWhereInput {
 
   """All values not ending with the given string."""
   code_not_ends_with: String
+  securityCheck: Boolean
+
+  """All values that are not equal to given value."""
+  securityCheck_not: Boolean
   description: String
 
   """All values that are not equal to given value."""
@@ -8153,6 +9159,8 @@ type TestSession implements Node {
   bail: Boolean
   status: TestSessionStatus!
   results(where: TestSessionTestCaseResultWhereInput, orderBy: TestSessionTestCaseResultOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionTestCaseResult!]
+  securityCheck: Boolean
+  securityAlerts(where: SecurityAlertWhereInput, orderBy: SecurityAlertOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SecurityAlert!]
   jobs(where: TestSessionJobWhereInput, orderBy: TestSessionJobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSessionJob!]
   capabilities(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
   sources(where: CapabilityWhereInput, orderBy: CapabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Capability!]
@@ -8176,6 +9184,7 @@ input TestSessionCreateInput {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus!
+  securityCheck: Boolean
   chartData: String
   tags: TestSessionCreatetagsInput
   client: ClientCreateOneInput
@@ -8186,6 +9195,7 @@ input TestSessionCreateInput {
   testProject: TestProjectCreateOneInput
   agent: AgentCreateOneInput
   results: TestSessionTestCaseResultCreateManyWithoutTestSessionInput
+  securityAlerts: SecurityAlertCreateManyInput
   jobs: TestSessionJobCreateManyWithoutTestSessionInput
   capabilities: CapabilityCreateManyInput
   sources: CapabilityCreateManyInput
@@ -8212,6 +9222,7 @@ input TestSessionCreateWithoutJobsInput {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus!
+  securityCheck: Boolean
   chartData: String
   tags: TestSessionCreatetagsInput
   client: ClientCreateOneInput
@@ -8222,6 +9233,7 @@ input TestSessionCreateWithoutJobsInput {
   testProject: TestProjectCreateOneInput
   agent: AgentCreateOneInput
   results: TestSessionTestCaseResultCreateManyWithoutTestSessionInput
+  securityAlerts: SecurityAlertCreateManyInput
   capabilities: CapabilityCreateManyInput
   sources: CapabilityCreateManyInput
   envs: CapabilityCreateManyInput
@@ -8233,6 +9245,7 @@ input TestSessionCreateWithoutResultsInput {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus!
+  securityCheck: Boolean
   chartData: String
   tags: TestSessionCreatetagsInput
   client: ClientCreateOneInput
@@ -8242,6 +9255,7 @@ input TestSessionCreateWithoutResultsInput {
   registeredComponents: RegisteredComponentCreateManyInput
   testProject: TestProjectCreateOneInput
   agent: AgentCreateOneInput
+  securityAlerts: SecurityAlertCreateManyInput
   jobs: TestSessionJobCreateManyWithoutTestSessionInput
   capabilities: CapabilityCreateManyInput
   sources: CapabilityCreateManyInput
@@ -9576,6 +10590,8 @@ enum TestSessionOrderByInput {
   bail_DESC
   status_ASC
   status_DESC
+  securityCheck_ASC
+  securityCheck_DESC
   chartData_ASC
   chartData_DESC
 }
@@ -9590,6 +10606,7 @@ type TestSessionPreviousValues {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus!
+  securityCheck: Boolean
   chartData: String
 }
 
@@ -12051,6 +13068,7 @@ input TestSessionUpdateInput {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus
+  securityCheck: Boolean
   chartData: String
   tags: TestSessionUpdatetagsInput
   client: ClientUpdateOneInput
@@ -12061,6 +13079,7 @@ input TestSessionUpdateInput {
   testProject: TestProjectUpdateOneInput
   agent: AgentUpdateOneInput
   results: TestSessionTestCaseResultUpdateManyWithoutTestSessionInput
+  securityAlerts: SecurityAlertUpdateManyInput
   jobs: TestSessionJobUpdateManyWithoutTestSessionInput
   capabilities: CapabilityUpdateManyInput
   sources: CapabilityUpdateManyInput
@@ -12073,6 +13092,7 @@ input TestSessionUpdateManyMutationInput {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus
+  securityCheck: Boolean
   chartData: String
   tags: TestSessionUpdatetagsInput
 }
@@ -12101,6 +13121,7 @@ input TestSessionUpdateWithoutJobsDataInput {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus
+  securityCheck: Boolean
   chartData: String
   tags: TestSessionUpdatetagsInput
   client: ClientUpdateOneInput
@@ -12111,6 +13132,7 @@ input TestSessionUpdateWithoutJobsDataInput {
   testProject: TestProjectUpdateOneInput
   agent: AgentUpdateOneInput
   results: TestSessionTestCaseResultUpdateManyWithoutTestSessionInput
+  securityAlerts: SecurityAlertUpdateManyInput
   capabilities: CapabilityUpdateManyInput
   sources: CapabilityUpdateManyInput
   envs: CapabilityUpdateManyInput
@@ -12122,6 +13144,7 @@ input TestSessionUpdateWithoutResultsDataInput {
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus
+  securityCheck: Boolean
   chartData: String
   tags: TestSessionUpdatetagsInput
   client: ClientUpdateOneInput
@@ -12131,6 +13154,7 @@ input TestSessionUpdateWithoutResultsDataInput {
   registeredComponents: RegisteredComponentUpdateManyInput
   testProject: TestProjectUpdateOneInput
   agent: AgentUpdateOneInput
+  securityAlerts: SecurityAlertUpdateManyInput
   jobs: TestSessionJobUpdateManyWithoutTestSessionInput
   capabilities: CapabilityUpdateManyInput
   sources: CapabilityUpdateManyInput
@@ -12356,6 +13380,10 @@ input TestSessionWhereInput {
 
   """All values that are not contained in given list."""
   status_not_in: [TestSessionStatus!]
+  securityCheck: Boolean
+
+  """All values that are not equal to given value."""
+  securityCheck_not: Boolean
   chartData: String
 
   """All values that are not equal to given value."""
@@ -12412,6 +13440,9 @@ input TestSessionWhereInput {
   results_every: TestSessionTestCaseResultWhereInput
   results_some: TestSessionTestCaseResultWhereInput
   results_none: TestSessionTestCaseResultWhereInput
+  securityAlerts_every: SecurityAlertWhereInput
+  securityAlerts_some: SecurityAlertWhereInput
+  securityAlerts_none: SecurityAlertWhereInput
   jobs_every: TestSessionJobWhereInput
   jobs_some: TestSessionJobWhereInput
   jobs_none: TestSessionJobWhereInput
@@ -12447,6 +13478,14 @@ type TestSet implements Node {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   tags: [String!]!
   scripts(where: TestSetScriptWhereInput, orderBy: TestSetScriptOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TestSetScript!]
@@ -13179,6 +14218,14 @@ input TestSetCreateInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -13242,6 +14289,14 @@ input TestSetCreateWithoutExcelsInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -13270,6 +14325,14 @@ input TestSetCreateWithoutFoldersInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -13298,6 +14361,14 @@ input TestSetCreateWithoutRepositoriesInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -13326,6 +14397,14 @@ input TestSetCreateWithoutScriptsInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -13357,14 +14436,6 @@ type TestSetExcel implements Node {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int!
-  startCol: Int!
   testSet: TestSet!
 }
 
@@ -13382,14 +14453,6 @@ input TestSetExcelCreateInput {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int!
-  startCol: Int!
   testSet: TestSetCreateOneWithoutExcelsInput!
 }
 
@@ -13407,14 +14470,6 @@ input TestSetExcelCreateWithoutTestSetInput {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int!
-  startCol: Int!
 }
 
 """An edge in a connection."""
@@ -13439,22 +14494,6 @@ enum TestSetExcelOrderByInput {
   filename_DESC
   filecontent_ASC
   filecontent_DESC
-  hasConvos_ASC
-  hasConvos_DESC
-  hasPartialConvos_ASC
-  hasPartialConvos_DESC
-  hasUtterances_ASC
-  hasUtterances_DESC
-  worksheetsConvos_ASC
-  worksheetsConvos_DESC
-  worksheetsPartialConvos_ASC
-  worksheetsPartialConvos_DESC
-  worksheetsUtterances_ASC
-  worksheetsUtterances_DESC
-  startRow_ASC
-  startRow_DESC
-  startCol_ASC
-  startCol_DESC
 }
 
 type TestSetExcelPreviousValues {
@@ -13464,14 +14503,6 @@ type TestSetExcelPreviousValues {
   name: String!
   filename: String!
   filecontent: String!
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int!
-  startCol: Int!
 }
 
 input TestSetExcelScalarWhereInput {
@@ -13687,182 +14718,6 @@ input TestSetExcelScalarWhereInput {
 
   """All values not ending with the given string."""
   filecontent_not_ends_with: String
-  hasConvos: Boolean
-
-  """All values that are not equal to given value."""
-  hasConvos_not: Boolean
-  hasPartialConvos: Boolean
-
-  """All values that are not equal to given value."""
-  hasPartialConvos_not: Boolean
-  hasUtterances: Boolean
-
-  """All values that are not equal to given value."""
-  hasUtterances_not: Boolean
-  worksheetsConvos: String
-
-  """All values that are not equal to given value."""
-  worksheetsConvos_not: String
-
-  """All values that are contained in given list."""
-  worksheetsConvos_in: [String!]
-
-  """All values that are not contained in given list."""
-  worksheetsConvos_not_in: [String!]
-
-  """All values less than the given value."""
-  worksheetsConvos_lt: String
-
-  """All values less than or equal the given value."""
-  worksheetsConvos_lte: String
-
-  """All values greater than the given value."""
-  worksheetsConvos_gt: String
-
-  """All values greater than or equal the given value."""
-  worksheetsConvos_gte: String
-
-  """All values containing the given string."""
-  worksheetsConvos_contains: String
-
-  """All values not containing the given string."""
-  worksheetsConvos_not_contains: String
-
-  """All values starting with the given string."""
-  worksheetsConvos_starts_with: String
-
-  """All values not starting with the given string."""
-  worksheetsConvos_not_starts_with: String
-
-  """All values ending with the given string."""
-  worksheetsConvos_ends_with: String
-
-  """All values not ending with the given string."""
-  worksheetsConvos_not_ends_with: String
-  worksheetsPartialConvos: String
-
-  """All values that are not equal to given value."""
-  worksheetsPartialConvos_not: String
-
-  """All values that are contained in given list."""
-  worksheetsPartialConvos_in: [String!]
-
-  """All values that are not contained in given list."""
-  worksheetsPartialConvos_not_in: [String!]
-
-  """All values less than the given value."""
-  worksheetsPartialConvos_lt: String
-
-  """All values less than or equal the given value."""
-  worksheetsPartialConvos_lte: String
-
-  """All values greater than the given value."""
-  worksheetsPartialConvos_gt: String
-
-  """All values greater than or equal the given value."""
-  worksheetsPartialConvos_gte: String
-
-  """All values containing the given string."""
-  worksheetsPartialConvos_contains: String
-
-  """All values not containing the given string."""
-  worksheetsPartialConvos_not_contains: String
-
-  """All values starting with the given string."""
-  worksheetsPartialConvos_starts_with: String
-
-  """All values not starting with the given string."""
-  worksheetsPartialConvos_not_starts_with: String
-
-  """All values ending with the given string."""
-  worksheetsPartialConvos_ends_with: String
-
-  """All values not ending with the given string."""
-  worksheetsPartialConvos_not_ends_with: String
-  worksheetsUtterances: String
-
-  """All values that are not equal to given value."""
-  worksheetsUtterances_not: String
-
-  """All values that are contained in given list."""
-  worksheetsUtterances_in: [String!]
-
-  """All values that are not contained in given list."""
-  worksheetsUtterances_not_in: [String!]
-
-  """All values less than the given value."""
-  worksheetsUtterances_lt: String
-
-  """All values less than or equal the given value."""
-  worksheetsUtterances_lte: String
-
-  """All values greater than the given value."""
-  worksheetsUtterances_gt: String
-
-  """All values greater than or equal the given value."""
-  worksheetsUtterances_gte: String
-
-  """All values containing the given string."""
-  worksheetsUtterances_contains: String
-
-  """All values not containing the given string."""
-  worksheetsUtterances_not_contains: String
-
-  """All values starting with the given string."""
-  worksheetsUtterances_starts_with: String
-
-  """All values not starting with the given string."""
-  worksheetsUtterances_not_starts_with: String
-
-  """All values ending with the given string."""
-  worksheetsUtterances_ends_with: String
-
-  """All values not ending with the given string."""
-  worksheetsUtterances_not_ends_with: String
-  startRow: Int
-
-  """All values that are not equal to given value."""
-  startRow_not: Int
-
-  """All values that are contained in given list."""
-  startRow_in: [Int!]
-
-  """All values that are not contained in given list."""
-  startRow_not_in: [Int!]
-
-  """All values less than the given value."""
-  startRow_lt: Int
-
-  """All values less than or equal the given value."""
-  startRow_lte: Int
-
-  """All values greater than the given value."""
-  startRow_gt: Int
-
-  """All values greater than or equal the given value."""
-  startRow_gte: Int
-  startCol: Int
-
-  """All values that are not equal to given value."""
-  startCol_not: Int
-
-  """All values that are contained in given list."""
-  startCol_in: [Int!]
-
-  """All values that are not contained in given list."""
-  startCol_not_in: [Int!]
-
-  """All values less than the given value."""
-  startCol_lt: Int
-
-  """All values less than or equal the given value."""
-  startCol_lte: Int
-
-  """All values greater than the given value."""
-  startCol_gt: Int
-
-  """All values greater than or equal the given value."""
-  startCol_gte: Int
 }
 
 type TestSetExcelSubscriptionPayload {
@@ -13908,14 +14763,6 @@ input TestSetExcelUpdateDataInput {
   name: String
   filename: String
   filecontent: String
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int
-  startCol: Int
   testSet: TestSetUpdateOneRequiredWithoutExcelsInput
 }
 
@@ -13923,14 +14770,6 @@ input TestSetExcelUpdateInput {
   name: String
   filename: String
   filecontent: String
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int
-  startCol: Int
   testSet: TestSetUpdateOneRequiredWithoutExcelsInput
 }
 
@@ -13938,28 +14777,12 @@ input TestSetExcelUpdateManyDataInput {
   name: String
   filename: String
   filecontent: String
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int
-  startCol: Int
 }
 
 input TestSetExcelUpdateManyMutationInput {
   name: String
   filename: String
   filecontent: String
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int
-  startCol: Int
 }
 
 input TestSetExcelUpdateManyWithoutTestSetInput {
@@ -13992,14 +14815,6 @@ input TestSetExcelUpdateWithoutTestSetDataInput {
   name: String
   filename: String
   filecontent: String
-  hasConvos: Boolean
-  hasPartialConvos: Boolean
-  hasUtterances: Boolean
-  worksheetsConvos: String
-  worksheetsPartialConvos: String
-  worksheetsUtterances: String
-  startRow: Int
-  startCol: Int
 }
 
 input TestSetExcelUpdateWithWhereUniqueWithoutTestSetInput {
@@ -14231,182 +15046,6 @@ input TestSetExcelWhereInput {
 
   """All values not ending with the given string."""
   filecontent_not_ends_with: String
-  hasConvos: Boolean
-
-  """All values that are not equal to given value."""
-  hasConvos_not: Boolean
-  hasPartialConvos: Boolean
-
-  """All values that are not equal to given value."""
-  hasPartialConvos_not: Boolean
-  hasUtterances: Boolean
-
-  """All values that are not equal to given value."""
-  hasUtterances_not: Boolean
-  worksheetsConvos: String
-
-  """All values that are not equal to given value."""
-  worksheetsConvos_not: String
-
-  """All values that are contained in given list."""
-  worksheetsConvos_in: [String!]
-
-  """All values that are not contained in given list."""
-  worksheetsConvos_not_in: [String!]
-
-  """All values less than the given value."""
-  worksheetsConvos_lt: String
-
-  """All values less than or equal the given value."""
-  worksheetsConvos_lte: String
-
-  """All values greater than the given value."""
-  worksheetsConvos_gt: String
-
-  """All values greater than or equal the given value."""
-  worksheetsConvos_gte: String
-
-  """All values containing the given string."""
-  worksheetsConvos_contains: String
-
-  """All values not containing the given string."""
-  worksheetsConvos_not_contains: String
-
-  """All values starting with the given string."""
-  worksheetsConvos_starts_with: String
-
-  """All values not starting with the given string."""
-  worksheetsConvos_not_starts_with: String
-
-  """All values ending with the given string."""
-  worksheetsConvos_ends_with: String
-
-  """All values not ending with the given string."""
-  worksheetsConvos_not_ends_with: String
-  worksheetsPartialConvos: String
-
-  """All values that are not equal to given value."""
-  worksheetsPartialConvos_not: String
-
-  """All values that are contained in given list."""
-  worksheetsPartialConvos_in: [String!]
-
-  """All values that are not contained in given list."""
-  worksheetsPartialConvos_not_in: [String!]
-
-  """All values less than the given value."""
-  worksheetsPartialConvos_lt: String
-
-  """All values less than or equal the given value."""
-  worksheetsPartialConvos_lte: String
-
-  """All values greater than the given value."""
-  worksheetsPartialConvos_gt: String
-
-  """All values greater than or equal the given value."""
-  worksheetsPartialConvos_gte: String
-
-  """All values containing the given string."""
-  worksheetsPartialConvos_contains: String
-
-  """All values not containing the given string."""
-  worksheetsPartialConvos_not_contains: String
-
-  """All values starting with the given string."""
-  worksheetsPartialConvos_starts_with: String
-
-  """All values not starting with the given string."""
-  worksheetsPartialConvos_not_starts_with: String
-
-  """All values ending with the given string."""
-  worksheetsPartialConvos_ends_with: String
-
-  """All values not ending with the given string."""
-  worksheetsPartialConvos_not_ends_with: String
-  worksheetsUtterances: String
-
-  """All values that are not equal to given value."""
-  worksheetsUtterances_not: String
-
-  """All values that are contained in given list."""
-  worksheetsUtterances_in: [String!]
-
-  """All values that are not contained in given list."""
-  worksheetsUtterances_not_in: [String!]
-
-  """All values less than the given value."""
-  worksheetsUtterances_lt: String
-
-  """All values less than or equal the given value."""
-  worksheetsUtterances_lte: String
-
-  """All values greater than the given value."""
-  worksheetsUtterances_gt: String
-
-  """All values greater than or equal the given value."""
-  worksheetsUtterances_gte: String
-
-  """All values containing the given string."""
-  worksheetsUtterances_contains: String
-
-  """All values not containing the given string."""
-  worksheetsUtterances_not_contains: String
-
-  """All values starting with the given string."""
-  worksheetsUtterances_starts_with: String
-
-  """All values not starting with the given string."""
-  worksheetsUtterances_not_starts_with: String
-
-  """All values ending with the given string."""
-  worksheetsUtterances_ends_with: String
-
-  """All values not ending with the given string."""
-  worksheetsUtterances_not_ends_with: String
-  startRow: Int
-
-  """All values that are not equal to given value."""
-  startRow_not: Int
-
-  """All values that are contained in given list."""
-  startRow_in: [Int!]
-
-  """All values that are not contained in given list."""
-  startRow_not_in: [Int!]
-
-  """All values less than the given value."""
-  startRow_lt: Int
-
-  """All values less than or equal the given value."""
-  startRow_lte: Int
-
-  """All values greater than the given value."""
-  startRow_gt: Int
-
-  """All values greater than or equal the given value."""
-  startRow_gte: Int
-  startCol: Int
-
-  """All values that are not equal to given value."""
-  startCol_not: Int
-
-  """All values that are contained in given list."""
-  startCol_in: [Int!]
-
-  """All values that are not contained in given list."""
-  startCol_not_in: [Int!]
-
-  """All values less than the given value."""
-  startCol_lt: Int
-
-  """All values less than or equal the given value."""
-  startCol_lte: Int
-
-  """All values greater than the given value."""
-  startCol_gt: Int
-
-  """All values greater than or equal the given value."""
-  startCol_gte: Int
   testSet: TestSetWhereInput
 }
 
@@ -15086,6 +15725,22 @@ enum TestSetOrderByInput {
   expandScriptingMemory_DESC
   normalizeText_ASC
   normalizeText_DESC
+  excelHasConvos_ASC
+  excelHasConvos_DESC
+  excelHasPartialConvos_ASC
+  excelHasPartialConvos_DESC
+  excelHasUtterances_ASC
+  excelHasUtterances_DESC
+  excelWorksheetsConvos_ASC
+  excelWorksheetsConvos_DESC
+  excelWorksheetsPartialConvos_ASC
+  excelWorksheetsPartialConvos_DESC
+  excelWorksheetsUtterances_ASC
+  excelWorksheetsUtterances_DESC
+  excelStartRow_ASC
+  excelStartRow_DESC
+  excelStartCol_ASC
+  excelStartCol_DESC
   selectionType_ASC
   selectionType_DESC
   statsUpdatedAt_ASC
@@ -15116,6 +15771,14 @@ type TestSetPreviousValues {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   tags: [String!]!
   statsUpdatedAt: DateTime
@@ -16398,6 +17061,182 @@ input TestSetScalarWhereInput {
 
   """All values that are not equal to given value."""
   normalizeText_not: Boolean
+  excelHasConvos: Boolean
+
+  """All values that are not equal to given value."""
+  excelHasConvos_not: Boolean
+  excelHasPartialConvos: Boolean
+
+  """All values that are not equal to given value."""
+  excelHasPartialConvos_not: Boolean
+  excelHasUtterances: Boolean
+
+  """All values that are not equal to given value."""
+  excelHasUtterances_not: Boolean
+  excelWorksheetsConvos: String
+
+  """All values that are not equal to given value."""
+  excelWorksheetsConvos_not: String
+
+  """All values that are contained in given list."""
+  excelWorksheetsConvos_in: [String!]
+
+  """All values that are not contained in given list."""
+  excelWorksheetsConvos_not_in: [String!]
+
+  """All values less than the given value."""
+  excelWorksheetsConvos_lt: String
+
+  """All values less than or equal the given value."""
+  excelWorksheetsConvos_lte: String
+
+  """All values greater than the given value."""
+  excelWorksheetsConvos_gt: String
+
+  """All values greater than or equal the given value."""
+  excelWorksheetsConvos_gte: String
+
+  """All values containing the given string."""
+  excelWorksheetsConvos_contains: String
+
+  """All values not containing the given string."""
+  excelWorksheetsConvos_not_contains: String
+
+  """All values starting with the given string."""
+  excelWorksheetsConvos_starts_with: String
+
+  """All values not starting with the given string."""
+  excelWorksheetsConvos_not_starts_with: String
+
+  """All values ending with the given string."""
+  excelWorksheetsConvos_ends_with: String
+
+  """All values not ending with the given string."""
+  excelWorksheetsConvos_not_ends_with: String
+  excelWorksheetsPartialConvos: String
+
+  """All values that are not equal to given value."""
+  excelWorksheetsPartialConvos_not: String
+
+  """All values that are contained in given list."""
+  excelWorksheetsPartialConvos_in: [String!]
+
+  """All values that are not contained in given list."""
+  excelWorksheetsPartialConvos_not_in: [String!]
+
+  """All values less than the given value."""
+  excelWorksheetsPartialConvos_lt: String
+
+  """All values less than or equal the given value."""
+  excelWorksheetsPartialConvos_lte: String
+
+  """All values greater than the given value."""
+  excelWorksheetsPartialConvos_gt: String
+
+  """All values greater than or equal the given value."""
+  excelWorksheetsPartialConvos_gte: String
+
+  """All values containing the given string."""
+  excelWorksheetsPartialConvos_contains: String
+
+  """All values not containing the given string."""
+  excelWorksheetsPartialConvos_not_contains: String
+
+  """All values starting with the given string."""
+  excelWorksheetsPartialConvos_starts_with: String
+
+  """All values not starting with the given string."""
+  excelWorksheetsPartialConvos_not_starts_with: String
+
+  """All values ending with the given string."""
+  excelWorksheetsPartialConvos_ends_with: String
+
+  """All values not ending with the given string."""
+  excelWorksheetsPartialConvos_not_ends_with: String
+  excelWorksheetsUtterances: String
+
+  """All values that are not equal to given value."""
+  excelWorksheetsUtterances_not: String
+
+  """All values that are contained in given list."""
+  excelWorksheetsUtterances_in: [String!]
+
+  """All values that are not contained in given list."""
+  excelWorksheetsUtterances_not_in: [String!]
+
+  """All values less than the given value."""
+  excelWorksheetsUtterances_lt: String
+
+  """All values less than or equal the given value."""
+  excelWorksheetsUtterances_lte: String
+
+  """All values greater than the given value."""
+  excelWorksheetsUtterances_gt: String
+
+  """All values greater than or equal the given value."""
+  excelWorksheetsUtterances_gte: String
+
+  """All values containing the given string."""
+  excelWorksheetsUtterances_contains: String
+
+  """All values not containing the given string."""
+  excelWorksheetsUtterances_not_contains: String
+
+  """All values starting with the given string."""
+  excelWorksheetsUtterances_starts_with: String
+
+  """All values not starting with the given string."""
+  excelWorksheetsUtterances_not_starts_with: String
+
+  """All values ending with the given string."""
+  excelWorksheetsUtterances_ends_with: String
+
+  """All values not ending with the given string."""
+  excelWorksheetsUtterances_not_ends_with: String
+  excelStartRow: Int
+
+  """All values that are not equal to given value."""
+  excelStartRow_not: Int
+
+  """All values that are contained in given list."""
+  excelStartRow_in: [Int!]
+
+  """All values that are not contained in given list."""
+  excelStartRow_not_in: [Int!]
+
+  """All values less than the given value."""
+  excelStartRow_lt: Int
+
+  """All values less than or equal the given value."""
+  excelStartRow_lte: Int
+
+  """All values greater than the given value."""
+  excelStartRow_gt: Int
+
+  """All values greater than or equal the given value."""
+  excelStartRow_gte: Int
+  excelStartCol: Int
+
+  """All values that are not equal to given value."""
+  excelStartCol_not: Int
+
+  """All values that are contained in given list."""
+  excelStartCol_in: [Int!]
+
+  """All values that are not contained in given list."""
+  excelStartCol_not_in: [Int!]
+
+  """All values less than the given value."""
+  excelStartCol_lt: Int
+
+  """All values less than or equal the given value."""
+  excelStartCol_lte: Int
+
+  """All values greater than the given value."""
+  excelStartCol_gt: Int
+
+  """All values greater than or equal the given value."""
+  excelStartCol_gte: Int
   selectionType: TestSetSelectionType
 
   """All values that are not equal to given value."""
@@ -17240,6 +18079,14 @@ input TestSetUpdateDataInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17269,6 +18116,14 @@ input TestSetUpdateInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17298,6 +18153,14 @@ input TestSetUpdateManyDataInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17332,6 +18195,14 @@ input TestSetUpdateManyMutationInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17400,6 +18271,14 @@ input TestSetUpdateWithoutExcelsDataInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17428,6 +18307,14 @@ input TestSetUpdateWithoutFoldersDataInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17456,6 +18343,14 @@ input TestSetUpdateWithoutRepositoriesDataInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17484,6 +18379,14 @@ input TestSetUpdateWithoutScriptsDataInput {
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
   expandScriptingMemory: Boolean
   normalizeText: Boolean
+  excelHasConvos: Boolean
+  excelHasPartialConvos: Boolean
+  excelHasUtterances: Boolean
+  excelWorksheetsConvos: String
+  excelWorksheetsPartialConvos: String
+  excelWorksheetsUtterances: String
+  excelStartRow: Int
+  excelStartCol: Int
   selectionType: TestSetSelectionType
   statsUpdatedAt: DateTime
   statsConvoCount: Int
@@ -17820,6 +18723,182 @@ input TestSetWhereInput {
 
   """All values that are not equal to given value."""
   normalizeText_not: Boolean
+  excelHasConvos: Boolean
+
+  """All values that are not equal to given value."""
+  excelHasConvos_not: Boolean
+  excelHasPartialConvos: Boolean
+
+  """All values that are not equal to given value."""
+  excelHasPartialConvos_not: Boolean
+  excelHasUtterances: Boolean
+
+  """All values that are not equal to given value."""
+  excelHasUtterances_not: Boolean
+  excelWorksheetsConvos: String
+
+  """All values that are not equal to given value."""
+  excelWorksheetsConvos_not: String
+
+  """All values that are contained in given list."""
+  excelWorksheetsConvos_in: [String!]
+
+  """All values that are not contained in given list."""
+  excelWorksheetsConvos_not_in: [String!]
+
+  """All values less than the given value."""
+  excelWorksheetsConvos_lt: String
+
+  """All values less than or equal the given value."""
+  excelWorksheetsConvos_lte: String
+
+  """All values greater than the given value."""
+  excelWorksheetsConvos_gt: String
+
+  """All values greater than or equal the given value."""
+  excelWorksheetsConvos_gte: String
+
+  """All values containing the given string."""
+  excelWorksheetsConvos_contains: String
+
+  """All values not containing the given string."""
+  excelWorksheetsConvos_not_contains: String
+
+  """All values starting with the given string."""
+  excelWorksheetsConvos_starts_with: String
+
+  """All values not starting with the given string."""
+  excelWorksheetsConvos_not_starts_with: String
+
+  """All values ending with the given string."""
+  excelWorksheetsConvos_ends_with: String
+
+  """All values not ending with the given string."""
+  excelWorksheetsConvos_not_ends_with: String
+  excelWorksheetsPartialConvos: String
+
+  """All values that are not equal to given value."""
+  excelWorksheetsPartialConvos_not: String
+
+  """All values that are contained in given list."""
+  excelWorksheetsPartialConvos_in: [String!]
+
+  """All values that are not contained in given list."""
+  excelWorksheetsPartialConvos_not_in: [String!]
+
+  """All values less than the given value."""
+  excelWorksheetsPartialConvos_lt: String
+
+  """All values less than or equal the given value."""
+  excelWorksheetsPartialConvos_lte: String
+
+  """All values greater than the given value."""
+  excelWorksheetsPartialConvos_gt: String
+
+  """All values greater than or equal the given value."""
+  excelWorksheetsPartialConvos_gte: String
+
+  """All values containing the given string."""
+  excelWorksheetsPartialConvos_contains: String
+
+  """All values not containing the given string."""
+  excelWorksheetsPartialConvos_not_contains: String
+
+  """All values starting with the given string."""
+  excelWorksheetsPartialConvos_starts_with: String
+
+  """All values not starting with the given string."""
+  excelWorksheetsPartialConvos_not_starts_with: String
+
+  """All values ending with the given string."""
+  excelWorksheetsPartialConvos_ends_with: String
+
+  """All values not ending with the given string."""
+  excelWorksheetsPartialConvos_not_ends_with: String
+  excelWorksheetsUtterances: String
+
+  """All values that are not equal to given value."""
+  excelWorksheetsUtterances_not: String
+
+  """All values that are contained in given list."""
+  excelWorksheetsUtterances_in: [String!]
+
+  """All values that are not contained in given list."""
+  excelWorksheetsUtterances_not_in: [String!]
+
+  """All values less than the given value."""
+  excelWorksheetsUtterances_lt: String
+
+  """All values less than or equal the given value."""
+  excelWorksheetsUtterances_lte: String
+
+  """All values greater than the given value."""
+  excelWorksheetsUtterances_gt: String
+
+  """All values greater than or equal the given value."""
+  excelWorksheetsUtterances_gte: String
+
+  """All values containing the given string."""
+  excelWorksheetsUtterances_contains: String
+
+  """All values not containing the given string."""
+  excelWorksheetsUtterances_not_contains: String
+
+  """All values starting with the given string."""
+  excelWorksheetsUtterances_starts_with: String
+
+  """All values not starting with the given string."""
+  excelWorksheetsUtterances_not_starts_with: String
+
+  """All values ending with the given string."""
+  excelWorksheetsUtterances_ends_with: String
+
+  """All values not ending with the given string."""
+  excelWorksheetsUtterances_not_ends_with: String
+  excelStartRow: Int
+
+  """All values that are not equal to given value."""
+  excelStartRow_not: Int
+
+  """All values that are contained in given list."""
+  excelStartRow_in: [Int!]
+
+  """All values that are not contained in given list."""
+  excelStartRow_not_in: [Int!]
+
+  """All values less than the given value."""
+  excelStartRow_lt: Int
+
+  """All values less than or equal the given value."""
+  excelStartRow_lte: Int
+
+  """All values greater than the given value."""
+  excelStartRow_gt: Int
+
+  """All values greater than or equal the given value."""
+  excelStartRow_gte: Int
+  excelStartCol: Int
+
+  """All values that are not equal to given value."""
+  excelStartCol_not: Int
+
+  """All values that are contained in given list."""
+  excelStartCol_in: [Int!]
+
+  """All values that are not contained in given list."""
+  excelStartCol_not_in: [Int!]
+
+  """All values less than the given value."""
+  excelStartCol_lt: Int
+
+  """All values less than or equal the given value."""
+  excelStartCol_lte: Int
+
+  """All values greater than the given value."""
+  excelStartCol_gt: Int
+
+  """All values greater than or equal the given value."""
+  excelStartCol_gte: Int
   selectionType: TestSetSelectionType
 
   """All values that are not equal to given value."""
@@ -18820,4 +19899,11 @@ input UserWhereUniqueInput {
   id: ID
   email: String
   name: String
+}
+
+enum Verb {
+  POST
+  PUT
+  DELETE
+  GET
 }
