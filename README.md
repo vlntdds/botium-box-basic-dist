@@ -100,6 +100,8 @@ You can run Botium Box on your own server.
 * [docker-compose](https://docs.docker.com/compose/install/)
 * [Node.js](https://nodejs.org/en/download/) (only when running node processes outside of docker)
 
+_If you have a firewall, you have to make sure that it allows inbound connections to port 4000 (default Botium Box listen port), or any other port if you are not using the default port_
+
 ### Run Botium Box with Docker-Compose (recommended)
 
 The Docker-Compose file contains all prerequisites for running Botium Box and is the recommended and most easy way to run Botium Box.
