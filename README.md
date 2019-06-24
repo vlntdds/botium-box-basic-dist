@@ -15,10 +15,26 @@ This is the fastest way to launch Botium Box and all required components ([docke
 
 ```
 > curl --output docker-compose-all.yml https://raw.githubusercontent.com/codeforequity-at/botium-box-basic-dist/master/docker-compose-all.yml
-> docker-compose -f docker-compose-all.yml up
+> docker-compose -f docker-compose-all.yml up -d
+> docker-compose -f docker-compose-all.yml logs -f
 ```
 
+_The last command is optional, you will see log output_
+
 Botium Box will now run on http://127.0.0.1:4000
+
+### Update Botium Box
+
+If you already have installed Botium Box before and just want to update to the latest Botium Box build, run this:
+
+```
+> docker-compose -f docker-compose-all.yml stop
+> docker-compose -f docker-compose-all.yml pull
+> docker-compose -f docker-compose-all.yml up -d
+> docker-compose -f docker-compose-all.yml logs -f
+```
+
+_The last command is optional, you will see log output_
 
 ## Botium Box Serverless Installation
 
