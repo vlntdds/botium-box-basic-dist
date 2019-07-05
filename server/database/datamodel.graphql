@@ -268,15 +268,15 @@ type TestSet {
   name: String!
   description: String
   useMatchingMode: TestSetMatchingModeType
-  expandConvos: Boolean @default(value: "true")
+  expandConvos: Boolean @default(value: true)
   expandConvosMode: TestSetExpandConvosModeType
   expandConvosModeRandomCount: Int
-  expandUtterancesToConvos: Boolean @default(value: "false")
+  expandUtterancesToConvos: Boolean @default(value: false)
   expandUtterancesIncomprehension: String
-  useScriptingMemory: Boolean @default(value: "true")
+  useScriptingMemory: Boolean @default(value: true)
   useScriptingMemoryMatchingMode: TestSetMemoryMatchingModeType
-  expandScriptingMemory: Boolean @default(value: "false")
-  normalizeText: Boolean @default(value: "true")
+  expandScriptingMemory: Boolean @default(value: false)
+  normalizeText: Boolean @default(value: true)
   excelHasConvos: Boolean
   excelHasPartialConvos: Boolean
   excelHasUtterances: Boolean
