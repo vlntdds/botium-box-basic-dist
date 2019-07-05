@@ -1,12 +1,12 @@
 type Tag {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String! @unique
 }
 
 type TestProject {
-  id: ID! @unique
+  id: ID! @id
   client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -26,7 +26,7 @@ type TestProject {
 }
 
 type Agent {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String! @unique
@@ -38,7 +38,7 @@ type Agent {
 }
 
 type Chatbot {
-  id: ID! @unique
+  id: ID! @id
   client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -61,7 +61,7 @@ enum CapabilityType {
 }
 
 type Capability {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -73,7 +73,7 @@ type Capability {
 }
 
 type TestSession {
-  id: ID! @unique
+  id: ID! @id
   client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -100,7 +100,7 @@ type TestSession {
 }
 
 type SecurityAlert {
-  id: ID! @unique
+  id: ID! @id
   method: Verb
   confidence: String
   risk: String
@@ -125,7 +125,7 @@ enum TestSessionStatus {
 }
 
 type TestSessionTestCaseResult {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   testSession: TestSession!
@@ -147,7 +147,7 @@ type TestSessionTestCaseResult {
 }
 
 type TestSessionTestCaseResultTranscript {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   step: Int!
@@ -161,7 +161,7 @@ type TestSessionTestCaseResultTranscript {
 }
 
 type TestSessionTestCaseResultAttachment {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String,
@@ -171,7 +171,7 @@ type TestSessionTestCaseResultAttachment {
 }
 
 type TestSessionJob {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   testSession: TestSession!
@@ -195,7 +195,7 @@ enum TestSessionJobStatus {
 }
 
 type TestSessionJobLog {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   testSessionJob: TestSessionJob!
@@ -203,7 +203,7 @@ type TestSessionJobLog {
 }
 
 type PerformanceTestSession {
-    id: ID! @unique
+    id: ID! @id
     client: Client
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -229,7 +229,7 @@ type PerformanceTestSession {
 }
 
 type PerformanceTestSessionAggregatedResult {
-    id: ID! @unique
+    id: ID! @id
     createdAt: DateTime!
     updatedAt: DateTime!
     testSession: PerformanceTestSession! @relation(name: "PerformanceTestSessionResults")
@@ -248,7 +248,7 @@ type PerformanceTestSessionAggregatedResult {
 }
 
 type PerformanceTestSessionJob {
-    id: ID! @unique
+    id: ID! @id
     createdAt: DateTime!
     updatedAt: DateTime!
     testSession: PerformanceTestSession! @relation(name: "PerformanceTestSessionJobs")
@@ -261,7 +261,7 @@ type PerformanceTestSessionJob {
 }
 
 type TestSet {
-  id: ID! @unique
+  id: ID! @id
   client: Client
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -324,7 +324,7 @@ enum TestSetSelectionType {
 }
 
 type TestSetCompiledConvo {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -335,7 +335,7 @@ type TestSetCompiledConvo {
 }
 
 type TestSetScript {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -353,7 +353,7 @@ enum TestSetScriptType {
 }
 
 type TestSetRepository {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -367,7 +367,7 @@ type TestSetRepository {
 }
 
 type TestSetFolder {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -377,7 +377,7 @@ type TestSetFolder {
 }
 
 type TestSetExcel {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -387,7 +387,7 @@ type TestSetExcel {
 }
 
 type DeviceSet {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -398,7 +398,7 @@ type DeviceSet {
 }
 
 type DeviceDescriptor {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
@@ -407,7 +407,7 @@ type DeviceDescriptor {
 }
 
 type DeviceProvider {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String! @unique
@@ -431,7 +431,7 @@ enum DeviceType {
 }
 
 type UserRole {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String! @unique
@@ -440,7 +440,7 @@ type UserRole {
 }
 
 type User {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   email: String! @unique
@@ -451,7 +451,7 @@ type User {
 }
 
 type ApiKey {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String! @unique
@@ -463,7 +463,7 @@ type ApiKey {
 }
 
 type RegisteredComponent {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String! @unique
@@ -483,7 +483,7 @@ enum RegisteredComponentType {
 }
 
 type SystemSettings {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   cleanupJobIntervalMinutes: Int
@@ -494,7 +494,7 @@ type SystemSettings {
 }
 
 type Client {
-  id: ID! @unique
+  id: ID! @id
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String! @unique
