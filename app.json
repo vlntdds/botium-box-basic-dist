@@ -7,7 +7,7 @@
     "automation"
   ],
   "website": "https://botium.at/",
-  "repository": "https://github.com/codeforequity-at/botium-box-basic-dist",
+  "repository": "https://github.com/vlntdds/botium-box-basic-dist",
   "logo": "https://raw.githubusercontent.com/codeforequity-at/botium-box-basic-dist/master/botium-logo.png",
   "env": {
     "BOTIUMBOX_QUEUE_REDISURL": {
