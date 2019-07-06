@@ -16,10 +16,10 @@ type TestProject {
   description: String
   tags: [String!]
   chatbot: Chatbot!
-  testSets: [TestSet!]!
-  deviceSets: [DeviceSet!]!
-  registeredComponents: [RegisteredComponent!]!
-  capabilities: [Capability!]!
+  testSets: [TestSet!]! @scalarList(strategy: RELATION)
+  deviceSets: [DeviceSet!]! @scalarList(strategy: RELATION)
+  registeredComponents: [RegisteredComponent!]! @scalarList(strategy: RELATION)
+  capabilities: [Capability!]! @scalarList(strategy: RELATION)
   agent: Agent
   batchCount: Int
   bail: Boolean
@@ -34,7 +34,7 @@ type Agent {
   tags: [String!]
   heartbeat: DateTime
   debug: Boolean
-  capabilities: [Capability!]!
+  capabilities: [Capability!]! @scalarList(strategy: RELATION)
 }
 
 type Chatbot {
@@ -46,9 +46,9 @@ type Chatbot {
   description: String
   tags: [String!]
   allowHtmlDisplay: Boolean
-  capabilities: [Capability!]! @relation(name: "ChatbotCapabilities")
-  sources: [Capability!]! @relation(name: "ChatbotSources")
-  envs: [Capability!]! @relation(name: "ChatbotEnvs")
+  capabilities: [Capability!]! @relation(name: "ChatbotCapabilities") @scalarList(strategy: RELATION)
+  sources: [Capability!]! @relation(name: "ChatbotSources") @scalarList(strategy: RELATION)
+  envs: [Capability!]! @relation(name: "ChatbotEnvs") @scalarList(strategy: RELATION)
 }
 
 enum CapabilityType {
@@ -81,21 +81,21 @@ type TestSession {
   description: String
   tags: [String!]
   chatbot: Chatbot!
-  testSets: [TestSet!]!
-  deviceSets: [DeviceSet!]!
-  registeredComponents: [RegisteredComponent!]!
+  testSets: [TestSet!]! @scalarList(strategy: RELATION)
+  deviceSets: [DeviceSet!]! @scalarList(strategy: RELATION)
+  registeredComponents: [RegisteredComponent!]! @scalarList(strategy: RELATION)
   testProject: TestProject
   agent: Agent
   batchCount: Int
   bail: Boolean
   status: TestSessionStatus!
-  results: [TestSessionTestCaseResult!]!
+  results: [TestSessionTestCaseResult!]! @scalarList(strategy: RELATION)
   securityCheck: Boolean
   securityAlerts: [SecurityAlert!]
-  jobs: [TestSessionJob!]!
-  capabilities: [Capability!]! @relation(name: "TestSessionCapabilities")
-  sources: [Capability!]! @relation(name: "TestSessionSources")
-  envs: [Capability!]! @relation(name: "TestSessionEnvs")
+  jobs: [TestSessionJob!]! @scalarList(strategy: RELATION)
+  capabilities: [Capability!]! @relation(name: "TestSessionCapabilities") @scalarList(strategy: RELATION)
+  sources: [Capability!]! @relation(name: "TestSessionSources") @scalarList(strategy: RELATION)
+  envs: [Capability!]! @relation(name: "TestSessionEnvs") @scalarList(strategy: RELATION)
   chartData: String
 }
 
@@ -134,8 +134,8 @@ type TestSessionTestCaseResult {
   success: Boolean!
   err: String
   duration: Int
-  steps: [TestSessionTestCaseResultTranscript!]!
-  attachments: [TestSessionTestCaseResultAttachment!]!
+  steps: [TestSessionTestCaseResultTranscript!]! @scalarList(strategy: RELATION)
+  attachments: [TestSessionTestCaseResultAttachment!]! @scalarList(strategy: RELATION)
   testSet: TestSet
   testSetScript: TestSetScript
   testSetRepository: TestSetRepository
@@ -184,7 +184,7 @@ type TestSessionJob {
   totalCount: Int
   failedCount: Int
   successCount: Int
-  logs: [TestSessionJobLog!]!
+  logs: [TestSessionJobLog!]! @scalarList(strategy: RELATION)
 }
 
 enum TestSessionJobStatus {
@@ -211,14 +211,14 @@ type PerformanceTestSession {
     description: String
     tags: [String!]
     chatbot: Chatbot!
-    testSets: [TestSet!]!
-    registeredComponents: [RegisteredComponent!]!
+    testSets: [TestSet!]! @scalarList(strategy: RELATION)
+    registeredComponents: [RegisteredComponent!]! @scalarList(strategy: RELATION)
     testProject: TestProject
-    results: [PerformanceTestSessionAggregatedResult!]! @relation(name: "PerformanceTestSessionResults" onDelete: CASCADE)
-    jobs: [PerformanceTestSessionJob!]! @relation(name: "PerformanceTestSessionJobs" onDelete: CASCADE)
-    capabilities: [Capability!]! @relation(name: "PerformanceTestSessionCapabilities")
-    sources: [Capability!]! @relation(name: "PerformanceTestSessionSources")
-    envs: [Capability!]! @relation(name: "PerformanceTestSessionEnvs")
+    results: [PerformanceTestSessionAggregatedResult!]! @relation(name: "PerformanceTestSessionResults" onDelete: CASCADE) @scalarList(strategy: RELATION)
+    jobs: [PerformanceTestSessionJob!]! @relation(name: "PerformanceTestSessionJobs" onDelete: CASCADE) @scalarList(strategy: RELATION)
+    capabilities: [Capability!]! @relation(name: "PerformanceTestSessionCapabilities") @scalarList(strategy: RELATION)
+    sources: [Capability!]! @relation(name: "PerformanceTestSessionSources") @scalarList(strategy: RELATION)
+    envs: [Capability!]! @relation(name: "PerformanceTestSessionEnvs") @scalarList(strategy: RELATION)
     parallelConvoCount: Int!
     parallelJobCount: Int!
     dataDensity: Int
@@ -287,10 +287,10 @@ type TestSet {
   excelStartCol: Int
   selectionType: TestSetSelectionType
   tags: [String!]
-  scripts: [TestSetScript!]!
-  repositories: [TestSetRepository!]!
-  folders: [TestSetFolder!]!
-  excels: [TestSetExcel!]!
+  scripts: [TestSetScript!]! @scalarList(strategy: RELATION)
+  repositories: [TestSetRepository!]! @scalarList(strategy: RELATION)
+  folders: [TestSetFolder!]! @scalarList(strategy: RELATION)
+  excels: [TestSetExcel!]! @scalarList(strategy: RELATION)
   statsUpdatedAt: DateTime,
   statsConvoCount: Int,
   statsPartialConvoCount: Int,
@@ -394,7 +394,7 @@ type DeviceSet {
   description: String
   tags: [String!]
   provider: DeviceProvider!
-  devices: [DeviceDescriptor!]!
+  devices: [DeviceDescriptor!]! @scalarList(strategy: RELATION)
 }
 
 type DeviceDescriptor {
