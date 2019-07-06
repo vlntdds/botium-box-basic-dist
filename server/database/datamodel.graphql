@@ -14,7 +14,7 @@ type TestProject {
   code: String! @unique
   securityCheck: Boolean
   description: String
-  tags: [String!]
+  tags: [String!] @scalarList(strategy: RELATION)
   chatbot: Chatbot!
   testSets: [TestSet!]! @scalarList(strategy: RELATION)
   deviceSets: [DeviceSet!]! @scalarList(strategy: RELATION)
@@ -31,7 +31,7 @@ type Agent {
   updatedAt: DateTime!
   name: String! @unique
   description: String
-  tags: [String!]
+  tags: [String!] @scalarList(strategy: RELATION)
   heartbeat: DateTime
   debug: Boolean
   capabilities: [Capability!]! @scalarList(strategy: RELATION)
@@ -44,7 +44,7 @@ type Chatbot {
   updatedAt: DateTime!
   name: String!
   description: String
-  tags: [String!]
+  tags: [String!] @scalarList(strategy: RELATION)
   allowHtmlDisplay: Boolean
   capabilities: [Capability!]! @relation(name: "ChatbotCapabilities") @scalarList(strategy: RELATION)
   sources: [Capability!]! @relation(name: "ChatbotSources") @scalarList(strategy: RELATION)
@@ -79,7 +79,7 @@ type TestSession {
   updatedAt: DateTime!
   name: String!
   description: String
-  tags: [String!]
+  tags: [String!] @scalarList(strategy: RELATION)
   chatbot: Chatbot!
   testSets: [TestSet!]! @scalarList(strategy: RELATION)
   deviceSets: [DeviceSet!]! @scalarList(strategy: RELATION)
@@ -91,7 +91,7 @@ type TestSession {
   status: TestSessionStatus!
   results: [TestSessionTestCaseResult!]! @scalarList(strategy: RELATION)
   securityCheck: Boolean
-  securityAlerts: [SecurityAlert!]
+  securityAlerts: [SecurityAlert!] @scalarList(strategy: RELATION)
   jobs: [TestSessionJob!]! @scalarList(strategy: RELATION)
   capabilities: [Capability!]! @relation(name: "TestSessionCapabilities") @scalarList(strategy: RELATION)
   sources: [Capability!]! @relation(name: "TestSessionSources") @scalarList(strategy: RELATION)
@@ -107,7 +107,7 @@ type SecurityAlert {
   alert: String
   solution: String
   evidence: String
-  references: [String!]
+  references: [String!] @scalarList(strategy: RELATION)
 }
 
 enum Verb {
@@ -209,7 +209,7 @@ type PerformanceTestSession {
     updatedAt: DateTime!
     name: String!
     description: String
-    tags: [String!]
+    tags: [String!] @scalarList(strategy: RELATION)
     chatbot: Chatbot!
     testSets: [TestSet!]! @scalarList(strategy: RELATION)
     registeredComponents: [RegisteredComponent!]! @scalarList(strategy: RELATION)
@@ -286,7 +286,7 @@ type TestSet {
   excelStartRow: Int
   excelStartCol: Int
   selectionType: TestSetSelectionType
-  tags: [String!]
+  tags: [String!] @scalarList(strategy: RELATION)
   scripts: [TestSetScript!]! @scalarList(strategy: RELATION)
   repositories: [TestSetRepository!]! @scalarList(strategy: RELATION)
   folders: [TestSetFolder!]! @scalarList(strategy: RELATION)
@@ -296,8 +296,8 @@ type TestSet {
   statsPartialConvoCount: Int,
   statsUtterancesCount: Int,
   statsScriptingMemoryCount: Int,
-  statsCompiledConvos: [TestSetCompiledConvo!]
-  dependencies: [TestSet!]
+  statsCompiledConvos: [TestSetCompiledConvo!] @scalarList(strategy: RELATION)
+  dependencies: [TestSet!] @scalarList(strategy: RELATION)
 }
 
 enum TestSetExpandConvosModeType {
@@ -392,7 +392,7 @@ type DeviceSet {
   updatedAt: DateTime!
   name: String!
   description: String
-  tags: [String!]
+  tags: [String!] @scalarList(strategy: RELATION)
   provider: DeviceProvider!
   devices: [DeviceDescriptor!]! @scalarList(strategy: RELATION)
 }
@@ -436,7 +436,7 @@ type UserRole {
   updatedAt: DateTime!
   name: String! @unique
   description: String
-  permissions: [String!]
+  permissions: [String!] @scalarList(strategy: RELATION)
 }
 
 type User {
@@ -458,8 +458,8 @@ type ApiKey {
   key: String! @unique
   validFrom: DateTime
   validTo: DateTime
-  clients: [Client!]
-  permissions: [String!]
+  clients: [Client!] @scalarList(strategy: RELATION)
+  permissions: [String!] @scalarList(strategy: RELATION)
 }
 
 type RegisteredComponent {
