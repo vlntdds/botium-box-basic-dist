@@ -20,7 +20,9 @@ const setSeedId = (entityName, key, id) => {
 
 const clientData = () => [
   {
-    name: 'DefaultClient'
+    name: 'DefaultClient',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -29,7 +31,9 @@ const rolesData = () => [
     name: 'ADMIN',
     permissions: {
       set: [ '*' ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'TESTMANAGER',
@@ -46,7 +50,9 @@ const rolesData = () => [
         'DEVICEPROVIDERS_*',
         'REGISTEREDCOMPONENTS_*'
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'TESTER',
@@ -71,7 +77,9 @@ const rolesData = () => [
         'DEVICEPROVIDERS_SELECT',
         'REGISTEREDCOMPONENTS_SELECT'
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'GUEST',
@@ -83,7 +91,9 @@ const rolesData = () => [
         'TESTSESSIONS_SELECT',
         'PERFORMANCETESTSESSIONS_SELECT'
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -97,7 +107,9 @@ const usersData = () => [
     },
     clients: {
       connect: [ { name: 'DefaultClient' } ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     email: 'testmanager@mydomain.com',
@@ -108,7 +120,9 @@ const usersData = () => [
     },
     clients: {
       connect: [ { name: 'DefaultClient' } ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     email: 'tester@mydomain.com',
@@ -119,7 +133,9 @@ const usersData = () => [
     },
     clients: {
       connect: [ { name: 'DefaultClient' } ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     email: 'guest@mydomain.com',
@@ -130,7 +146,9 @@ const usersData = () => [
     },
     clients: {
       connect: [ { name: 'DefaultClient' } ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -138,7 +156,9 @@ const agentsData = () => [
   {
     name: 'Default Agent',
     description: 'Default Agent',
-    capabilities: {}
+    capabilities: {},
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -155,39 +175,51 @@ const apikeysData = () => [
         'TESTSESSIONS_CREATE',
         'TESTSESSIONS_REPORTS'
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
 const deviceProvidersData = () => [
   {
     name: 'Local Selenium Server',
-    type: 'LOCALSELENIUM'
+    type: 'LOCALSELENIUM',
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Integrated PhantomJS',
-    type: 'INTEGRATED'
+    type: 'INTEGRATED',
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Saucelabs.com',
     type: 'SAUCELABS',
     url: 'http://ondemand.saucelabs.com:80/wd/hub',
     username: 'YOUR_SAUCELABS_USERNAME',
-    password: 'YOUR_SAUCELABS_ACCESS_KEY'
+    password: 'YOUR_SAUCELABS_ACCESS_KEY',
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Saucelabs.com Real Device Cloud',
     type: 'TESTOBJECTS',
     url: 'https://eu1.appium.testobject.com/wd/hub',
     username: '',
-    password: 'YOUR_TESTOBJECTS_PROJECT_API_KEY'
+    password: 'YOUR_TESTOBJECTS_PROJECT_API_KEY',
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'experitest Desktop & Real Device Browsers',
     type: 'EXPERITEST',
     url: 'https://cloud.seetest.io/wd/hub',
     username: '',
-    password: 'YOUR_EXPERITEST_ACCESS_KEY'
+    password: 'YOUR_EXPERITEST_ACCESS_KEY',
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -211,7 +243,9 @@ const deviceSetsData = () => [
           capabilities: JSON.stringify({ browserName: 'phantomjs' })
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Android Core Devices',
@@ -252,7 +286,9 @@ const deviceSetsData = () => [
           capabilities: '{"browserName":"Chrome","deviceName":"PixelGoogleAPI","platformName":"Android","platformVersion":"7.1"}'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'iOS Core Devices',
@@ -283,7 +319,9 @@ const deviceSetsData = () => [
           capabilities: '{"browserName":"Safari","deviceName":"iPhone SE","platformName":"iOS","platformVersion":"10.0"}'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Latest Chrome on Desktop',
@@ -314,7 +352,9 @@ const deviceSetsData = () => [
           capabilities: '{"browserName":"chrome","platform":"Windows 10","version":"69"}'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Latest Firefox on Desktop',
@@ -345,7 +385,9 @@ const deviceSetsData = () => [
           capabilities: '{"browserName":"firefox","platform":"Linux","version":"45"}'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Real Devices - iPhone Core Devices',
@@ -386,7 +428,9 @@ const deviceSetsData = () => [
           'capabilities': '{"deviceName":"iPhone XS Max","platformName":"IOS","platformVersion":"12.1.2"}'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Real Devices - Android Core Devices',
@@ -457,7 +501,9 @@ const deviceSetsData = () => [
           'capabilities': '{"deviceName":"HTC One","platformName":"ANDROID","platformVersion":"5.0.2"}'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -476,7 +522,9 @@ const chatbotsData = () => [
           stringValue: 'echo'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'I am Botium',
@@ -512,7 +560,9 @@ const chatbotsData = () => [
           jsonValue: '{ "username": "botium", "message": "{{msg.messageText}}" }'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -539,7 +589,9 @@ const testsetData = () => [
           script: 'give me buttons\n\n#me\nHi Bot!\n\n#bot\nYou said: Hi Bot!\n\n#me\ngive me buttons\n\n#bot\nHere are some buttons\nBUTTONS First Button|Second Button\n'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Smalltalk (EN)',
@@ -568,7 +620,9 @@ const testsetData = () => [
           globFilter: 'INCOMPREHENSION.en.utterances.txt'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'I am Botium (Smalltalk)',
@@ -599,7 +653,9 @@ const testsetData = () => [
           script: 'INCOMPREHENSION\nlol\nokay\nso...\ngo on\numm\ninteresting\nreally?\n'
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -623,7 +679,9 @@ const testProjectData = () => [
           id: entries['testset']['Echo Sample']
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'I am Botium - Test Suite',
@@ -644,7 +702,9 @@ const testProjectData = () => [
           id: entries['testset']['I am Botium (Smalltalk)']
         }
       ]
-    }
+    },
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
@@ -657,7 +717,9 @@ const registeredComponentsDataBasic = () => [
     src: 'botium-asserter-basiclink',
     global: false,
     ref: 'HASLINK',
-    args: JSON.stringify({})
+    args: JSON.stringify({}),
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 const registeredComponentsDataPremium = () => [
@@ -669,7 +731,9 @@ const registeredComponentsDataPremium = () => [
     src: 'botium-asserter-secexploits/fbwebhook',
     global: false,
     ref: 'FBWEBHOOKEXPLOITS',
-    args: JSON.stringify({})
+    args: JSON.stringify({}),
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Chatbot Hyperlink Response Asserter',
@@ -679,7 +743,9 @@ const registeredComponentsDataPremium = () => [
     src: 'botium-asserter-hyperlink',
     global: true,
     ref: 'CHECKLINK',
-    args: JSON.stringify({})
+    args: JSON.stringify({}),
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Chatbot HTTP Endpoint Asserter',
@@ -689,7 +755,9 @@ const registeredComponentsDataPremium = () => [
     src: 'botium-asserter-http',
     global: false,
     ref: 'HTTP',
-    args: JSON.stringify({})
+    args: JSON.stringify({}),
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Chatbot MSSQL Database Asserter',
@@ -704,7 +772,9 @@ const registeredComponentsDataPremium = () => [
       'user': 'SA',
       'password': '',
       'port': 1433
-    })
+    }),
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Chatbot MySQL Database Asserter',
@@ -720,7 +790,9 @@ const registeredComponentsDataPremium = () => [
       'password': 'mysql',
       'port': 3306,
       'database': 'example'
-    })
+    }),
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Chatbot Oracle Database Asserter',
@@ -735,7 +807,9 @@ const registeredComponentsDataPremium = () => [
       'password': 'Oracle18',
       'connectString': 'localhost:32118/XE',
       'privilege': 2
-    })
+    }),
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Chatbot Postgres Database Asserter',
@@ -751,7 +825,9 @@ const registeredComponentsDataPremium = () => [
       'password': 'postgres',
       'port': 5432,
       'database': 'example'
-    })
+    }),
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ]
 
