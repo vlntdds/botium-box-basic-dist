@@ -1,15 +1,15 @@
 type Tag {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String! @unique
 }
 
 type TestProject {
   id: ID! @id
   client: Client
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   code: String! @unique
   securityCheck: Boolean
@@ -27,8 +27,8 @@ type TestProject {
 
 type Agent {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String! @unique
   description: String
   tags: [String!] @scalarList(strategy: RELATION)
@@ -40,8 +40,8 @@ type Agent {
 type Chatbot {
   id: ID! @id
   client: Client
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   description: String
   tags: [String!] @scalarList(strategy: RELATION)
@@ -62,8 +62,8 @@ enum CapabilityType {
 
 type Capability {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   type: CapabilityType!
   stringValue: String
@@ -75,8 +75,8 @@ type Capability {
 type TestSession {
   id: ID! @id
   client: Client
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   description: String
   tags: [String!] @scalarList(strategy: RELATION)
@@ -126,8 +126,8 @@ enum TestSessionStatus {
 
 type TestSessionTestCaseResult {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   testSession: TestSession!
   testcaseName: String!
   testcaseSource: String!
@@ -148,8 +148,8 @@ type TestSessionTestCaseResult {
 
 type TestSessionTestCaseResultTranscript {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   step: Int!
   sender: String!
   expected: String
@@ -162,8 +162,8 @@ type TestSessionTestCaseResultTranscript {
 
 type TestSessionTestCaseResultAttachment {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String,
   mimeType: String!,
   base64: String!
@@ -172,8 +172,8 @@ type TestSessionTestCaseResultAttachment {
 
 type TestSessionJob {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   testSession: TestSession!
   jobId: Int
   progressPercent: Int
@@ -196,8 +196,8 @@ enum TestSessionJobStatus {
 
 type TestSessionJobLog {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   testSessionJob: TestSessionJob!
   log: String!
 }
@@ -205,8 +205,8 @@ type TestSessionJobLog {
 type PerformanceTestSession {
     id: ID! @id
     client: Client
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
     name: String!
     description: String
     tags: [String!] @scalarList(strategy: RELATION)
@@ -230,8 +230,8 @@ type PerformanceTestSession {
 
 type PerformanceTestSessionAggregatedResult {
     id: ID! @id
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
     testSession: PerformanceTestSession! @relation(name: "PerformanceTestSessionResults")
     job: PerformanceTestSessionJob!
     stepIndex: Int!
@@ -249,8 +249,8 @@ type PerformanceTestSessionAggregatedResult {
 
 type PerformanceTestSessionJob {
     id: ID! @id
-    createdAt: DateTime!
-    updatedAt: DateTime!
+    createdAt: DateTime! @createdAt
+    updatedAt: DateTime! @updatedAt
     testSession: PerformanceTestSession! @relation(name: "PerformanceTestSessionJobs")
     jobId: Int
     status: TestSessionJobStatus!
@@ -263,8 +263,8 @@ type PerformanceTestSessionJob {
 type TestSet {
   id: ID! @id
   client: Client
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   description: String
   useMatchingMode: TestSetMatchingModeType
@@ -325,8 +325,8 @@ enum TestSetSelectionType {
 
 type TestSetCompiledConvo {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   order: Int
   description: String,
@@ -336,8 +336,8 @@ type TestSetCompiledConvo {
 
 type TestSetScript {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   description: String
   script: String!
@@ -354,8 +354,8 @@ enum TestSetScriptType {
 
 type TestSetRepository {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   giturl: String!
   gitbranch: String!
@@ -368,8 +368,8 @@ type TestSetRepository {
 
 type TestSetFolder {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   path: String!
   globFilter: String
@@ -378,8 +378,8 @@ type TestSetFolder {
 
 type TestSetExcel {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   filename: String!
   filecontent: String!
@@ -388,8 +388,8 @@ type TestSetExcel {
 
 type DeviceSet {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   description: String
   tags: [String!] @scalarList(strategy: RELATION)
@@ -399,8 +399,8 @@ type DeviceSet {
 
 type DeviceDescriptor {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String!
   type: DeviceType!
   capabilities: String!
@@ -408,8 +408,8 @@ type DeviceDescriptor {
 
 type DeviceProvider {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String! @unique
   type: DeviceProviderType!
   url: String
@@ -432,8 +432,8 @@ enum DeviceType {
 
 type UserRole {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String! @unique
   description: String
   permissions: [String!] @scalarList(strategy: RELATION)
@@ -441,8 +441,8 @@ type UserRole {
 
 type User {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   email: String! @unique
   password: String
   name: String! @unique
@@ -452,8 +452,8 @@ type User {
 
 type ApiKey {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String! @unique
   key: String! @unique
   validFrom: DateTime
@@ -464,8 +464,8 @@ type ApiKey {
 
 type RegisteredComponent {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String! @unique
   description: String
   type: RegisteredComponentType!
@@ -484,8 +484,8 @@ enum RegisteredComponentType {
 
 type SystemSettings {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   cleanupJobIntervalMinutes: Int
   keepTestCaseSuccessScreenshotsDays: Int
   keepTestCaseSuccessConversationDays: Int
@@ -495,7 +495,7 @@ type SystemSettings {
 
 type Client {
   id: ID! @id
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
   name: String! @unique
 }
