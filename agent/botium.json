@@ -1,6 +1,11 @@
 {
   "botium": {
     "Capabilities": {
+      "PROJECTNAME": "botium-connector-asynchttp",
+      "CONTAINERMODE": "botium-connector-asynchttp",
+      "ASYNCRECEIVER_REDISURL": "redis://",
+      "ASYNCRECEIVER_POSTURL": "http://",
+      "ASYNCRECEIVER_UNIQUEID": "001001"
     }
   }
 }
