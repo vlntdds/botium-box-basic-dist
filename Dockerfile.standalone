@@ -1,6 +1,6 @@
 FROM docker:18.09
 
-RUN apk update && apk add nodejs npm python python-dev py-pip dos2unix bash build-base libffi-dev openssl-dev git && pip install docker-compose
+RUN apk update && apk add nodejs npm python python-dev py-pip dos2unix bash build-base build-essential tcl8.5 libffi-dev openssl-dev git && pip install docker-compose
 
 WORKDIR /app
 COPY . /app
@@ -10,6 +10,7 @@ ENV PHANTOMJS_VERSION 2.1.1
 
 RUN apk --no-cache add curl curl-dev g++ make python
 RUN curl -Ls "https://github.com/dustinblackman/phantomized/releases/download/${PHANTOMJS_VERSION}/dockerized-phantomjs.tar.gz" | tar xz -C / && curl -k -Ls https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${PHANTOMJS_VERSION}-linux-x86_64.tar.bz2 | tar -jxvf - -C ./ && cp phantomjs-${PHANTOMJS_VERSION}-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs && rm -fR phantomjs-${PHANTOMJS_VERSION}-linux-x86_64
+RUN git clone http://github.com/antirez/redis.git && cd redis && git checkout 3.0 && make redis-cli && ln -s src/redis-cli /usr/local/bin/redis-cli
 RUN npm set unsafe-perm true && BUILD_ONLY=true npm install --no-optional --production
 RUN apk del curl g++ make python
 
