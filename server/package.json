@@ -32,7 +32,7 @@
 		"botium-connector-watson": "0.0.7",
 		"botium-connector-webdriverio": "0.1.1",
 		"botium-connector-wechat": "0.0.1",
-		"botium-connector-asynchttp": "0.0.2"
+		"botium-connector-asynchttp": "0.0.2",
 		"botium-core": "1.5.1",
 		"concat-stream": "^2.0.0",
 		"connect-history-api-fallback": "^1.5.0",
