@@ -24,12 +24,10 @@
         }) => {
             v[e] && clearTimeout(v[e]), v[e] = setTimeout(async () => {
                 const n = new a({
-                    port: 16616, // Redis port
-                    host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", // Redis host
-                    family: 4, // 4 (IPv4) or 6 (IPv6)
-                    password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
-                    db: 0
-                  });
+                    port: 16616, 
+                    host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
+                    password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+                });
                 d(`Auto cleanup of conversation ${e} after ${E}ms idle time`), m(e), await n.del(e), s.publish(e, {
                     liveChatConvoStepAdded: {
                         err: `Automatically closed chatbot connection after ${E}ms idle time`
@@ -46,7 +44,11 @@
         }, {
             queueSettings: t
         }) => {
-            const s = new a(t.redis),
+            const s = new a({
+                port: 16616, 
+                host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+            }),
                 n = await s.get(e);
             return n && JSON.parse(n)
         }, _ = async (e, t, s) => {
@@ -68,7 +70,11 @@
             pubsub: t,
             queueSettings: s
         }) => new Promise((e, t) => {
-            const n = new a(s.redis);
+            const n = new a({
+                port: 16616, 
+                host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+            });
             n.subscribe("livechat.send", "livechat.stop", (s, n) => {
                 s ? t(new Error(`Redis subscribe failed: ${s}`)) : (d(`Livechat Redis connected to ${n} channels.`), e())
             }), n.on("message", async (e, t) => {
@@ -89,7 +95,11 @@
             pubsub: c,
             queueSettings: p
         }) => {
-            const l = new a(p.redis),
+            const l = new a({
+                port: 16616, 
+                host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+            }),
                 E = t(),
                 v = new o(async (e, t) => {
                     try {
@@ -162,7 +172,11 @@
         }, {
             queueSettings: s
         }) => {
-            new a(s.redis).publish("livechat.send", JSON.stringify({
+            new a({
+                port: 16616, 
+                host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+            }).publish("livechat.send", JSON.stringify({
                 conversationId: e,
                 convoStep: t
             }))
@@ -172,7 +186,11 @@
         }, {
             queueSettings: t
         }) => {
-            new a(t.redis).publish("livechat.stop", JSON.stringify({
+            new a({
+                port: 16616, 
+                host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+            }).publish("livechat.stop", JSON.stringify({
                 conversationId: e
             }))
         },

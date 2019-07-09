@@ -195,15 +195,16 @@
         k = process.env.BOTIUMBOX_QUEUE_CONCURRENCY_PERFORMANCE || 1;
     let X = process.env.BOTIUMBOX_QUEUE_HEARTBEAT || 3e5;
     X > 0 && X < 5e3 && (X = 5e3);
-    // M.redis = {
-    //     port: 16616,
-    //     host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com",
-    //     auth: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
-    //     db: 0
-    // };
+    let dbredis = {};
+    dbredis.prefix = "qbasic";
+    dbredis.redis = {};
+    dbredis.redis.port = 16616;
+    dbredis.redis.host = "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com";
+    dbredis.redis.auth = "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d";
+    M = dbredis;
     const G = d.createQueue(M);
     G.on("error", e => {
-        console.log(`ERROR connecting to queue '${JSON.stringify(M)}':`), console.log(e), process.exit(1)
+        console.log(`ERROR connecting to queue Agent '${JSON.stringify(M)}':`), console.log(e), process.exit(1)
     });
     const D = (e, s) => G.create(e, s).removeOnComplete(!0).save(),
         q = e => {
