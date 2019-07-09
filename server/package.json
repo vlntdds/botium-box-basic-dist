@@ -2,7 +2,7 @@
 	"name": "botium-box-server",
 	"version": "1.0.0",
 	"scripts": {
-		"start:dist": "node dist/botium-box-server.js",
+		"start:dist": "DEBUG=* node dist/botium-box-server.js",
 		"prisma-deploy": "prisma deploy --force",
 		"prisma-reset": "prisma reset",
 		"prisma-seed": "BUILDTARGET=basic node database/seed.js"

@@ -2,7 +2,7 @@
 	"name": "botium-box-agent",
 	"version": "1.0.0",
 	"scripts": {
-		"start:dist": "node dist/botium-box-agent.js"
+		"start:dist": "DEBUG=* node dist/botium-box-agent.js"
 	},
 	"dependencies": {
 		"@babel/runtime": "^7.2.0",
