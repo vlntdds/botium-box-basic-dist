@@ -5672,6 +5672,12 @@
         e && console.log(e), t && console.log(t), process.exit(1)
     };
     let yr = fr();
+    yr.redis = {
+        port: 16616,
+        host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com",
+        auth: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
+        db: 0
+    };
     Tr(`connecting to Botium queue '${JSON.stringify(yr)}'`);
     const Er = S.createQueue(yr);
     Er.setMaxListeners(1e3), Er.watchStuckJobs(), Er.on("error", e => {
