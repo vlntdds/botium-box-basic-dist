@@ -5680,10 +5680,17 @@
     // };
     //redis://example.com:1234?redis_option=value&redis_option=value
     //redis://:1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d@redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com:16616?auth=1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d
-    Tr(`connecting to Botium queue '${JSON.stringify(yr)}'`);
-    const Er = S.createQueue(yr);
+    Tr(`connecting to custom Botium queue '${JSON.stringify(dbredis)}'`);
+    let dbredis = {};
+    dbredis.prefix = "qbasic";
+    dbredis.redis = {};
+    dbredis.redis.port = 16616;
+    dbredis.redis.host = "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com";
+    dbredis.redis.auth = "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d";
+
+    const Er = S.createQueue(dbredis);
     Er.setMaxListeners(1e3), Er.watchStuckJobs(), Er.on("error", e => {
-        console.log(`ERROR on queue Server '${JSON.stringify(yr)}':`, e)
+        console.log(`ERROR on custom queue Server '${JSON.stringify(dbredis)}':`, e)
     }), process.env.BOTIUM_TEMPDIR = process.env.BOTIUM_TEMPDIR || "./botiumwork";
     try {
         o.sync(process.env.BOTIUM_TEMPDIR), Tr(`Using BOTIUM_TEMPDIR ${process.env.BOTIUM_TEMPDIR}`)
