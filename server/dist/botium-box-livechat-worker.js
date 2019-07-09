@@ -26,7 +26,9 @@
                 const n = new a({
                     port: 16616, 
                     host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
-                    password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+                    password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
+                    family: 4, 
+                    db: 0
                 });
                 d(`Auto cleanup of conversation ${e} after ${E}ms idle time`), m(e), await n.del(e), s.publish(e, {
                     liveChatConvoStepAdded: {
@@ -47,7 +49,9 @@
             const s = new a({
                 port: 16616, 
                 host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
-                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
+                family: 4, 
+                db: 0
             }),
                 n = await s.get(e);
             return n && JSON.parse(n)
@@ -73,7 +77,9 @@
             const n = new a({
                 port: 16616, 
                 host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
-                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
+                family: 4, 
+                db: 0
             });
             n.subscribe("livechat.send", "livechat.stop", (s, n) => {
                 s ? t(new Error(`Redis subscribe failed: ${s}`)) : (d(`Livechat Redis connected to ${n} channels.`), e())
@@ -98,7 +104,9 @@
             const l = new a({
                 port: 16616, 
                 host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
-                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
+                family: 4, 
+                db: 0
             }),
                 E = t(),
                 v = new o(async (e, t) => {
@@ -175,7 +183,9 @@
             new a({
                 port: 16616, 
                 host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
-                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
+                family: 4, 
+                db: 0
             }).publish("livechat.send", JSON.stringify({
                 conversationId: e,
                 convoStep: t
@@ -189,7 +199,9 @@
             new a({
                 port: 16616, 
                 host: "redis-16616.c10.us-east-1-2.ec2.cloud.redislabs.com", 
-                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d"
+                password: "1eAcDS0PJ4R4nvr2ewqq7nZiUKnOpc7d",
+                family: 4, 
+                db: 0
             }).publish("livechat.stop", JSON.stringify({
                 conversationId: e
             }))
